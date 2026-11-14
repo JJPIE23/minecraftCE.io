@@ -1036,7 +1036,7 @@
     document.addEventListener("pointerdown", (event) => {
       if (!isMobile || event.pointerType === "mouse" || !event.isTrusted) return;
       mobileFullscreenWanted = true;
-      requestMobileFullscreen();
+      if (!playing) requestMobileFullscreen();
     }, { capture: true });
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
@@ -1323,6 +1323,7 @@
     document.addEventListener("pointerup", finishMobileTouch);
     document.addEventListener("pointercancel", finishMobileTouch);
     touchLook.addEventListener("lostpointercapture", finishMobileTouch);
+    document.addEventListener("pointerup", requestMobileFullscreen);
     const touchJump = document.querySelector("#touch-jump");
     touchJump.addEventListener("pointerdown", (event) => {
       event.preventDefault();
