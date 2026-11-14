@@ -220,7 +220,7 @@
     @media (max-height: 500px) {
       #menu-title { transform: translateY(-50px); }
     }
-    @media (pointer: coarse), (any-pointer: coarse) {
+    @media (pointer: coarse) and (hover: none) {
       #mobile-controls { display: block; }
       #bottom-hint { display: none; }
       #bottom { bottom: max(12px, env(safe-area-inset-bottom, 0px)); }
@@ -1005,7 +1005,7 @@
         feet < y + 0.5 - COLLISION_EPSILON && head > y - 0.5 + COLLISION_EPSILON);
     }
     const keys = new Set();
-    const isMobile = matchMedia("(pointer: coarse), (any-pointer: coarse)").matches || navigator.maxTouchPoints > 0;
+    const isMobile = matchMedia("(pointer: coarse) and (hover: none)").matches;
     let playing = false;
     let mobileFullscreenWanted = false;
     let mobileFullscreenHintShown = false;
