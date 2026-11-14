@@ -7,3 +7,5 @@ GitHub Actions deploys the site whenever changes are pushed to `main`. Once the 
 https://jjpie23.github.io/minecraftCE.io/
 
 Online multiplayer requires the site to be served over HTTPS.
+
+On mobile, tap the game to request fullscreen and return to fullscreen when the tab becomes active. For browsers that do not allow fullscreen from a tab, add the site to the Home Screen and launch the installed app.

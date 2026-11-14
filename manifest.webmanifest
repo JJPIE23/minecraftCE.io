@@ -1,0 +1,17 @@
+{
+  "name": "MinecraftCE Voxel World",
+  "short_name": "MinecraftCE",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "background_color": "#91c9ef",
+  "theme_color": "#10151a",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "res/gui/crash_logo.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}

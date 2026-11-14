@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10151a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
   <title>Voxel World</title>
   <style>
     :root {
@@ -23,7 +27,7 @@
     * { box-sizing: border-box; }
     html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #91c9ef; font-family: "Trebuchet MS", system-ui, sans-serif; }
     #game { position: fixed; inset: 0; }
-    #game canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
+    #game canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; touch-action: none; }
     .grain { position: fixed; inset: 0; pointer-events: none; opacity: .08; z-index: 1; background-image: url("res/misc/footprint.png"); background-size: 4px 4px; mix-blend-mode: soft-light; }
     #hud { position: fixed; inset: 0; z-index: 2; visibility: hidden; pointer-events: none; color: #fff; text-shadow: 0 2px 3px #000b; }
     body.world-active #hud { visibility: visible; }
@@ -180,6 +184,7 @@
     .touch-button:active, .touch-button.pressed { transform: scale(.92); background: #b6e36a; box-shadow: none; }
     .touch-button.sprinting { border-color: #b6e36a; }
     .touch-button img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    #touch-look { -webkit-user-select: none; user-select: none; }
     [data-direction="KeyW"] { grid-area: forward; }
     [data-direction="KeyA"] { grid-area: left; }
     [data-direction="KeyD"] { grid-area: right; }
@@ -215,7 +220,7 @@
     @media (max-height: 500px) {
       #menu-title { transform: translateY(-50px); }
     }
-    @media (pointer: coarse) and (hover: none) {
+    @media (pointer: coarse), (any-pointer: coarse) {
       #mobile-controls { display: block; }
       #bottom-hint { display: none; }
       #bottom { bottom: max(12px, env(safe-area-inset-bottom, 0px)); }
@@ -946,6 +951,7 @@
     const PLAYER_RADIUS = 0.3;
     const PLAYER_BODY_HEIGHT = 1.8;
     const PLAYER_EYE_HEIGHT = 1.22;
+    const COLLISION_EPSILON = 0.0001;
     function updatePlayerView(now = performance.now(), moving = false) {
       const bob = settings.viewBobbing && moving && player.grounded ? Math.sin(now * 0.012) * 0.035 : 0;
       const forwardX = -Math.sin(player.yaw) * Math.cos(player.pitch);
@@ -982,9 +988,9 @@
             const chunkKey = `${Math.floor(bx / CHUNK)},${Math.floor(bz / CHUNK)}`;
             if (!placed.get(chunkKey)?.has(`${bx},${by},${bz}`) &&
                 !treeBlockAt(bx, by, bz) && !(includeTerrain && blockType(bx, by, bz))) continue;
-            if (x + PLAYER_RADIUS <= bx - 0.5 || x - PLAYER_RADIUS >= bx + 0.5) continue;
-            if (z + PLAYER_RADIUS <= bz - 0.5 || z - PLAYER_RADIUS >= bz + 0.5) continue;
-            if (feet >= by + 0.5 || head <= by - 0.5) continue;
+            if (x + PLAYER_RADIUS <= bx - 0.5 + COLLISION_EPSILON || x - PLAYER_RADIUS >= bx + 0.5 - COLLISION_EPSILON) continue;
+            if (z + PLAYER_RADIUS <= bz - 0.5 + COLLISION_EPSILON || z - PLAYER_RADIUS >= bz + 0.5 - COLLISION_EPSILON) continue;
+            if (feet >= by + 0.5 - COLLISION_EPSILON || head <= by - 0.5 + COLLISION_EPSILON) continue;
             overlaps.push({ x: bx, y: by, z: bz });
           }
         }
@@ -996,11 +1002,53 @@
       const head = feet + PLAYER_BODY_HEIGHT;
       return !!treeBlockAt(x, y, z) || (Math.abs(player.x - x) < PLAYER_RADIUS + 0.5 &&
         Math.abs(player.z - z) < PLAYER_RADIUS + 0.5 &&
-        feet < y + 0.5 && head > y - 0.5);
+        feet < y + 0.5 - COLLISION_EPSILON && head > y - 0.5 + COLLISION_EPSILON);
     }
     const keys = new Set();
-    const isMobile = matchMedia("(pointer: coarse) and (hover: none)").matches;
+    const isMobile = matchMedia("(pointer: coarse), (any-pointer: coarse)").matches || navigator.maxTouchPoints > 0;
     let playing = false;
+    let mobileFullscreenWanted = false;
+    let mobileFullscreenHintShown = false;
+    function showMobileFullscreenHint() {
+      if (mobileFullscreenHintShown) return;
+      mobileFullscreenHintShown = true;
+      showNotice("For fullscreen, add this game to your Home Screen.");
+    }
+    async function requestMobileFullscreen() {
+      if (!isMobile || !mobileFullscreenWanted || document.fullscreenElement ||
+          navigator.standalone === true || matchMedia("(display-mode: standalone)").matches ||
+          matchMedia("(display-mode: fullscreen)").matches) return;
+      const requestFullscreen = document.documentElement.requestFullscreen;
+      if (typeof requestFullscreen !== "function") {
+        showMobileFullscreenHint();
+        return;
+      }
+      try {
+        await requestFullscreen.call(document.documentElement, { navigationUI: "hide" });
+      } catch (error) {
+        if (error.name === "NotAllowedError" || error.name === "SecurityError") {
+          showMobileFullscreenHint();
+        } else {
+          showNotice(`Fullscreen unavailable: ${error.message}`);
+        }
+      }
+    }
+    document.addEventListener("pointerdown", (event) => {
+      if (!isMobile || event.pointerType === "mouse" || !event.isTrusted) return;
+      mobileFullscreenWanted = true;
+      requestMobileFullscreen();
+    }, { capture: true });
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        cancelMobileTouch();
+        keys.clear();
+        resetMobileSprint();
+      } else {
+        requestMobileFullscreen();
+      }
+    });
+    addEventListener("focus", requestMobileFullscreen);
+    addEventListener("pageshow", requestMobileFullscreen);
     let activeWorld = null;
     let multiplayerPeer = null;
     let multiplayerRole = null;
@@ -1167,7 +1215,7 @@
     document.addEventListener("keyup", (event) => {
       if (!settings.sprintToggle || (event.code !== "ShiftLeft" && event.code !== "ShiftRight")) keys.delete(event.code);
     });
-    addEventListener("blur", () => { keys.clear(); sprintToggleState = false; dragLooking = false; fallbackPress = null; cancelDesktopMining(); resetMobileSprint(); });
+    addEventListener("blur", () => { keys.clear(); sprintToggleState = false; dragLooking = false; fallbackPress = null; cancelDesktopMining(); cancelMobileTouch(); resetMobileSprint(); });
     let lastForwardTapAt = -Infinity;
     let sprintPointerId = null;
     function resetMobileSprint() {
@@ -1212,13 +1260,19 @@
     const touchLook = document.querySelector("#touch-look");
     const TOUCH_HOLD_DELAY = 250;
     let mobileTouch = null;
+    function cancelMobileTouch() {
+      if (!mobileTouch) return;
+      mobileTouch = null;
+      clearMiningOverlay();
+    }
     touchLook.addEventListener("pointerdown", (event) => {
-      if (!playing) return;
-      if (event.pointerType === "mouse") {
-        requestMouseLock();
-        return;
-      }
-      if (event.pointerType !== "touch") return;
+      if (playing && event.pointerType === "mouse") requestMouseLock();
+    });
+    document.addEventListener("pointerdown", (event) => {
+      if (!playing || !isMobile || event.pointerType === "mouse" || mobileTouch) return;
+      const target = event.target;
+      if (!(target instanceof Element) ||
+          target.closest("#touch-dpad, #touch-actions, #touch-pause, #hotbar, #room-code-pill, #chat-overlay, #main-menu, #pause-menu")) return;
       event.preventDefault();
       mobileTouch = {
         pointerId: event.pointerId,
@@ -1236,8 +1290,8 @@
       lastPointerX = event.clientX;
       lastPointerY = event.clientY;
       touchLook.setPointerCapture(event.pointerId);
-    });
-    touchLook.addEventListener("pointermove", (event) => {
+    }, { capture: true });
+    function updateMobileTouchLook(event) {
       if (!playing || !mobileTouch || event.pointerId !== mobileTouch.pointerId) return;
       const dx = event.clientX - mobileTouch.lastX;
       const dy = event.clientY - mobileTouch.lastY;
@@ -1255,7 +1309,8 @@
       const sensitivity = mouseSensitivity * settings.mobileLookSensitivity * 1.8;
       player.yaw -= dx * sensitivity * (settings.invertMouseX ? -1 : 1);
       player.pitch = THREE.MathUtils.clamp(player.pitch - dy * sensitivity * (settings.invertMouseY ? -1 : 1), -Math.PI/2 + .04, Math.PI/2 - .04);
-    });
+    }
+    document.addEventListener("pointermove", updateMobileTouchLook);
     function finishMobileTouch(event) {
       if (!mobileTouch || event.pointerId !== mobileTouch.pointerId) return;
       const touch = mobileTouch;
@@ -1265,8 +1320,9 @@
         placeAtScreen(touch.x, touch.y);
       }
     }
-    touchLook.addEventListener("pointerup", finishMobileTouch);
-    touchLook.addEventListener("pointercancel", finishMobileTouch);
+    document.addEventListener("pointerup", finishMobileTouch);
+    document.addEventListener("pointercancel", finishMobileTouch);
+    touchLook.addEventListener("lostpointercapture", finishMobileTouch);
     const touchJump = document.querySelector("#touch-jump");
     touchJump.addEventListener("pointerdown", (event) => {
       event.preventDefault();
