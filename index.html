@@ -29,6 +29,10 @@
     #game { position: fixed; inset: 0; }
     #game canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; touch-action: none; }
     .grain { position: fixed; inset: 0; pointer-events: none; opacity: .08; z-index: 1; background-image: url("res/misc/footprint.png"); background-size: 4px 4px; mix-blend-mode: soft-light; }
+    #rain-overlay { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: url("res/environment/rain.png") repeat; background-size: 64px 256px; mix-blend-mode: screen; transition: opacity 1s; }
+    body.raining #rain-overlay { opacity: .48; animation: rain-fall .65s linear infinite; }
+    @keyframes rain-fall { to { background-position: 0 256px; } }
+    @media (prefers-reduced-motion: reduce) { body.raining #rain-overlay { animation: none; } }
     #underwater-overlay { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: rgba(15, 86, 145, .3); opacity: 0; transition: opacity .15s; }
     body.underwater #underwater-overlay { opacity: 1; }
     #hud { position: fixed; inset: 0; z-index: 2; visibility: hidden; pointer-events: none; color: #fff; text-shadow: 0 2px 3px #000b; }
@@ -66,9 +70,18 @@
     #experience-fill { width: 0; height: 100%; background: url("res/gui/icons.png") no-repeat 0 -138px / 512px 512px; }
     #bottom-hint { margin-top: 8px; color: #e4eadc; font-size: 10px; letter-spacing: .08em; }
     #bottom-hint b { color: #fff; }
-    .menu-screen { position: fixed; inset: 0; z-index: 5; display: none; place-items: center; overflow: auto; padding: 12px; background: linear-gradient(180deg, #10151a66, #10151a9c), url("res/title/bg/panorama0.png") center / cover; }
+    .menu-screen { position: fixed; inset: 0; z-index: 5; display: none; place-items: center; overflow: auto; padding: 12px; background: #10151a; }
     .menu-screen.visible { display: grid; }
     #main-menu { padding: 0; }
+    .menu-panorama { position: absolute; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; }
+    .menu-panorama::after { position: absolute; inset: 0; background: linear-gradient(180deg, #10151a66, #10151a9c); content: ""; }
+    .menu-panorama-track { display: flex; width: max-content; height: 100%; animation: menu-panorama-scroll 180s linear infinite; will-change: transform; }
+    .menu-panorama-track img { flex: 0 0 100vw; width: 100vw; height: 100%; object-fit: fill; }
+    #main-menu > :not(.menu-panorama) { position: relative; z-index: 2; }
+    @keyframes menu-panorama-scroll { from { transform: translateX(-400vw); } to { transform: translateX(0); } }
+    @media (prefers-reduced-motion: reduce) {
+      .menu-panorama-track { animation: none; transform: translateX(-400vw); }
+    }
     #pause-menu { z-index: 4; place-items: stretch; padding: 0; background: #10150c88; }
     .menu-view { display: none; width: min(420px, calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow: auto; flex-direction: column; align-items: center; gap: 12px; padding: 24px; border: 1px solid #c9c9c966; background: #101010c9; box-shadow: 0 10px 40px #000b; text-align: center; }
     .menu-view.active { display: flex; }
@@ -103,19 +116,20 @@
     .pause-footer { position: absolute; bottom: 12px; left: clamp(16px, 22vw, 140px); padding: 5px 8px; background: #0009; color: #e0e8d8; font-size: 12px; text-shadow: 0 1px 3px #000; }
     .menu-heading { margin: 0 0 4px; font-size: 1rem; font-weight: 400; }
     #menu-worlds.menu-view, #menu-create.menu-view { width: min(800px, 80vw, calc(100vw - 24px)); height: min(520px, 51vw, calc(100dvh - 24px)); max-height: calc(100dvh - 24px); align-items: stretch; gap: 8px; padding: 8px; border: 2px solid #d7d7d7; background: linear-gradient(145deg, #343a43f2, #11151bea); box-shadow: 0 0 0 3px #0009, 0 14px 40px #000c; text-align: left; }
-    #menu-worlds.menu-view { position: relative; overflow: visible; padding: 4.86% 3.5% 2.7%; border: 0; background-color: #15191e; background-image: url("world_menu_1.png"); background-position: center 66%; background-repeat: no-repeat; background-size: 161.7% 140.4%; box-shadow: none; transform: translateY(6.25%); }
-    #menu-worlds[data-active-tab="friends"].menu-view { background-image: url("world_menu_2.png"); }
-    #menu-worlds[data-active-tab="servers"].menu-view { background-image: url("world_menu_3.png"); }
+    #menu-worlds.menu-view { position: relative; width: min(96vw, 120.3dvh, calc(100vw - 24px)); height: min(78dvh, 62.25vw, calc(64.85vw - 15.6px), calc(100dvh - 24px)); max-height: calc(100dvh - 24px); overflow: visible; padding: 4.86% 3.5% 2.7%; border: 0; background-color: #15191e; background-image: none; box-shadow: none; transform: translateY(6.25%); }
+    #menu-worlds::before { position: absolute; z-index: 2; inset: 0; background: url("world_menu_1.png") center 66% / 161.7% 140.4% no-repeat; content: ""; pointer-events: none; }
+    #menu-worlds[data-active-tab="friends"].menu-view::before { background-image: url("world_menu_2.png"); }
+    #menu-worlds[data-active-tab="servers"].menu-view::before { background-image: url("world_menu_3.png"); }
     #menu-create.menu-view { width: min(900px, calc(100vw - 24px)); height: min(660px, calc(100dvh - 24px)); gap: 12px; padding: 16px; }
-    .world-tabs { position: absolute; z-index: 1; top: -13%; right: 0; left: 0; height: 15.8%; min-height: 32px; transform: translateY(1px); }
-    .world-tab-panel { position: relative; z-index: 1; }
+    .world-tabs { position: absolute; z-index: auto; top: calc(-13% + 1px); right: 0; left: 0; height: 15.8%; min-height: 32px; }
+    .world-tab-panel { position: relative; z-index: 2; }
     .world-tab { position: absolute; z-index: 0; top: 0; display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; height: 100%; padding: 5px 10px; border: 0; background-color: transparent; background-image: url("button_dact.png"); background-position: 45.92% 10.93%; background-repeat: no-repeat; background-size: 545.45% 962.86%; color: #fff; font: 14px ui-monospace, Consolas, monospace; cursor: pointer; image-rendering: pixelated; }
     #world-tab-worlds { left: 0; width: 29.73%; }
     #world-tab-friends { left: 29.73%; width: 29.73%; }
-    #world-tab-multiplayer { left: 59.46%; width: 29.73%; }
-    .world-tab[aria-selected="true"] { z-index: 2; background-image: url("button_act.png"); background-position: 23.47% 11.04%; background-size: 545.45% 886.84%; color: #222; }
+    #world-tab-multiplayer { z-index: 1; left: 59.46%; width: 29.73%; }
+    .world-tab[aria-selected="true"] { z-index: 3; background-image: url("button_act.png"); background-position: 23.47% 11.04%; background-size: 545.45% 886.84%; color: #222; }
     .world-tab-count { align-self: center; font: 11px ui-monospace, Consolas, monospace; }
-    .world-tab-return { z-index: 1; left: 89.19%; width: 10.81%; margin: 0; padding: 0; border: 2px solid #696969; background: linear-gradient(#858585, #555); }
+    .world-tab-return { z-index: 0; left: calc(89.19% - 5px); width: calc(10.81% + 5px); margin: 0; padding: 0; border: 0; background: url("x_button_world.png") no-repeat 79.68% 11% / 1539% 910%; }
     .world-tab-panel { display: none; flex: 1; min-height: 0; }
     .world-tab-panel.active:not([hidden]) { display: flex; flex-direction: column; gap: 6px; }
     #world-panel-worlds { min-height: 0; }
@@ -303,7 +317,7 @@
       #menu-title { padding: 0; }
       #menu-splash { right: 12%; bottom: -5px; }
       .menu-title-content { gap: 8px; }
-      #menu-worlds.menu-view { width: min(800px, 80vw, calc(100vw - 16px)); height: min(520px, 51vw, calc(100dvh - 16px)); max-height: calc(100dvh - 16px); gap: 6px; }
+      #menu-worlds.menu-view { width: min(96vw, 120.3dvh, calc(100vw - 24px)); height: min(78dvh, 62.25vw, calc(64.85vw - 15.6px), calc(100dvh - 24px)); max-height: calc(100dvh - 24px); gap: 6px; }
       #menu-create.menu-view { width: calc(100vw - 16px); height: min(720px, calc(100dvh - 16px)); max-height: calc(100dvh - 16px); gap: 8px; padding: 10px; }
       .world-tab { flex: 1; min-width: 0; padding: 5px 3px; font-size: 12px; }
       .world-menu-header { gap: 8px; }
@@ -332,9 +346,6 @@
       .settings-actions .menu-button { height: 27px; padding: 0 4px; }
       #debug-overlay { top: 5px; left: 5px; max-width: 88vw; font-size: 10px; }
     }
-    @media (max-width: 420px) {
-      #menu-worlds.menu-view { width: calc(100vw - 16px); height: min(520px, calc((100vw - 16px) * .64), calc(100dvh - 16px)); }
-    }
     @media (max-height: 500px) {
       #menu-title { padding-top: 6px; padding-bottom: 6px; }
       .menu-title-content { grid-template-columns: minmax(220px, 34%) minmax(0, 1fr); gap: 12px; }
@@ -352,6 +363,7 @@
 <body>
   <div id="game"></div>
   <div class="grain"></div>
+  <div id="rain-overlay" aria-hidden="true"></div>
   <div id="underwater-overlay" aria-hidden="true"></div>
   <div id="hud">
     <div class="topbar">
@@ -397,6 +409,18 @@
   <div id="chat-announcement" aria-live="polite"></div>
   <div id="notice"></div>
   <div id="main-menu" class="menu-screen visible">
+    <div class="menu-panorama" aria-hidden="true">
+      <div class="menu-panorama-track">
+        <img src="res/title/bg/panorama0.png" alt="">
+        <img src="res/title/bg/panorama1.png" alt="">
+        <img src="res/title/bg/panorama2.png" alt="">
+        <img src="res/title/bg/panorama3.png" alt="">
+        <img src="res/title/bg/panorama0.png" alt="">
+        <img src="res/title/bg/panorama1.png" alt="">
+        <img src="res/title/bg/panorama2.png" alt="">
+        <img src="res/title/bg/panorama3.png" alt="">
+      </div>
+    </div>
     <section id="menu-title" class="menu-view active" aria-label="Main menu">
       <div class="title-logo-wrap">
         <img id="title-logo" src="minecraft_title.png" alt="Minecraft Craft Edition">
@@ -448,7 +472,7 @@
         <button id="world-tab-worlds" class="world-tab" type="button" role="tab" aria-selected="true" aria-controls="world-panel-worlds" aria-label="Worlds 0"><span class="bitmap-label">Worlds</span><span id="world-count" class="world-tab-count bitmap-label">0</span></button>
         <button id="world-tab-friends" class="world-tab" type="button" role="tab" aria-selected="false" aria-controls="world-panel-friends" aria-label="Friends 0"><span class="bitmap-label">Friends</span><span class="world-tab-count bitmap-label">0</span></button>
         <button id="world-tab-multiplayer" class="world-tab" type="button" role="tab" aria-selected="false" aria-controls="world-panel-multiplayer" aria-label="Servers 0"><span class="bitmap-label">Servers</span><span class="world-tab-count bitmap-label">0</span></button>
-        <button id="worlds-back" class="world-tab world-tab-return" type="button" aria-label="Return to title">×</button>
+        <button id="worlds-back" class="world-tab world-tab-return" type="button" aria-label="Return to title"></button>
       </header>
       <section id="world-panel-worlds" class="world-tab-panel active" role="tabpanel" aria-labelledby="world-tab-worlds">
         <header class="world-menu-header">
@@ -944,7 +968,10 @@
       birchWood: tileMaterial(5, 7),
       birchWoodTop: tileMaterial(5, 1, 0xe8dfc7),
       birchLeaves: tileMaterial(4, 2, 0xd9e8bf, { side: THREE.DoubleSide }),
-      water: tileMaterial(14, 0, 0x93dfff, { transparent: true, opacity: 0.58, depthWrite: false, side: THREE.DoubleSide })
+      deadBush: tileMaterial(7, 3, 0xffffff, { transparent: true, alphaTest: 0.08, side: THREE.DoubleSide }),
+      water: tileMaterial(14, 0, 0x93dfff, { transparent: true, opacity: 0.58, depthWrite: false, side: THREE.DoubleSide }),
+      cactus: tileMaterial(6, 4),
+      cactusTop: tileMaterial(5, 4)
     };
     const crackMaterials = Array.from({ length: 10 }, (_, stage) => new THREE.MeshBasicMaterial({
       map: tileMap(stage, 15),
@@ -1021,6 +1048,8 @@
     const TICKS_PER_DAY = 24000;
     const INITIAL_TICK = 6000;
     let worldTime = 0;
+    let weatherRaining = false;
+    let nextWeatherChangeAt = 0;
     let tickRate = 20;
     let tickFrozen = false;
     let tickStepRemaining = 0;
@@ -1029,12 +1058,28 @@
     const twilightSky = new THREE.Color(0xe49a72);
     const nightSky = new THREE.Color(0x111a38);
     const warmSun = new THREE.Color(0xffedcc);
+    const rainSky = new THREE.Color(0x676767);
     const skyScratch = new THREE.Color();
+    function randomWeatherDuration(isRaining) {
+      const minimumDays = 0.5;
+      const maximumDays = isRaining ? 1 : 7.5;
+      return (minimumDays + Math.random() * (maximumDays - minimumDays)) * DAY_LENGTH;
+    }
+    function updateWeather(elapsed) {
+      if (elapsed >= nextWeatherChangeAt) {
+        weatherRaining = !weatherRaining;
+        nextWeatherChangeAt = elapsed + randomWeatherDuration(weatherRaining);
+      }
+      const rainingHere = weatherRaining && biomeAt(Math.floor(player.x), Math.floor(player.z)) !== "Desert";
+      document.body.classList.toggle("raining", rainingHere);
+      return rainingHere;
+    }
     const smoothstep = (edge0, edge1, value) => {
       const t = THREE.MathUtils.clamp((value - edge0) / (edge1 - edge0), 0, 1);
       return t * t * (3 - 2 * t);
     };
     function updateSky(elapsed) {
+      const rainingHere = updateWeather(elapsed);
       const tick = (INITIAL_TICK + (elapsed / DAY_LENGTH) * TICKS_PER_DAY) % TICKS_PER_DAY;
       const phase = tick / TICKS_PER_DAY;
       const angle = phase * Math.PI * 2;
@@ -1046,27 +1091,30 @@
       else daylight = (tick - 23000) / 1000;
       const twilight = (1 - smoothstep(0.04, 0.42, Math.abs(altitude))) * 0.72;
       skyScratch.copy(nightSky).lerp(daySky, daylight).lerp(twilightSky, twilight);
+      if (rainingHere) skyScratch.lerp(rainSky, 0.45);
       scene.background.copy(skyScratch);
       if (scene.fog) scene.fog.color.copy(skyScratch);
-      hemi.intensity = THREE.MathUtils.lerp(0.28, 2.05, daylight);
-      sun.intensity = THREE.MathUtils.lerp(0.08, 2.35, daylight);
+      worldFog.far = Math.max(100, RADIUS * CHUNK * 2.6) * (rainingHere ? 0.7 : 1);
+      hemi.intensity = THREE.MathUtils.lerp(0.28, 2.05, daylight) * (rainingHere ? 0.7 : 1);
+      sun.intensity = THREE.MathUtils.lerp(0.08, 2.35, daylight) * (rainingHere ? 0.7 : 1);
       sun.color.copy(twilightSky).lerp(warmSun, daylight);
       sun.position.set(player.x + Math.cos(angle) * 90, player.y + altitude * 90, player.z - 75);
       sun.target.position.set(player.x, player.y, player.z);
       sunSprite.position.copy(sun.position);
-      sunSprite.visible = settings.celestialBodies;
+      sunSprite.visible = settings.celestialBodies && !rainingHere;
       sunSprite.material.opacity = smoothstep(-0.08, 0.12, altitude);
       moonSprite.position.set(player.x - Math.cos(angle) * 90, player.y - altitude * 90, player.z - 75);
-      moonSprite.visible = settings.celestialBodies;
+      moonSprite.visible = settings.celestialBodies && !rainingHere;
       moonSprite.material.opacity = smoothstep(-0.08, 0.12, -altitude);
       stars.position.set(player.x, player.y, player.z);
-      stars.visible = settings.starsEnabled;
+      stars.visible = settings.starsEnabled && !rainingHere;
       stars.material.opacity = (1 - daylight) * 0.9;
       cloudLayer.position.x = player.x;
       cloudLayer.position.z = player.z;
       cloudLayer.visible = settings.cloudsEnabled;
       cloudTexture.offset.set((elapsed * 0.000000012 * settings.cloudSpeed) % 1, (elapsed * 0.000000003 * settings.cloudSpeed) % 1);
-      cloudMaterial.opacity = settings.cloudOpacity * (0.35 + daylight * 0.45);
+      cloudMaterial.color.set(rainingHere ? 0xbfbfbf : 0xffffff);
+      cloudMaterial.opacity = settings.cloudOpacity * (0.35 + daylight * 0.45) * (rainingHere ? 0.95 : 1);
     }
     const CHUNK = 16;
     let RADIUS = 3;
@@ -1116,10 +1164,28 @@
       const climate = noise(x + 1900, z - 800, 170);
       const birchClimate = noise(x - 1300, z + 1700, 130);
       if (climate > 0.39) return "Forest";
-      if (climate < -0.46) return "Drylands";
+      if (climate < -0.46) return "Desert";
       if (heightAt(x, z) > 14) return "Highlands";
       if (climate > 0.1 && birchClimate > 0.18) return "Birch Forest";
       return "Plains";
+    }
+    function cactusHeightAt(x, z, top = heightAt(x, z)) {
+      if (biomeAt(x, z) !== "Desert" || top <= SEA + 1 || top > 14 ||
+          blockType(x, top, z) !== "sand" || hash(x + 311, z - 997) < 0.994) return 0;
+      return 2 + Math.floor(hash(x - 157, z + 463) * 3);
+    }
+    function cactusBlockAt(x, y, z, top = heightAt(x, z)) {
+      if (y <= top || isEditedAway(x, y, z)) return null;
+      const cactusHeight = cactusHeightAt(x, z, top);
+      return cactusHeight && y > top && y <= top + cactusHeight ? "cactus" : null;
+    }
+    function deadBushAt(x, y, z, top = heightAt(x, z)) {
+      const key = `${Math.floor(x / CHUNK)},${Math.floor(z / CHUNK)}`;
+      if (y !== top + 1 || top <= SEA + 1 || top > 14 || isEditedAway(x, y, z) ||
+          placed.get(key)?.has(`${x},${y},${z}`) || biomeAt(x, z) !== "Desert" ||
+          blockType(x, top, z) !== "sand" || cactusHeightAt(x, z, top) ||
+          hash(x + 271, z - 683) < 0.99) return false;
+      return true;
     }
     function treeCandidateAt(x, z) {
       const key = `${x},${z}`;
@@ -1193,11 +1259,13 @@
       const key = `${Math.floor(x / CHUNK)},${Math.floor(z / CHUNK)}`;
       const placedType = placed.get(key)?.get(`${x},${y},${z}`);
       if (placedType) return placedType;
-      if (y < 0 || y > heightAt(x, z) || isEditedAway(x, y, z)) return null;
+      if (y < 0 || isEditedAway(x, y, z)) return null;
       const top = heightAt(x, z);
+      if (y > top) return cactusBlockAt(x, y, z, top);
       const beach = top <= SEA + 1;
-      if (y === top) return beach ? "sand" : "grass";
-      if (!beach && y >= top - 3) return "dirt";
+      const desert = biomeAt(x, z) === "Desert";
+      if (y === top) return beach || desert ? "sand" : "grass";
+      if (y >= top - 3 && (!beach || desert)) return desert ? "sand" : "dirt";
       return "stone";
     }
     const dirs = [
@@ -1208,12 +1276,13 @@
       { n: [0, 0, 1], p: [[.5,-.5,.5],[.5,.5,.5],[-.5,.5,.5],[-.5,-.5,.5]] },
       { n: [0, 0, -1], p: [[-.5,-.5,-.5],[-.5,.5,-.5],[.5,.5,-.5],[.5,-.5,-.5]] }
     ];
-    function addFace(bucket, x, y, z, face) {
+    function addFace(bucket, x, y, z, face, horizontalInset = 0) {
       const [nx, ny, nz] = face.n;
       const v = face.p;
+      const width = 1 - horizontalInset * 2;
       bucket.positions.push(
-        x+v[0][0],y+v[0][1],z+v[0][2], x+v[1][0],y+v[1][1],z+v[1][2],
-        x+v[2][0],y+v[2][1],z+v[2][2], x+v[3][0],y+v[3][1],z+v[3][2]
+        x+v[0][0]*width,y+v[0][1],z+v[0][2]*width, x+v[1][0]*width,y+v[1][1],z+v[1][2]*width,
+        x+v[2][0]*width,y+v[2][1],z+v[2][2]*width, x+v[3][0]*width,y+v[3][1],z+v[3][2]*width
       );
       for (let i = 0; i < 4; i++) bucket.normals.push(nx, ny, nz);
       bucket.uvs.push(0,0, 0,1, 1,1, 1,0);
@@ -1221,18 +1290,45 @@
       bucket.vertex += 4;
     }
     function faceBucket(type, face) {
+      if (type === "cactus") return face.n[1] === 1 ? "cactusTop" : "cactus";
       if (type === "grass") return face.n[1] === 1 ? "grassTop" : face.n[1] === -1 ? "dirt" : "grassSide";
       if (type === "wood") return face.n[1] === 0 ? "wood" : "woodTop";
       if (type === "birchWood") return face.n[1] === 0 ? "birchWood" : "birchWoodTop";
       return type;
     }
+    function addDeadBush(bucket, x, y, z) {
+      const halfWidth = 0.42;
+      const bottom = y - 0.5;
+      const top = y + 0.38;
+      const planes = [
+        {
+          normal: [Math.SQRT1_2, 0, -Math.SQRT1_2],
+          vertices: [[x-halfWidth,bottom,z-halfWidth],[x+halfWidth,bottom,z+halfWidth],[x+halfWidth,top,z+halfWidth],[x-halfWidth,top,z-halfWidth]]
+        },
+        {
+          normal: [Math.SQRT1_2, 0, Math.SQRT1_2],
+          vertices: [[x-halfWidth,bottom,z+halfWidth],[x+halfWidth,bottom,z-halfWidth],[x+halfWidth,top,z-halfWidth],[x-halfWidth,top,z+halfWidth]]
+        }
+      ];
+      for (const plane of planes) {
+        for (const vertex of plane.vertices) bucket.positions.push(...vertex);
+        for (let i = 0; i < 4; i++) bucket.normals.push(...plane.normal);
+        bucket.uvs.push(0,0, 1,0, 1,1, 0,1);
+        bucket.indices.push(bucket.vertex, bucket.vertex+1, bucket.vertex+2, bucket.vertex, bucket.vertex+2, bucket.vertex+3);
+        bucket.vertex += 4;
+      }
+    }
     function addCube(bucket, x, y, z, kind, checkTerrain) {
       if (isEditedAway(x, y, z)) return;
+      if (kind === "deadBush") {
+        addDeadBush(bucket.deadBush, x, y, z);
+        return;
+      }
       for (const face of dirs) {
         const [dx, dy, dz] = face.n;
         const adjacent = checkTerrain ? blockType(x+dx, y+dy, z+dz) : null;
         if (checkTerrain && adjacent) continue;
-        addFace(bucket[faceBucket(kind, face)], x, y, z, face);
+        addFace(bucket[faceBucket(kind, face)], x, y, z, face, kind === "cactus" ? 0.0625 : 0);
       }
     }
     function makeTree(bucket, x, z, top, birch = false) {
@@ -1255,7 +1351,7 @@
       const previous = loaded.get(key);
       if (previous) { scene.remove(previous); previous.traverse((o) => { if (o.geometry && o.geometry !== cubeGeometry) o.geometry.dispose(); }); }
       const buckets = {};
-      for (const type of ["grassTop", "grassSide", "dirt", "stone", "sand", "wood", "woodTop", "leaves", "birchWood", "birchWoodTop", "birchLeaves"]) {
+      for (const type of ["grassTop", "grassSide", "dirt", "stone", "sand", "wood", "woodTop", "leaves", "birchWood", "birchWoodTop", "birchLeaves", "cactus", "cactusTop", "deadBush"]) {
         buckets[type] = { positions: [], normals: [], uvs: [], indices: [], vertex: 0 };
       }
       const startX = cx * CHUNK, startZ = cz * CHUNK;
@@ -1272,6 +1368,16 @@
           }
         }
         if (isTreeOrigin(x, z)) makeTree(buckets, x, z, top, biomeAt(x, z) === "Birch Forest");
+        const cactusHeight = cactusHeightAt(x, z, top);
+        for (let y = top + 1; y <= top + cactusHeight; y++) {
+          if (isEditedAway(x, y, z) || placed.get(key)?.has(`${x},${y},${z}`)) continue;
+          for (const face of dirs) {
+            const [dx, dy, dz] = face.n;
+            if (blockType(x+dx, y+dy, z+dz)) continue;
+            addFace(buckets[faceBucket("cactus", face)], x, y, z, face, 0.0625);
+          }
+        }
+        if (deadBushAt(x, top + 1, z, top)) addDeadBush(buckets.deadBush, x, top + 1, z);
       }
       const placedKey = `${cx},${cz}`;
       for (const [coords, type] of placed.get(placedKey) || []) {
@@ -1408,8 +1514,10 @@
         for (let by = Math.floor(feet + 0.5); by <= Math.floor(head + 0.5); by++) {
           for (let bz = Math.floor(z - PLAYER_RADIUS + 0.5); bz <= Math.floor(z + PLAYER_RADIUS + 0.5); bz++) {
             const chunkKey = `${Math.floor(bx / CHUNK)},${Math.floor(bz / CHUNK)}`;
-            if (!placed.get(chunkKey)?.has(`${bx},${by},${bz}`) &&
-                !treeBlockAt(bx, by, bz) && !(includeTerrain && blockType(bx, by, bz))) continue;
+            const placedType = placed.get(chunkKey)?.get(`${bx},${by},${bz}`);
+            if (placedType === "deadBush") continue;
+            if (!placedType && !treeBlockAt(bx, by, bz) && !cactusBlockAt(bx, by, bz) &&
+                !(includeTerrain && blockType(bx, by, bz))) continue;
             if (x + PLAYER_RADIUS <= bx - 0.5 + COLLISION_EPSILON || x - PLAYER_RADIUS >= bx + 0.5 - COLLISION_EPSILON) continue;
             if (z + PLAYER_RADIUS <= bz - 0.5 + COLLISION_EPSILON || z - PLAYER_RADIUS >= bz + 0.5 - COLLISION_EPSILON) continue;
             if (feet >= by + 0.5 - COLLISION_EPSILON || head <= by - 0.5 + COLLISION_EPSILON) continue;
@@ -1422,7 +1530,7 @@
     function playerOverlapsBlock(x, y, z) {
       const feet = player.y - PLAYER_EYE_HEIGHT;
       const head = feet + PLAYER_BODY_HEIGHT;
-      return !!treeBlockAt(x, y, z) || (Math.abs(player.x - x) < PLAYER_RADIUS + 0.5 &&
+      return !!treeBlockAt(x, y, z) || !!cactusBlockAt(x, y, z) || (Math.abs(player.x - x) < PLAYER_RADIUS + 0.5 &&
         Math.abs(player.z - z) < PLAYER_RADIUS + 0.5 &&
         feet < y + 0.5 - COLLISION_EPSILON && head > y - 0.5 + COLLISION_EPSILON);
     }
@@ -1866,6 +1974,8 @@
       dirt: { name: "Dirt", tile: [2, 0] },
       stone: { name: "Stone", tile: [1, 0] },
       sand: { name: "Sand", tile: [2, 1] },
+      cactus: { name: "Cactus", tile: [6, 4] },
+      deadBush: { name: "Dead Bush", tile: [7, 3] },
       wood: { name: "Oak Log", tile: [4, 1] },
       birchWood: { name: "Birch Log", tile: [5, 7] },
       leaves: { name: "Oak Leaves", tile: [4, 2] },
@@ -1880,6 +1990,8 @@
       dirt: { name: "Dirt", seconds: 0.75, drops: "Dirt" },
       stone: { name: "Stone", seconds: 7.55, drops: "nothing without a pickaxe" },
       sand: { name: "Sand", seconds: 0.75, drops: "Sand" },
+      cactus: { name: "Cactus", seconds: 0.4, drops: "Cactus" },
+      deadBush: { name: "Dead Bush", seconds: 0.05, drops: "Dead Bush" },
       wood: { name: "Oak Log", seconds: 3.05, drops: "Oak Log" },
       leaves: { name: "Oak Leaves", seconds: 0.3, drops: "5% Sapling, 2% Sticks, 0.5% Apple" },
       birchWood: { name: "Birch Log", seconds: 3.05, drops: "Birch Log" },
@@ -2077,6 +2189,7 @@
       { name: "help", usage: "/help", description: "List all commands." },
       { name: "seed", usage: "/seed", description: "Show this world's seed." },
       { name: "time", usage: "/time set <day|noon|night|midnight|ticks>", description: "Change world time." },
+      { name: "weather", usage: "/weather <clear|rain>", description: "Change the weather." },
       { name: "tp", usage: "/tp <x> <y> <z>", description: "Teleport to coordinates." },
       { name: "give", usage: "/give <block> [count]", description: "Add blocks to your inventory." },
       { name: "clear", usage: "/clear", description: "Clear your inventory." },
@@ -2184,7 +2297,8 @@
     }
     const commandBlockAliases = Object.freeze({
       grass_block: "grass", oak_log: "wood", oak_leaves: "leaves",
-      birch_log: "birchWood", birch_leaves: "birchLeaves"
+      birch_log: "birchWood", birch_leaves: "birchLeaves",
+      dead_bush: "deadBush", deadbush: "deadBush"
     });
     function commandGive(name, requestedCount) {
       const normalizedName = name.toLowerCase();
@@ -2233,6 +2347,14 @@
         updateSky(worldTime);
         appendChatLine(`Time set to ${token}.`);
         saveActiveWorld();
+      } else if (command === "weather") {
+        const requestedWeather = args[0]?.toLowerCase();
+        if (requestedWeather !== "clear" && requestedWeather !== "rain") return usage("/weather <clear|rain>");
+        weatherRaining = requestedWeather === "rain";
+        nextWeatherChangeAt = worldTime + randomWeatherDuration(weatherRaining);
+        updateSky(worldTime);
+        saveActiveWorld();
+        appendChatLine(`Weather set to ${requestedWeather}.`);
       } else if (command === "tp") {
         if (args.length < 3) return usage("/tp <x> <y> <z>");
         const [x, y, z] = args.slice(0, 3).map(Number);
@@ -2413,6 +2535,7 @@
       if (type === "grassTop" || type === "grassSide") type = "grass";
       if (type === "woodTop") type = "wood";
       if (type === "birchWoodTop") type = "birchWood";
+      if (type === "cactusTop") type = "cactus";
       return { block: { ...block, type }, place: coords(outside) };
     }
     function playerTargetAtScreen(clientX, clientY) {
@@ -2516,7 +2639,8 @@
       const bx = Math.floor(x + 0.5);
       const bz = Math.floor(z + 0.5);
       for (let by = Math.floor(startY + 0.5); by >= 0; by--) {
-        if (blockType(bx, by, bz) || treeBlockAt(bx, by, bz)) {
+        const type = blockType(bx, by, bz);
+        if ((type && type !== "deadBush") || treeBlockAt(bx, by, bz)) {
           return by + 0.5 + DROP_HALF_SIZE + DROP_HOVER_HEIGHT;
         }
       }
@@ -3793,7 +3917,9 @@
       const coords = `${block.x},${block.y},${block.z}`;
       const wasPlaced = placed.get(key)?.has(coords);
       const treeType = treeBlockAt(block.x, block.y, block.z);
-      const type = wasPlaced ? placed.get(key).get(coords) : treeType || blockType(block.x, block.y, block.z);
+      const deadBushType = !wasPlaced && deadBushAt(block.x, block.y, block.z) ? "deadBush" : null;
+      const type = wasPlaced ? placed.get(key).get(coords) :
+        treeType || deadBushType || blockType(block.x, block.y, block.z);
       if (!type || isEditedAway(block.x, block.y, block.z)) return;
       if (isMobile && settings.destroyBlockVibrate && typeof navigator.vibrate === "function") navigator.vibrate(15);
       syncBlockChange("remove", block, type);
@@ -4034,6 +4160,8 @@
         x: player.x, y: player.y, z: player.z, yaw: player.yaw, bodyYaw: player.bodyYaw, pitch: player.pitch
       };
       activeWorld.elapsed = worldTime;
+      activeWorld.weatherRaining = weatherRaining;
+      activeWorld.nextWeatherChangeAt = nextWeatherChangeAt;
       activeWorld.items = items.map((item) => item ? { type: item.type, count: item.count } : null);
       activeWorld.selected = selected;
       activeWorld.health = health;
@@ -4050,6 +4178,7 @@
     }
     function clearWorldScene() {
       clearRemotePlayers();
+      document.body.classList.remove("raining");
       for (const group of loaded.values()) {
         scene.remove(group);
         group.traverse((object) => {
@@ -4182,6 +4311,10 @@
       playing = true;
       setDebugVisible(false);
       applySettings();
+      weatherRaining = world.weatherRaining === true;
+      nextWeatherChangeAt = Number.isFinite(world.nextWeatherChangeAt) && world.nextWeatherChangeAt > worldTime
+        ? world.nextWeatherChangeAt
+        : worldTime + randomWeatherDuration(weatherRaining);
       requestMouseLock();
       updateChunks();
       updatePlayerView();
