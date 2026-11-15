@@ -42,6 +42,8 @@
     #crosshair:before, #crosshair:after { content: ""; position: absolute; background: #fff; box-shadow: 0 1px 3px #000; }
     #crosshair:before { width: 2px; height: 16px; left: 8px; top: 1px; }
     #crosshair:after { width: 16px; height: 2px; left: 1px; top: 8px; }
+    #debug-overlay { position: fixed; z-index: 4; top: 8px; left: 8px; max-width: 70vw; color: #fff; font: 12px/1.35 ui-monospace, Consolas, monospace; white-space: pre; text-shadow: 1px 1px #000, -1px -1px #000; pointer-events: none; }
+    #debug-overlay[hidden] { display: none; }
     #bottom { position: absolute; bottom: max(12px, env(safe-area-inset-bottom, 0px)); left: 50%; width: min(var(--hotbar-width), calc(100vw - 24px)); transform: translateX(-50%); text-align: center; }
     #target-label { min-height: 18px; margin-bottom: 8px; font-size: 11px; letter-spacing: .13em; text-transform: uppercase; color: #eef4df; }
     #hotbar { display: flex; gap: 0; width: 100%; height: var(--slot-size); padding: 0; background: url("res/gui/gui.png") no-repeat 0 0 / 139% auto; border: 0; box-shadow: none; }
@@ -222,6 +224,9 @@
     .touch-preview-fixed-control { position: absolute; top: 23px; width: 24px; height: 24px; object-fit: fill; image-rendering: pixelated; }
     #touch-preview-pause { right: 6px; }
     #touch-preview-chat { right: 34px; }
+    #touch-preview-f3 { right: 62px; }
+    .touch-sneak-reference { display: flex; align-items: center; gap: 8px; margin: 0; padding: 6px; border: 1px solid #fff8; background: #172019cc; color: #fff; font: 10px/1.35 Arial, sans-serif; }
+    .touch-sneak-reference img { width: 44px; height: 64px; object-fit: contain; background: #fff; image-rendering: pixelated; }
     .setting-value { min-width: 38px; color: #d3dccb; font: 11px ui-monospace, Consolas, monospace; text-align: right; }
     .settings-actions { display: flex; justify-content: center; gap: 8px; width: 100%; }
     .settings-actions .menu-button { flex: 1; width: auto; height: 30px; }
@@ -256,6 +261,8 @@
     #touch-actions { left: calc(var(--touch-actions-x) * 100vw); right: auto; bottom: calc(var(--touch-actions-y) * 100vh); grid-template-columns: 44px; transform: scale(var(--touch-control-scale)); transform-origin: bottom left; }
     #touch-pause { position: absolute; top: 58px; right: 12px; pointer-events: auto; }
     #touch-chat { position: absolute; top: 58px; right: 64px; pointer-events: auto; }
+    #touch-f3 { position: absolute; top: 58px; right: 116px; pointer-events: auto; }
+    #touch-f3[hidden] { display: none; }
     #mobile-controls.split-controls #touch-look { width: 50%; }
     .touch-button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; overflow: hidden; border: 2px solid #ffffff80; border-radius: 9px; background: #172019b8; box-shadow: none; color: #fff; font: 800 9px ui-monospace, monospace; text-shadow: none; touch-action: none; user-select: none; -webkit-user-select: none; }
     .touch-button:active, .touch-button.pressed { transform: scale(.92); background: #b6e36a; box-shadow: none; }
@@ -316,6 +323,7 @@
       .setting-control input[type="range"] { width: 100%; }
       .settings-actions { gap: 5px; }
       .settings-actions .menu-button { height: 27px; padding: 0 4px; }
+      #debug-overlay { top: 5px; left: 5px; max-width: 88vw; font-size: 10px; }
     }
     @media (max-height: 500px) {
       #menu-title { padding-top: 6px; padding-bottom: 6px; }
@@ -341,6 +349,7 @@
     </div>
     <div id="readout"><span>POSITION</span><br><span id="coordinates-readout"><span>X</span> <b id="pos-x">0</b><br><span>Z</span> <b id="pos-z">0</b></span><br><span id="biome-readout"><span>BIOME</span> <b id="biome">Plains</b></span></div>
     <div id="crosshair"></div>
+    <div id="debug-overlay" hidden aria-label="Developer debug information"></div>
     <div id="bottom">
       <div id="target-label">Wilderness</div>
       <div id="survival-bars" aria-label="Survival status">
@@ -365,6 +374,7 @@
       <button id="touch-jump" class="touch-button" aria-label="Jump"><img src="mobile_res/Jump_button.webp" alt=""></button>
     </div>
     <button id="touch-chat" class="touch-button" aria-label="Open chat"><img src="mobile_res/Chat_button.webp" alt=""></button>
+    <button id="touch-f3" class="touch-button" aria-label="Toggle developer debug information" aria-pressed="false" hidden><img src="mobile_res/Agent_button.webp" alt=""></button>
     <button id="touch-pause" class="touch-button" aria-label="Pause"><img src="mobile_res/Pause_button.webp" alt=""></button>
   </div>
   <div id="chat-overlay" aria-label="Game chat">
@@ -537,6 +547,7 @@
       fogEnabled: true, renderScale: 1, viewBobbing: false, thirdPersonDistance: 5,
       hudVisible: true, crosshair: !isMobile, coordinates: true, biomeIndicator: true,
       username: "Steve", survivalBars: true, experienceBar: true,
+      developerMode: false,
       hotbar: true, hudScale: 1, chatOpacity: 0.88, chatLines: 8,
       mouseSensitivity: 0.0022, invertMouseX: false, invertMouseY: false,
       mobileLookSensitivity: 1, sprintToggle: false, walkSpeed: 5.4, sprintSpeed: 10,
@@ -1365,34 +1376,38 @@
     const PLAYER_BODY_HEIGHT = 1.8;
     const PLAYER_EYE_HEIGHT = 1.22;
     const COLLISION_EPSILON = 0.0001;
+    const HEAD_YAW_LIMIT = Math.PI * 0.82;
+    function angleDifference(target, current) {
+      return Math.atan2(Math.sin(target - current), Math.cos(target - current));
+    }
     function updatePlayerView(now = performance.now(), moving = false) {
       const bob = settings.viewBobbing && moving && player.grounded ? Math.sin(now * 0.012) * 0.035 : 0;
       const forwardX = -Math.sin(player.yaw) * Math.cos(player.pitch);
       const forwardY = Math.sin(player.pitch);
       const forwardZ = -Math.cos(player.yaw) * Math.cos(player.pitch);
       if (perspectiveMode === 0) {
-        camera.position.set(player.x, player.y + bob - 0.18 * crouchAnimation, player.z);
+        camera.position.set(player.x, player.y + bob - 0.28 * crouchAnimation, player.z);
         camera.rotation.set(player.pitch, player.yaw, 0, "YXZ");
       } else {
         const side = perspectiveMode === 1 ? 1 : -1;
         const distance = settings.thirdPersonDistance;
-        camera.position.set(player.x - forwardX * distance * side, player.y - forwardY * distance * side + bob - 0.18 * crouchAnimation, player.z - forwardZ * distance * side);
-        camera.lookAt(player.x, player.y - 0.2 - 0.18 * crouchAnimation, player.z);
+        camera.position.set(player.x - forwardX * distance * side, player.y - forwardY * distance * side + bob - 0.28 * crouchAnimation, player.z - forwardZ * distance * side);
+        camera.lookAt(player.x, player.y - 0.2 - 0.28 * crouchAnimation, player.z);
       }
       const feet = player.y - PLAYER_EYE_HEIGHT;
-      steveModel.position.set(player.x, feet + 0.4064 * steveModel.scale.y - 0.08 * crouchAnimation, player.z);
+      steveModel.position.set(player.x, feet + 0.4064 * steveModel.scale.y - 0.14 * crouchAnimation, player.z);
       steveModel.rotation.y = player.bodyYaw + Math.PI;
       steveModel.visible = perspectiveMode !== 0;
       document.body.classList.toggle("pov-third-person", perspectiveMode !== 0);
       const parts = steveModel.userData.parts;
       const swing = moving ? Math.sin(now * 0.012) * 0.72 : 0;
-      parts.head.rotation.y = Math.atan2(Math.sin(player.yaw - player.bodyYaw), Math.cos(player.yaw - player.bodyYaw));
-      parts.head.rotation.x = -player.pitch + 0.12 * crouchAnimation;
-      parts.body.rotation.x = -0.14 * crouchAnimation;
-      parts.armLeft.rotation.x = swing + 0.34 * crouchAnimation;
-      parts.armRight.rotation.x = -swing + 0.34 * crouchAnimation;
-      parts.legLeft.rotation.x = -swing - 0.22 * crouchAnimation;
-      parts.legRight.rotation.x = swing - 0.22 * crouchAnimation;
+      parts.head.rotation.y = THREE.MathUtils.clamp(angleDifference(player.yaw, player.bodyYaw), -HEAD_YAW_LIMIT, HEAD_YAW_LIMIT);
+      parts.head.rotation.x = -player.pitch + 0.2 * crouchAnimation;
+      parts.body.rotation.x = -0.38 * crouchAnimation;
+      parts.armLeft.rotation.x = swing + 0.62 * crouchAnimation;
+      parts.armRight.rotation.x = -swing + 0.62 * crouchAnimation;
+      parts.legLeft.rotation.x = -swing - 0.4 * crouchAnimation;
+      parts.legRight.rotation.x = swing - 0.4 * crouchAnimation;
     }
     function solidBlocksOverlapping(x, y, z, includeTerrain = false) {
       const feet = y - PLAYER_EYE_HEIGHT;
@@ -1434,6 +1449,16 @@
       return false;
     }
     const keys = new Set();
+    let debugVisible = false;
+    let lastDebugUpdateAt = 0;
+    function setDebugVisible(visible) {
+      debugVisible = settings.developerMode && playing && visible;
+      const overlay = document.querySelector("#debug-overlay");
+      overlay.hidden = !debugVisible;
+      const button = document.querySelector("#touch-f3");
+      button.setAttribute("aria-pressed", String(debugVisible));
+      if (debugVisible) updateDebugOverlay(performance.now());
+    }
     let touchSneakActive = false;
     function isSneaking() {
       return touchSneakActive || keys.has("ControlLeft") || keys.has("ControlRight");
@@ -1453,10 +1478,10 @@
       crouchAnimation = 0;
     }
     function updateBodyYaw(dt) {
-      const difference = Math.atan2(Math.sin(player.yaw - player.bodyYaw), Math.cos(player.yaw - player.bodyYaw));
-      const threshold = Math.PI * 0.42;
-      if (Math.abs(difference) > threshold) {
-        player.bodyYaw += Math.sign(difference) * (Math.abs(difference) - threshold) * Math.min(1, dt * 5);
+      const difference = angleDifference(player.yaw, player.bodyYaw);
+      const excess = Math.abs(difference) - HEAD_YAW_LIMIT;
+      if (excess > 0) {
+        player.bodyYaw += Math.sign(difference) * excess * (1 - Math.exp(-8 * dt));
       }
     }
     let playing = false;
@@ -1537,6 +1562,7 @@
     function pauseGame() {
       if (!activeWorld) return;
       playing = false;
+      setDebugVisible(false);
       closeChat();
       keys.clear();
       dragLooking = false;
@@ -1661,6 +1687,11 @@
         openChat(event.key === "/");
         return;
       }
+      if (event.code === "F3" && settings.developerMode) {
+        event.preventDefault();
+        setDebugVisible(!debugVisible);
+        return;
+      }
       if (event.code === "F5") {
         event.preventDefault();
         perspectiveMode = (perspectiveMode + 1) % 3;
@@ -1740,7 +1771,7 @@
       if (!playing || !isMobile || event.pointerType === "mouse" || mobileTouch) return;
       const target = event.target;
       if (!(target instanceof Element) ||
-          target.closest("#touch-dpad, #touch-actions, #touch-chat, #touch-pause, #hotbar, #room-code-pill, #chat-overlay, #main-menu, #pause-menu")) return;
+          target.closest("#touch-dpad, #touch-actions, #touch-chat, #touch-f3, #touch-pause, #hotbar, #room-code-pill, #chat-overlay, #main-menu, #pause-menu")) return;
       event.preventDefault();
       mobileTouch = {
         pointerId: event.pointerId,
@@ -1804,6 +1835,7 @@
       if (playing) setTouchSneakActive(!touchSneakActive);
     });
     document.querySelector("#touch-chat").addEventListener("click", () => openChat());
+    document.querySelector("#touch-f3").addEventListener("click", () => setDebugVisible(!debugVisible));
     document.querySelector("#touch-pause").addEventListener("click", pauseGame);
     document.addEventListener("contextmenu", (event) => event.preventDefault());
 
@@ -2411,6 +2443,13 @@
         chatAnnouncementTimeout = null;
       }, 10000);
     }
+    function announcePlayerLeft(playerId, suppliedName) {
+      const remote = remotePlayers.get(playerId);
+      const name = sanitizeUsername(typeof suppliedName === "string" ? suppliedName : remote?.name || "Player");
+      const message = `${name} has left the world.`;
+      appendChatLine(message);
+      showChatAnnouncement(message);
+    }
     function setPauseMessage(message) {
       document.querySelector("#pause-message").textContent = message;
     }
@@ -2763,6 +2802,8 @@
     function createRemotePlayer(state) {
       const model = steveModel.clone(true);
       model.visible = true;
+      const bodyYaw = Number.isFinite(state.bodyYaw) ? state.bodyYaw : state.yaw;
+      const pitch = Number.isFinite(state.pitch) ? state.pitch : 0;
       const parts = {};
       const originalMaterials = new Map();
       const baseMaterials = [];
@@ -2817,10 +2858,12 @@
         labelTexture,
         target: {
           x: state.x, y: state.y, z: state.z, yaw: state.yaw,
-          bodyYaw: Number.isFinite(state.bodyYaw) ? state.bodyYaw : state.yaw,
-          pitch: Number.isFinite(state.pitch) ? state.pitch : 0,
+          bodyYaw,
+          pitch,
           sneaking: !!state.sneaking
         },
+        headYaw: THREE.MathUtils.clamp(angleDifference(state.yaw, bodyYaw), -HEAD_YAW_LIMIT, HEAD_YAW_LIMIT),
+        headPitch: -pitch,
         crouchAnimation: 0,
         heldType: null,
         heldMesh: null
@@ -2899,15 +2942,19 @@
         const yawDelta = Math.atan2(Math.sin(target.bodyYaw - remote.model.rotation.y + Math.PI), Math.cos(target.bodyYaw - remote.model.rotation.y + Math.PI));
         remote.model.rotation.y += yawDelta * amount;
         remote.crouchAnimation += ((target.sneaking ? 1 : 0) - remote.crouchAnimation) * amount;
-        remote.parts.head.rotation.y = Math.atan2(Math.sin(target.yaw - target.bodyYaw), Math.cos(target.yaw - target.bodyYaw));
-        remote.parts.head.rotation.x = -target.pitch + 0.12 * remote.crouchAnimation;
-        remote.parts.body.rotation.x = -0.14 * remote.crouchAnimation;
+        const targetHeadYaw = THREE.MathUtils.clamp(angleDifference(target.yaw, target.bodyYaw), -HEAD_YAW_LIMIT, HEAD_YAW_LIMIT);
+        remote.headYaw += angleDifference(targetHeadYaw, remote.headYaw) * amount;
+        const targetHeadPitch = -target.pitch + 0.2 * remote.crouchAnimation;
+        remote.headPitch += (targetHeadPitch - remote.headPitch) * amount;
+        remote.parts.head.rotation.y = remote.headYaw;
+        remote.parts.head.rotation.x = remote.headPitch;
+        remote.parts.body.rotation.x = -0.38 * remote.crouchAnimation;
         const moving = Math.hypot(position.x - previousX, position.z - previousZ) > 0.003;
         const swing = moving ? Math.sin(now * 0.012) * 0.62 : 0;
-        remote.parts.armLeft.rotation.x = swing + 0.34 * remote.crouchAnimation;
-        remote.parts.armRight.rotation.x = -swing + 0.34 * remote.crouchAnimation;
-        remote.parts.legLeft.rotation.x = -swing - 0.22 * remote.crouchAnimation;
-        remote.parts.legRight.rotation.x = swing - 0.22 * remote.crouchAnimation;
+        remote.parts.armLeft.rotation.x = swing + 0.62 * remote.crouchAnimation;
+        remote.parts.armRight.rotation.x = -swing + 0.62 * remote.crouchAnimation;
+        remote.parts.legLeft.rotation.x = -swing - 0.4 * remote.crouchAnimation;
+        remote.parts.legRight.rotation.x = swing - 0.4 * remote.crouchAnimation;
       }
     }
     function applyRemoteBlockChange(change) {
@@ -3164,8 +3211,10 @@
       connection.on("close", () => {
         clearSkinTransfersForPeer(connection.peer);
         if (!multiplayerConnections.delete(connection.peer)) return;
+        const name = remotePlayers.get(connection.peer)?.name || "Player";
         removeRemotePlayer(connection.peer);
-        if (multiplayerRole === "host") broadcastToPlayers({ type: "player_left", playerId: connection.peer });
+        announcePlayerLeft(connection.peer, name);
+        if (multiplayerRole === "host") broadcastToPlayers({ type: "player_left", playerId: connection.peer, name });
       });
       connection.on("error", (error) => {
         if (multiplayerRole === "host") setMultiplayerStatus(`Player connection failed: ${error.message}`, true);
@@ -3234,10 +3283,12 @@
         applyRemoteBlockChange(message.change);
         broadcastToPlayers({ type: "block_change", change: message.change }, connection);
       } else if (message.type === "leave_room") {
+        const name = remotePlayers.get(connection.peer)?.name || "Player";
         multiplayerConnections.delete(connection.peer);
         clearSkinTransfersForPeer(connection.peer);
         removeRemotePlayer(connection.peer);
-        broadcastToPlayers({ type: "player_left", playerId: connection.peer });
+        announcePlayerLeft(connection.peer, name);
+        broadcastToPlayers({ type: "player_left", playerId: connection.peer, name });
         connection.close();
       }
     }
@@ -3322,12 +3373,15 @@
         updateRemotePlayer(message.player);
       } else if (message.type === "player_left") {
         if (typeof message.playerId === "string") {
+          announcePlayerLeft(message.playerId, message.name);
           clearSkinTransfersForPlayer(message.playerId);
           removeRemotePlayer(message.playerId);
         }
       } else if (message.type === "block_change") {
         applyRemoteBlockChange(message.change);
       } else if (message.type === "room_closed") {
+        const host = remotePlayers.get("host");
+        if (host) announcePlayerLeft("host", host.name);
         showNotice("The host closed this room.");
         disconnectMultiplayer();
       } else if (message.type === "skin_transfer_start" || message.type === "skin_transfer_chunk" ||
@@ -3401,6 +3455,8 @@
         connection.on("close", () => {
           clearSkinTransfersForPeer(connection.peer);
           if (peer !== multiplayerPeer || multiplayerRole !== "client") return;
+          const hostName = remotePlayers.get("host")?.name;
+          if (hostName) announcePlayerLeft("host", hostName);
           multiplayerHostConnection = null;
           multiplayerPeer = null;
           multiplayerRole = null;
@@ -3627,12 +3683,18 @@
       if (!target) return;
       placeBlock(target.place);
     }
+    function mobileMiningTarget(touch) {
+      const crosshairVisible = settings.hudVisible && settings.crosshair && (!isMobile || settings.splitControls);
+      return crosshairVisible
+        ? targetAtScreen(innerWidth / 2, innerHeight / 2)
+        : targetAtScreen(touch.x, touch.y);
+    }
     function updateMobileMining(now) {
       if (!mobileTouch || mobileTouch.moved || mobileTouch.mined) return;
       if (now - mobileTouch.downAt < TOUCH_HOLD_DELAY) return;
       if (!mobileTouch.mineStartedAt) {
         mobileTouch.mineStartedAt = now;
-        mobileTouch.target = targetAtScreen(mobileTouch.x, mobileTouch.y)?.block || null;
+        mobileTouch.target = mobileMiningTarget(mobileTouch)?.block || null;
       }
       if (!mobileTouch.target || !mobileTouch.mineStartedAt) return;
       const seconds = gameMode === "creative" ? 0.05 : (miningInfo[mobileTouch.target.type]?.seconds || 0.75) / settings.miningSpeed;
@@ -3695,6 +3757,7 @@
       { key: "coordinates", label: "Coordinates", category: "Interface", type: "checkbox" },
       { key: "biomeIndicator", label: "Biome Indicator", category: "Interface", type: "checkbox" },
       { key: "username", label: "Username", category: "Interface", type: "text" },
+      { key: "developerMode", label: "Developer Mode", category: "Developer", type: "checkbox" },
       { key: "survivalBars", label: "Health and Hunger", category: "Interface", type: "checkbox" },
       { key: "experienceBar", label: "Experience Bar", category: "Interface", type: "checkbox" },
       { key: "hotbar", label: "Hotbar", category: "Interface", type: "checkbox" },
@@ -3741,7 +3804,8 @@
       { title: "Profile Settings", group: "General", icon: "●", keys: ["username"] },
       { title: "Global Resources", group: "General", icon: "▤", info: "Resource packs aren't available in this version. The built-in block textures are used." },
       { title: "Video Settings", group: "General", icon: "▰", category: "Video" },
-      { title: "Gameplay Settings", group: "General", icon: "⚙", category: "Gameplay" }
+      { title: "Gameplay Settings", group: "General", icon: "⚙", category: "Gameplay" },
+      { title: "Developer Settings", group: "General", icon: "⌘", keys: ["developerMode"] }
     ];
     let activeSettingsPage = isMobile ? "Touch Settings" : "Keyboard & Mouse Settings";
     let savedWorlds = [];
@@ -3950,6 +4014,7 @@
       pauseMenu.classList.remove("visible");
       document.body.classList.add("world-active");
       playing = true;
+      setDebugVisible(false);
       applySettings();
       requestMouseLock();
       updateChunks();
@@ -4037,6 +4102,14 @@
       const help = document.createElement("p");
       help.className = "settings-info";
       help.textContent = "Drag the move and action groups. Chat and pause stay in the top-right.";
+      const sneakReference = document.createElement("figure");
+      sneakReference.className = "touch-sneak-reference";
+      const sneakImage = document.createElement("img");
+      sneakImage.src = "mobile_res/78677z.jpg";
+      sneakImage.alt = "Crouched player pose used as the sneak animation reference";
+      const sneakCaption = document.createElement("figcaption");
+      sneakCaption.textContent = "Sneak pose reference";
+      sneakReference.append(sneakImage, sneakCaption);
       const preview = document.createElement("div");
       preview.className = "touch-layout-preview";
       preview.setAttribute("role", "group");
@@ -4136,7 +4209,7 @@
         image.alt = control.name;
         preview.appendChild(image);
       }
-      return [help, preview];
+      return [help, sneakReference, preview];
     }
     function setFirebaseStatus(message, isError = false) {
       firebaseStatusMessage = message;
@@ -4220,6 +4293,11 @@
             });
             if (activeSettingsPage === "Profile Settings") renderSettingsCategory();
           }, (error) => setFirebaseStatus(firebaseErrorMessage(error), true));
+          authSdk.getRedirectResult(auth).then((result) => {
+            if (result?.user) setFirebaseStatus(`Signed in as ${result.user.email || result.user.displayName || "your account"}. Syncing…`);
+          }).catch((error) => {
+            setFirebaseStatus(firebaseErrorMessage(error), true);
+          });
           return firebaseRuntime;
         }).catch((error) => {
           firebaseRuntimePromise = null;
@@ -4527,8 +4605,17 @@
       addButton("Google sign in", async () => {
         const runtime = await getFirebaseRuntime();
         const provider = new runtime.authSdk.GoogleAuthProvider();
-        if (isMobile) await runtime.authSdk.signInWithRedirect(runtime.auth, provider);
-        else await runtime.authSdk.signInWithPopup(runtime.auth, provider);
+        if (isMobile) {
+          await runtime.authSdk.signInWithRedirect(runtime.auth, provider);
+          return;
+        }
+        try {
+          const result = await runtime.authSdk.signInWithPopup(runtime.auth, provider);
+          if (!result.user) throw new Error("Google sign-in finished without returning an account.");
+        } catch (error) {
+          if (error?.code !== "auth/popup-blocked") throw error;
+          await runtime.authSdk.signInWithRedirect(runtime.auth, provider);
+        }
       });
       addButton("Create account", async () => {
         const runtime = await getFirebaseRuntime();
@@ -4668,6 +4755,8 @@
       document.documentElement.style.setProperty("--chat-opacity", settings.chatOpacity);
       document.querySelector("#hud").classList.toggle("hud-hidden", !settings.hudVisible);
       document.querySelector("#crosshair").hidden = !settings.crosshair || (isMobile && !settings.splitControls);
+      if (!settings.developerMode) setDebugVisible(false);
+      document.querySelector("#touch-f3").hidden = !isMobile || !settings.developerMode;
       document.querySelector("#coordinates-readout").hidden = !settings.coordinates;
       document.querySelector("#biome-readout").hidden = !settings.biomeIndicator;
       updatePausePlayerList();
@@ -4948,6 +5037,24 @@
     addEventListener("beforeunload", saveActiveWorld);
     let last = performance.now();
     let frames = 0, fps = 0, fpsAt = last;
+    function updateDebugOverlay(now) {
+      if (!activeWorld) return;
+      const direction = ["North", "West", "South", "East"][
+        ((Math.round(player.yaw / (Math.PI / 2)) % 4) + 4) % 4
+      ];
+      const dayTick = Math.floor((((worldTime / DAY_LENGTH) % 1) + 1) % 1 * 24000);
+      document.querySelector("#debug-overlay").textContent = [
+        `MinecraftCE | ${location.host || "local"}`,
+        `XYZ: ${player.x.toFixed(2)} / ${player.y.toFixed(2)} / ${player.z.toFixed(2)}`,
+        `Block: ${Math.floor(player.x)} ${Math.floor(player.y)} ${Math.floor(player.z)}`,
+        `Facing: ${direction} | Biome: ${biomeAt(Math.floor(player.x), Math.floor(player.z))}`,
+        `Chunk: ${Math.floor(player.x / CHUNK)}, ${Math.floor(player.z / CHUNK)} | Loaded: ${loaded.size}`,
+        `FPS: ${fps || "--"} | Players: ${multiplayerRoomCode ? remotePlayers.size + 1 : 1}`,
+        `World: ${activeWorld.name} | Seed: ${seed}`,
+        `Time: ${dayTick} | Mode: ${gameMode} | Tick: ${tickRate}${tickFrozen ? " (frozen)" : ""}`
+      ].join("\n");
+      lastDebugUpdateAt = now;
+    }
     function animate(now) {
       requestAnimationFrame(animate);
       const frameDt = Math.min((now-last)/1000, .05);
@@ -5047,6 +5154,7 @@
         document.querySelector("#pos-z").textContent = Math.floor(player.z);
         document.querySelector("#biome").textContent = biomeAt(Math.floor(player.x), Math.floor(player.z));
         document.querySelector("#target-label").textContent = `${items[selected] ? itemCatalog[items[selected].type].name : "Empty slot"}  ·  ${biomeAt(Math.floor(player.x), Math.floor(player.z))}  ·  ${fps || "--"} FPS`;
+        if (debugVisible && now - lastDebugUpdateAt > 150) updateDebugOverlay(now);
         updateSky(worldTime);
         if (now - lastPlayerSaveAt > 10000) {
           saveActiveWorld();
