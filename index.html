@@ -75,23 +75,19 @@
     .bitmap-label canvas { display: block; max-width: 100%; height: auto; image-rendering: pixelated; }
     .menu-title-content { display: grid; grid-template-columns: minmax(270px, 34%) minmax(0, 1fr); align-items: center; gap: 28px; width: 100%; }
     .menu-buttons { display: grid; justify-items: center; gap: 8px; width: 100%; }
-    .menu-button { display: grid; place-items: center; width: 300px; max-width: 100%; height: 30px; padding: 0 10px; border: 0; background: url("res/gui/gui.png") no-repeat left -69px / 384px 384px; color: #fff; cursor: pointer; image-rendering: pixelated; }
-    .menu-button:hover, .menu-button:focus-visible { background-position: left -99px; outline: 1px solid #fff9; }
-    .menu-button:active { background-position: left -129px; }
+    .menu-button { display: grid; place-items: center; width: 300px; max-width: 100%; height: 30px; padding: 0 10px; border: 1px solid #f1f1f1; background: #858585; box-shadow: inset 1px 1px #bdbdbd, inset -1px -1px #4c4c4c; color: #fff; cursor: pointer; image-rendering: pixelated; }
+    .menu-button:hover, .menu-button:focus-visible { background: #3f70a8; outline: 1px solid #fff9; }
+    .menu-button:active { background: #315783; }
     .menu-button:disabled { cursor: default; filter: grayscale(1); opacity: .5; }
     .menu-character-panel { display: grid; grid-template-rows: auto minmax(190px, 35vh) auto; justify-items: center; align-items: center; gap: 0; width: 100%; }
     #menu-player-name { align-self: end; margin-bottom: -12px; color: #fff; filter: drop-shadow(1px 2px #111); transform: translateX(20px); z-index: 1; }
     #menu-steve-preview { display: block; width: 100%; height: 100%; min-height: 0; touch-action: none; }
     #menu-wardrobe { position: relative; z-index: 2; width: 220px; margin-top: -18px; transform: translateX(20px); }
-    .menu-actions .menu-button { flex: 1; width: auto; background: #343c32; border: 1px solid #aeb8a9; }
-    .menu-actions .menu-button:hover, .menu-actions .menu-button:focus-visible { background: #455241; }
+    .menu-actions .menu-button { flex: 1; width: auto; }
     #pause-menu .menu-view { position: absolute; top: 50%; left: clamp(16px, 8vw, 60px); width: min(360px, 42vw); max-height: calc(100vh - 40px); align-items: stretch; gap: 8px; overflow: visible; padding: 0; transform: translateY(-50%); border: 0; background: transparent; box-shadow: none; text-align: center; }
-    #pause-menu .menu-button { height: 34px; background: #c9cbc6; border: 1px solid #f4f4f4; box-shadow: inset 0 1px #fff, 0 1px 2px #0008; }
-    #pause-menu .menu-button:hover, #pause-menu .menu-button:focus-visible { background: #e2e4df; }
-    #pause-menu .menu-button:active { background: #a9aca5; }
+    #pause-menu .menu-button { height: 34px; }
     #pause-menu .menu-button .bitmap-label { filter: brightness(.15); }
-    #pause-menu #resume-game { border: 0; outline: none; background: #c9cbc6; }
-    #pause-menu #resume-game:hover { background: #e2e4df; }
+    #pause-menu #resume-game { outline: none; }
     #pause-menu #resume-game:focus-visible { outline: none; }
     #main-menu.pause-settings { z-index: 5; background: #090c108c; }
     #pause-menu .menu-message { text-align: left; }
@@ -186,14 +182,15 @@
     .settings-titlebar { display: grid; grid-template-columns: minmax(60px, 1fr) minmax(0, 2fr) 24px; align-items: center; min-height: 24px; padding-left: 6px; background: #858585; color: #fff; font-size: 12px; }
     .settings-titlebar-title { color: #fff; font-weight: 700; }
     #settings-page-title { text-align: center; }
-    #settings-close { display: grid; place-items: center; width: 26px; height: 24px; border: 0; background: url("res/gui/gui.png") no-repeat left -69px / 384px 384px; color: #fff; font: 16px/1 Arial, sans-serif; cursor: pointer; }
+    #settings-close { display: grid; place-items: center; width: 26px; height: 24px; border: 1px solid #f1f1f1; background: #858585; color: #fff; font: 16px/1 Arial, sans-serif; cursor: pointer; }
+    #settings-close:hover { background: #3f70a8; }
     #settings-close:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
     .settings-layout { display: grid; grid-template-columns: minmax(145px, 36%) minmax(0, 1fr); gap: 4px; flex: 1; min-height: 0; }
     .settings-nav { display: flex; flex-direction: column; gap: 3px; min-height: 0; overflow-y: auto; padding: 3px; border: 1px solid #aaa; background: #707070; }
     .settings-nav-group { padding: 3px 4px 0; color: #fff; font: 10px Arial, sans-serif; }
-    .settings-nav-button { display: flex; align-items: center; gap: 7px; min-height: 30px; padding: 3px 5px; border: 0; background: url("res/gui/gui.png") no-repeat left -69px / 384px 384px; color: #fff; text-align: left; cursor: pointer; image-rendering: pixelated; }
-    .settings-nav-button:hover, .settings-nav-button:focus-visible { background-position: left -99px; outline: 1px solid #fff; }
-    .settings-nav-button.active { background-position: left -129px; }
+    .settings-nav-button { display: flex; align-items: center; gap: 7px; min-height: 30px; padding: 3px 5px; border: 1px solid #ddd; background: #858585; color: #fff; text-align: left; cursor: pointer; image-rendering: pixelated; }
+    .settings-nav-button:hover, .settings-nav-button:focus-visible { background: #3f70a8; outline: 1px solid #fff; }
+    .settings-nav-button.active { background: #315783; }
     .settings-nav-icon { display: grid; place-items: center; flex: 0 0 16px; height: 16px; border: 1px solid #333; background: linear-gradient(#d5d5d5, #858585); color: #243244; font: 11px Arial, sans-serif; }
     .settings-main { display: flex; flex-direction: column; min-width: 0; min-height: 0; padding: 3px; border: 1px solid #aaa; background: #777; }
     .settings-list { display: grid; align-content: start; gap: 1px; flex: 1; width: 100%; min-height: 0; overflow-y: auto; padding: 2px 4px; }
@@ -203,6 +200,13 @@
     .setting-control input[type="checkbox"] { width: 18px; height: 18px; accent-color: #858585; }
     .setting-control input[type="text"], .setting-control select { width: min(170px, 100%); min-width: 0; height: 25px; padding: 3px 6px; border: 1px solid #aaa; background: #454545; color: #fff; font: 11px Arial, sans-serif; }
     .settings-info { padding: 10px; color: #eee; font: 11px/1.5 Arial, sans-serif; }
+    .firebase-account-panel { display: grid; gap: 8px; padding: 10px; border: 1px solid #aaa; background: #555; color: #fff; font: 12px/1.4 Arial, sans-serif; }
+    .firebase-account-panel h3 { margin: 0; font-size: 13px; }
+    .firebase-account-panel input { min-width: 0; padding: 7px; border: 1px solid #aaa; background: #333; color: #fff; font: 12px Arial, sans-serif; }
+    .firebase-account-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+    .firebase-account-actions .menu-button { min-height: 28px; padding: 4px 8px; }
+    #firebase-account-status { min-height: 18px; color: #e6e6e6; }
+    #firebase-account-status.error { color: #ffb6a8; }
     .touch-layout-preview { position: relative; min-height: 120px; overflow: hidden; border: 2px solid #fff9; background: linear-gradient(135deg, #566b4e, #27384a); touch-action: none; }
     .touch-layout-preview::before { content: "DRAG BUTTONS TO REARRANGE"; position: absolute; top: 5px; left: 0; width: 100%; color: #fff; font: 8px Arial, sans-serif; text-align: center; text-shadow: 1px 1px #000; }
     .touch-preview-control { position: absolute; bottom: calc(var(--touch-dpad-y) * 100%); display: grid; place-items: center; border: 2px solid #fff9; border-radius: 6px; background: #172019c9; color: #fff; font: 8px Arial, sans-serif; text-shadow: 1px 1px #000; cursor: grab; touch-action: none; user-select: none; transform: scale(var(--touch-control-scale)); }
@@ -210,7 +214,7 @@
     .touch-preview-control { padding: 0; transform-origin: bottom left; }
     .touch-preview-control:focus-visible { outline: 2px solid #ffff55; outline-offset: 2px; }
     #touch-preview-dpad { left: calc(var(--touch-dpad-x) * 100%); width: 80px; height: 55px; }
-    .touch-preview-dpad-grid { display: grid; grid-template: " . forward . " 17px " left . right " 17px " . backward . " 17px / 17px 17px 17px; gap: 1px; }
+    .touch-preview-dpad-grid { display: grid; grid-template: " . forward . " 17px " left sneak right " 17px " . backward . " 17px / 17px 17px 17px; gap: 1px; }
     .touch-preview-dpad-grid img { display: block; width: 17px; height: 17px; object-fit: fill; image-rendering: pixelated; }
     #touch-preview-actions { left: calc(var(--touch-actions-x) * 100%); bottom: calc(var(--touch-actions-y) * 100%); display: flex; flex-direction: column; gap: 3px; width: 34px; }
     #touch-preview-actions span { display: grid; place-items: center; width: 30px; height: 24px; border: 1px solid #fff8; background: #485548; }
@@ -220,8 +224,7 @@
     #touch-preview-chat { right: 34px; }
     .setting-value { min-width: 38px; color: #d3dccb; font: 11px ui-monospace, Consolas, monospace; text-align: right; }
     .settings-actions { display: flex; justify-content: center; gap: 8px; width: 100%; }
-    .settings-actions .menu-button { flex: 1; width: auto; height: 30px; background: url("res/gui/gui.png") no-repeat left -69px / 384px 384px; border: 0; color: #fff; }
-    .settings-actions .menu-button:hover { background-position: left -99px; }
+    .settings-actions .menu-button { flex: 1; width: auto; height: 30px; }
     #chat-overlay { position: fixed; z-index: 3; left: 16px; bottom: 86px; display: none; width: min(480px, calc(100vw - 32px)); pointer-events: auto; }
     #chat-overlay.open { display: block; }
     #chat-announcement { position: fixed; z-index: 6; left: 16px; bottom: 86px; display: none; width: min(480px, calc(100vw - 32px)); pointer-events: none; }
@@ -249,23 +252,22 @@
     #mobile-controls { position: fixed; inset: 0; z-index: 3; display: none; pointer-events: none; touch-action: none; }
     #touch-look { position: absolute; top: 72px; right: 0; bottom: 210px; width: 58%; pointer-events: auto; touch-action: none; }
     #touch-dpad, #touch-actions { position: absolute; bottom: 96px; display: grid; gap: 4px; pointer-events: auto; }
-    #touch-dpad { left: calc(var(--touch-dpad-x) * 100vw); bottom: calc(var(--touch-dpad-y) * 100vh); grid-template: " . forward . " 44px " left . right " 44px " . backward . " 44px / 44px 44px 44px; transform: scale(var(--touch-control-scale)); transform-origin: bottom left; }
+    #touch-dpad { left: calc(var(--touch-dpad-x) * 100vw); bottom: calc(var(--touch-dpad-y) * 100vh); grid-template: " . forward . " 44px " left sneak right " 44px " . backward . " 44px / 44px 44px 44px; transform: scale(var(--touch-control-scale)); transform-origin: bottom left; }
     #touch-actions { left: calc(var(--touch-actions-x) * 100vw); right: auto; bottom: calc(var(--touch-actions-y) * 100vh); grid-template-columns: 44px; transform: scale(var(--touch-control-scale)); transform-origin: bottom left; }
     #touch-pause { position: absolute; top: 58px; right: 12px; pointer-events: auto; }
     #touch-chat { position: absolute; top: 58px; right: 64px; pointer-events: auto; }
-    #touch-sneak { font-size: 7px; }
     #mobile-controls.split-controls #touch-look { width: 50%; }
-    #touch-actions.swap-jump-sneak #touch-jump { order: 2; }
-    #touch-actions.swap-jump-sneak #touch-sneak { order: 1; }
     .touch-button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; overflow: hidden; border: 2px solid #ffffff80; border-radius: 9px; background: #172019b8; box-shadow: none; color: #fff; font: 800 9px ui-monospace, monospace; text-shadow: none; touch-action: none; user-select: none; -webkit-user-select: none; }
     .touch-button:active, .touch-button.pressed { transform: scale(.92); background: #b6e36a; box-shadow: none; }
     .touch-button.sprinting { border-color: #b6e36a; }
+    #touch-sneak.sneaking { border-color: #a9d8ff; box-shadow: 0 0 0 2px #3f70a8; }
     .touch-button img { display: block; width: 100%; height: 100%; object-fit: cover; }
     #touch-look { -webkit-user-select: none; user-select: none; }
     [data-direction="KeyW"] { grid-area: forward; }
     [data-direction="KeyA"] { grid-area: left; }
     [data-direction="KeyD"] { grid-area: right; }
     [data-direction="KeyS"] { grid-area: backward; }
+    #touch-sneak { grid-area: sneak; }
     @media (max-width: 600px) {
       :root { --slot-size: clamp(28px, 8.2vw, 35px); --hotbar-width: clamp(252px, 73.8vw, 315px); --status-icon-size: 16px; }
       .topbar { top: 12px; left: 12px; right: 12px; }
@@ -357,10 +359,10 @@
       <button class="touch-button" data-direction="KeyA" aria-label="Move left"><img src="mobile_res/Left_button.webp" alt=""></button>
       <button class="touch-button" data-direction="KeyD" aria-label="Move right"><img src="mobile_res/Right_button.webp" alt=""></button>
       <button class="touch-button" data-direction="KeyS" aria-label="Move backward"><img src="mobile_res/Backward_button.webp" alt=""></button>
+      <button id="touch-sneak" class="touch-button" aria-label="Start sneaking" aria-pressed="false"><img src="mobile_res/Sneak_button.webp" alt=""></button>
     </div>
     <div id="touch-actions">
       <button id="touch-jump" class="touch-button" aria-label="Jump"><img src="mobile_res/Jump_button.webp" alt=""></button>
-      <button id="touch-sneak" class="touch-button" aria-label="Hold to sneak">Sneak</button>
     </div>
     <button id="touch-chat" class="touch-button" aria-label="Open chat"><img src="mobile_res/Chat_button.webp" alt=""></button>
     <button id="touch-pause" class="touch-button" aria-label="Pause"><img src="mobile_res/Pause_button.webp" alt=""></button>
@@ -539,7 +541,7 @@
       mouseSensitivity: 0.0022, invertMouseX: false, invertMouseY: false,
       mobileLookSensitivity: 1, sprintToggle: false, walkSpeed: 5.4, sprintSpeed: 10,
       jumpStrength: 7.3, gravity: 19,       autoJump: false, reverseHotbarScroll: false, destroyBlockVibrate: false,
-      splitControls: false, lefty: false, swapJumpAndSneak: false,
+      splitControls: false, lefty: false,
       mobileControlSize: 1, mobileDpadX: 0.02, mobileDpadY: 0.12, mobileActionsX: 0.84, mobileActionsY: 0.12,
       pickupRange: 1.8, sprintHungerSeconds: 5, fallDamage: true,
       fallDamageMultiplier: 1, healthRegeneration: true, hungerRecovery: false,
@@ -1056,6 +1058,10 @@
     const TICKS_PER_DAY = 24000;
     const INITIAL_TICK = 6000;
     let worldTime = 0;
+    let tickRate = 20;
+    let tickFrozen = false;
+    let tickStepRemaining = 0;
+    let tickSprintRemaining = 0;
     const daySky = new THREE.Color(0x79bdf2);
     const twilightSky = new THREE.Color(0xe49a72);
     const nightSky = new THREE.Color(0x111a38);
@@ -1325,7 +1331,8 @@
     water.position.y = SEA + 0.02;
     scene.add(water);
 
-    const player = { x: 0, z: 0, y: 1.72, vy: 0, yaw: Math.PI, pitch: 0, grounded: true };
+    const player = { x: 0, z: 0, y: 1.72, vy: 0, yaw: Math.PI, bodyYaw: Math.PI, pitch: 0, grounded: true };
+    let crouchAnimation = 0;
     let gameMode = settings.defaultGameMode;
     let health = settings.maxHealth;
     let hunger = 20;
@@ -1364,25 +1371,28 @@
       const forwardY = Math.sin(player.pitch);
       const forwardZ = -Math.cos(player.yaw) * Math.cos(player.pitch);
       if (perspectiveMode === 0) {
-        camera.position.set(player.x, player.y + bob, player.z);
+        camera.position.set(player.x, player.y + bob - 0.18 * crouchAnimation, player.z);
         camera.rotation.set(player.pitch, player.yaw, 0, "YXZ");
       } else {
         const side = perspectiveMode === 1 ? 1 : -1;
         const distance = settings.thirdPersonDistance;
-        camera.position.set(player.x - forwardX * distance * side, player.y - forwardY * distance * side + bob, player.z - forwardZ * distance * side);
-        camera.lookAt(player.x, player.y - 0.2, player.z);
+        camera.position.set(player.x - forwardX * distance * side, player.y - forwardY * distance * side + bob - 0.18 * crouchAnimation, player.z - forwardZ * distance * side);
+        camera.lookAt(player.x, player.y - 0.2 - 0.18 * crouchAnimation, player.z);
       }
       const feet = player.y - PLAYER_EYE_HEIGHT;
-      steveModel.position.set(player.x, feet + 0.4064 * steveModel.scale.y, player.z);
-      steveModel.rotation.y = player.yaw + Math.PI;
+      steveModel.position.set(player.x, feet + 0.4064 * steveModel.scale.y - 0.08 * crouchAnimation, player.z);
+      steveModel.rotation.y = player.bodyYaw + Math.PI;
       steveModel.visible = perspectiveMode !== 0;
       document.body.classList.toggle("pov-third-person", perspectiveMode !== 0);
       const parts = steveModel.userData.parts;
       const swing = moving ? Math.sin(now * 0.012) * 0.72 : 0;
-      parts.armLeft.rotation.x = swing;
-      parts.armRight.rotation.x = -swing;
-      parts.legLeft.rotation.x = -swing;
-      parts.legRight.rotation.x = swing;
+      parts.head.rotation.y = Math.atan2(Math.sin(player.yaw - player.bodyYaw), Math.cos(player.yaw - player.bodyYaw));
+      parts.head.rotation.x = -player.pitch + 0.12 * crouchAnimation;
+      parts.body.rotation.x = -0.14 * crouchAnimation;
+      parts.armLeft.rotation.x = swing + 0.34 * crouchAnimation;
+      parts.armRight.rotation.x = -swing + 0.34 * crouchAnimation;
+      parts.legLeft.rotation.x = -swing - 0.22 * crouchAnimation;
+      parts.legRight.rotation.x = swing - 0.22 * crouchAnimation;
     }
     function solidBlocksOverlapping(x, y, z, includeTerrain = false) {
       const feet = y - PLAYER_EYE_HEIGHT;
@@ -1410,7 +1420,45 @@
         Math.abs(player.z - z) < PLAYER_RADIUS + 0.5 &&
         feet < y + 0.5 - COLLISION_EPSILON && head > y - 0.5 + COLLISION_EPSILON);
     }
+    function hasGroundSupportAt(x, z, feetY) {
+      const bx = Math.floor(x + 0.5);
+      const bz = Math.floor(z + 0.5);
+      const key = `${Math.floor(bx / CHUNK)},${Math.floor(bz / CHUNK)}`;
+      const topBlock = Math.floor(feetY + 0.5);
+      for (let by = topBlock; by >= topBlock - 1; by--) {
+        const type = placed.get(key)?.get(`${bx},${by},${bz}`);
+        if (!type && !treeBlockAt(bx, by, bz) && !blockType(bx, by, bz)) continue;
+        const surfaceY = by + 0.5;
+        if (surfaceY <= feetY + 0.04 && surfaceY >= feetY - 0.55) return true;
+      }
+      return false;
+    }
     const keys = new Set();
+    let touchSneakActive = false;
+    function isSneaking() {
+      return touchSneakActive || keys.has("ControlLeft") || keys.has("ControlRight");
+    }
+    function setTouchSneakActive(active) {
+      touchSneakActive = active;
+      const button = document.querySelector("#touch-sneak");
+      button.classList.toggle("sneaking", active);
+      button.setAttribute("aria-pressed", String(active));
+      button.setAttribute("aria-label", active ? "Stop sneaking" : "Start sneaking");
+      button.querySelector("img").src = active
+        ? "mobile_res/Sneak_toggled_button.webp"
+        : "mobile_res/Sneak_button.webp";
+    }
+    function clearSneakState() {
+      setTouchSneakActive(false);
+      crouchAnimation = 0;
+    }
+    function updateBodyYaw(dt) {
+      const difference = Math.atan2(Math.sin(player.yaw - player.bodyYaw), Math.cos(player.yaw - player.bodyYaw));
+      const threshold = Math.PI * 0.42;
+      if (Math.abs(difference) > threshold) {
+        player.bodyYaw += Math.sign(difference) * (Math.abs(difference) - threshold) * Math.min(1, dt * 5);
+      }
+    }
     let playing = false;
     let mobileFullscreenWanted = false;
     let mobileFullscreenHintShown = false;
@@ -1448,6 +1496,7 @@
         cancelMobileTouch();
         keys.clear();
         resetMobileSprint();
+        clearSneakState();
       } else {
         requestMobileFullscreen();
       }
@@ -1495,6 +1544,7 @@
       desktopMining = null;
       mobileTouch = null;
       resetMobileSprint();
+      clearSneakState();
       clearMiningOverlay();
       saveActiveWorld();
       pauseMenu.classList.add("visible");
@@ -1633,7 +1683,7 @@
     document.addEventListener("keyup", (event) => {
       if (!settings.sprintToggle || (event.code !== "ShiftLeft" && event.code !== "ShiftRight")) keys.delete(event.code);
     });
-    addEventListener("blur", () => { keys.clear(); sprintToggleState = false; dragLooking = false; fallbackPress = null; cancelDesktopMining(); cancelMobileTouch(); resetMobileSprint(); });
+    addEventListener("blur", () => { keys.clear(); sprintToggleState = false; dragLooking = false; fallbackPress = null; cancelDesktopMining(); cancelMobileTouch(); resetMobileSprint(); clearSneakState(); });
     let lastForwardTapAt = -Infinity;
     let sprintPointerId = null;
     function resetMobileSprint() {
@@ -1748,19 +1798,11 @@
       jump();
     });
     const touchSneak = document.querySelector("#touch-sneak");
-    const releaseTouchSneak = () => {
-      keys.delete("ControlLeft");
-      touchSneak.classList.remove("pressed");
-    };
+    setTouchSneakActive(false);
     touchSneak.addEventListener("pointerdown", (event) => {
       event.preventDefault();
-      keys.add("ControlLeft");
-      touchSneak.classList.add("pressed");
-      touchSneak.setPointerCapture(event.pointerId);
+      if (playing) setTouchSneakActive(!touchSneakActive);
     });
-    touchSneak.addEventListener("pointerup", releaseTouchSneak);
-    touchSneak.addEventListener("pointercancel", releaseTouchSneak);
-    touchSneak.addEventListener("lostpointercapture", releaseTouchSneak);
     document.querySelector("#touch-chat").addEventListener("click", () => openChat());
     document.querySelector("#touch-pause").addEventListener("click", pauseGame);
     document.addEventListener("contextmenu", (event) => event.preventDefault());
@@ -1987,7 +2029,12 @@
       { name: "spawnpoint", usage: "/spawnpoint [x y z]", description: "Set your respawn point." },
       { name: "heal", usage: "/heal", description: "Restore health and hunger." },
       { name: "kill", usage: "/kill", description: "Respawn at your spawn point." },
-      { name: "say", usage: "/say <message>", description: "Send a chat message." }
+      { name: "say", usage: "/say <message>", description: "Send a chat message." },
+      { name: "whereami", usage: "/whereami", description: "Show your coordinates and biome." },
+      { name: "spawn", usage: "/spawn", description: "Return to your spawn point." },
+      { name: "xp", usage: "/xp <amount|set amount>", description: "Add, remove, or set experience." },
+      { name: "crouch", usage: "/crouch", description: "Toggle sneaking." },
+      { name: "tick", usage: "/tick <query|rate|freeze|unfreeze|step|sprint>", description: "Control world ticks." }
     ];
     let activeCommandSuggestion = -1;
     function completeCommandSuggestion(name) {
@@ -2205,6 +2252,73 @@
       } else if (command === "say") {
         if (!args.length) return usage("/say <message>");
         appendChatLine(`<${settings.username}> ${args.join(" ")}`);
+      } else if (command === "whereami") {
+        appendChatLine(`Position: ${player.x.toFixed(1)}, ${player.y.toFixed(1)}, ${player.z.toFixed(1)} — ${biomeAt(Math.floor(player.x), Math.floor(player.z))}.`);
+      } else if (command === "spawn") {
+        player.x = spawnPoint.x;
+        player.y = spawnPoint.y;
+        player.z = spawnPoint.z;
+        player.yaw = Number.isFinite(spawnPoint.yaw) ? spawnPoint.yaw : player.yaw;
+        player.bodyYaw = player.yaw;
+        player.vy = 0;
+        player.grounded = false;
+        fallStartY = null;
+        updateChunks();
+        updatePlayerView();
+        saveActiveWorld();
+        appendChatLine(`Returned to spawn at ${player.x}, ${player.y}, ${player.z}.`);
+      } else if (command === "xp") {
+        if (args[0]?.toLowerCase() === "set") {
+          const value = Number(args[1]);
+          if (!Number.isFinite(value) || value < 0 || value > 100) return usage("/xp <amount|set amount 0-100>");
+          experience = value;
+        } else {
+          const amount = Number(args[0]);
+          if (!Number.isFinite(amount) || amount === 0 || Math.abs(amount) > 100) return usage("/xp <amount|set amount 0-100>");
+          experience = THREE.MathUtils.clamp(experience + amount, 0, 100);
+        }
+        updateSurvivalHud();
+        saveActiveWorld();
+        appendChatLine(`Experience: ${Math.round(experience)}%.`);
+      } else if (command === "crouch") {
+        setTouchSneakActive(!isSneaking());
+        appendChatLine(`Sneaking ${isSneaking() ? "on" : "off"}.`);
+      } else if (command === "tick") {
+        const action = args[0]?.toLowerCase();
+        const count = args[1] === undefined ? 1 : Number(args[1]);
+        if (action === "query") {
+          appendChatLine(`Tick rate: ${tickRate} TPS; ${tickFrozen ? "frozen" : "running"}.`);
+        } else if (multiplayerRole === "client" && action !== "query") {
+          appendChatLine("Only the world host can change tick settings.");
+        } else if (action === "rate") {
+          const rate = Number(args[1]);
+          if (!Number.isInteger(rate) || rate < 1 || rate > 40) return usage("/tick rate <1-40>");
+          tickRate = rate;
+          appendChatLine(`Tick rate set to ${tickRate} TPS.`);
+        } else if (action === "freeze") {
+          tickFrozen = true;
+          tickStepRemaining = 0;
+          tickSprintRemaining = 0;
+          appendChatLine("World ticks frozen.");
+        } else if (action === "unfreeze") {
+          tickFrozen = false;
+          tickStepRemaining = 0;
+          tickSprintRemaining = 0;
+          appendChatLine("World ticks resumed.");
+        } else if (action === "step" || action === "sprint") {
+          if (!Number.isInteger(count) || count < 1 || count > 100) return usage(`/tick ${action} [1-100]`);
+          tickFrozen = true;
+          tickStepRemaining = action === "step" ? count : 0;
+          tickSprintRemaining = action === "sprint" ? count : 0;
+          appendChatLine(`Running ${count} tick${count === 1 ? "" : "s"}${action === "sprint" ? " quickly" : ""}.`);
+        } else {
+          return usage("/tick <query|rate <1-40>|freeze|unfreeze|step [1-100]|sprint [1-100]>");
+        }
+        if (multiplayerRole === "host") {
+          lastNetworkSendAt = -Infinity;
+          updateNetworkPlayerState(performance.now());
+        }
+        saveActiveWorld();
       } else {
         appendChatLine(`Unknown command "/${command}". Use /help.`);
       }
@@ -2384,6 +2498,7 @@
       try {
         const skins = skinLibrary.filter((entry) => entry.dataURL);
         localStorage.setItem(SKIN_LIBRARY_STORAGE_KEY, JSON.stringify(skins));
+        scheduleFirebaseSync("skins");
         return true;
       } catch {
         return false;
@@ -2511,7 +2626,8 @@
             skinLibrary.push({
               id: entry.id,
               name: entry.name.replace(/[^a-zA-Z0-9 _-]/g, "").trim().slice(0, 24) || "Custom skin",
-              dataURL: entry.dataURL
+              dataURL: entry.dataURL,
+              updatedAt: Number.isFinite(entry.updatedAt) ? entry.updatedAt : 0
             });
             if (skinLibrary.length > MAX_WARDROBE_SKINS + 1) break;
           }
@@ -2524,7 +2640,7 @@
         if (savedSkin) {
           let entry = skinLibrary.find((item) => item.dataURL === savedSkin);
           if (!entry) {
-            entry = { id: `saved-${Date.now()}`, name: "Saved skin", dataURL: savedSkin };
+            entry = { id: `saved-${Date.now()}`, name: "Saved skin", dataURL: savedSkin, updatedAt: Date.now() };
             skinLibrary.push(entry);
             if (!saveSkinLibrary()) {
               document.querySelector("#wardrobe-status").textContent = "Saved skin was recovered, but the library could not be updated.";
@@ -2569,6 +2685,7 @@
         } catch {
           saved = false;
         }
+        markFirebaseProfileChanged();
       }
       drawWardrobePreview();
       for (const material of wardrobeMaterials) {
@@ -2698,7 +2815,13 @@
         labelCanvas,
         headCanvas,
         labelTexture,
-        target: { x: state.x, y: state.y, z: state.z, yaw: state.yaw },
+        target: {
+          x: state.x, y: state.y, z: state.z, yaw: state.yaw,
+          bodyYaw: Number.isFinite(state.bodyYaw) ? state.bodyYaw : state.yaw,
+          pitch: Number.isFinite(state.pitch) ? state.pitch : 0,
+          sneaking: !!state.sneaking
+        },
+        crouchAnimation: 0,
         heldType: null,
         heldMesh: null
       };
@@ -2733,7 +2856,12 @@
         remote.name = name;
         drawRemoteName(remote);
       }
-      remote.target = { x: state.x, y: state.y, z: state.z, yaw: state.yaw };
+      remote.target = {
+        x: state.x, y: state.y, z: state.z, yaw: state.yaw,
+        bodyYaw: Number.isFinite(state.bodyYaw) ? state.bodyYaw : state.yaw,
+        pitch: Number.isFinite(state.pitch) ? state.pitch : 0,
+        sneaking: !!state.sneaking
+      };
       if (remote.heldType !== (itemCatalog[state.held] ? state.held : null)) {
         setRemoteHeldItem(remote, state.held);
       }
@@ -2762,16 +2890,24 @@
         const previousX = position.x, previousZ = position.z;
         const amount = 0.24;
         position.x = THREE.MathUtils.lerp(position.x, target.x, amount);
-        position.y = THREE.MathUtils.lerp(position.y, target.y - PLAYER_EYE_HEIGHT + PLAYER_BODY_HEIGHT / 2, amount);
+        position.y = THREE.MathUtils.lerp(
+          position.y,
+          target.y - PLAYER_EYE_HEIGHT + PLAYER_BODY_HEIGHT / 2 - (target.sneaking ? 0.08 : 0),
+          amount
+        );
         position.z = THREE.MathUtils.lerp(position.z, target.z, amount);
-        const yawDelta = Math.atan2(Math.sin(target.yaw - remote.model.rotation.y + Math.PI), Math.cos(target.yaw - remote.model.rotation.y + Math.PI));
+        const yawDelta = Math.atan2(Math.sin(target.bodyYaw - remote.model.rotation.y + Math.PI), Math.cos(target.bodyYaw - remote.model.rotation.y + Math.PI));
         remote.model.rotation.y += yawDelta * amount;
+        remote.crouchAnimation += ((target.sneaking ? 1 : 0) - remote.crouchAnimation) * amount;
+        remote.parts.head.rotation.y = Math.atan2(Math.sin(target.yaw - target.bodyYaw), Math.cos(target.yaw - target.bodyYaw));
+        remote.parts.head.rotation.x = -target.pitch + 0.12 * remote.crouchAnimation;
+        remote.parts.body.rotation.x = -0.14 * remote.crouchAnimation;
         const moving = Math.hypot(position.x - previousX, position.z - previousZ) > 0.003;
         const swing = moving ? Math.sin(now * 0.012) * 0.62 : 0;
-        remote.parts.armLeft.rotation.x = swing;
-        remote.parts.armRight.rotation.x = -swing;
-        remote.parts.legLeft.rotation.x = -swing;
-        remote.parts.legRight.rotation.x = swing;
+        remote.parts.armLeft.rotation.x = swing + 0.34 * remote.crouchAnimation;
+        remote.parts.armRight.rotation.x = -swing + 0.34 * remote.crouchAnimation;
+        remote.parts.legLeft.rotation.x = -swing - 0.22 * remote.crouchAnimation;
+        remote.parts.legRight.rotation.x = swing - 0.22 * remote.crouchAnimation;
       }
     }
     function applyRemoteBlockChange(change) {
@@ -2850,9 +2986,10 @@
       const state = {
         id: multiplayerRole === "host" ? "host" : multiplayerPlayerId,
         name: settings.username,
-        x: player.x, y: player.y, z: player.z, yaw: player.yaw, pitch: player.pitch,
+        x: player.x, y: player.y, z: player.z, yaw: player.yaw, bodyYaw: player.bodyYaw,
+        pitch: player.pitch, sneaking: isSneaking(),
         held: items[selected]?.type || "",
-        worldTime
+        worldTime, tickRate, tickFrozen
       };
       if (sendMultiplayerMessage({ type: "player_state", player: state })) lastNetworkSendAt = now;
     }
@@ -2874,7 +3011,8 @@
       return {
         id,
         name: settings.username,
-        x: player.x, y: player.y, z: player.z, yaw: player.yaw, pitch: player.pitch,
+        x: player.x, y: player.y, z: player.z, yaw: player.yaw, bodyYaw: player.bodyYaw,
+        pitch: player.pitch, sneaking: isSneaking(), tickRate, tickFrozen,
         held: items[selected]?.type || ""
       };
     }
@@ -2883,6 +3021,7 @@
         id: remote.id,
         name: remote.name,
         x: remote.target.x, y: remote.target.y, z: remote.target.z, yaw: remote.target.yaw,
+        bodyYaw: remote.target.bodyYaw, pitch: remote.target.pitch, sneaking: remote.target.sneaking,
         held: remote.heldType || ""
       };
     }
@@ -3036,15 +3175,15 @@
       if (!message || typeof message.type !== "string") return;
       if (message.type === "join") {
         if (multiplayerConnections.has(connection.peer)) return;
-        if (multiplayerConnections.size >= 11) {
-          sendPeerMessage(connection, { type: "error", message: "This room is full (12 players maximum)." });
+        if (multiplayerConnections.size >= 9) {
+          sendPeerMessage(connection, { type: "error", message: "This room is full (10 players maximum)." });
           connection.close();
           return;
         }
         const state = {
           id: connection.peer,
           name: sanitizeUsername(message.name),
-          x: player.x + 2, y: player.y, z: player.z, yaw: player.yaw,
+          x: player.x + 2, y: player.y, z: player.z, yaw: player.yaw, bodyYaw: player.bodyYaw,
           held: ""
         };
         const players = [currentPlayerState("host"), ...[...remotePlayers.values()].map(remotePlayerState)];
@@ -3056,10 +3195,14 @@
           playerId: connection.peer,
           seed: activeWorld.seed | 0,
           elapsed: worldTime,
+          tickRate,
+          tickFrozen,
           gameMode,
-          spawn: { x: state.x, y: state.y, z: state.z, yaw: state.yaw },
+          spawn: { x: state.x, y: state.y, z: state.z, yaw: state.yaw, bodyYaw: state.bodyYaw },
           players
         });
+        appendChatLine(`${state.name} has joined the world.`);
+        showChatAnnouncement(`${state.name} has joined the world.`);
         const changes = serializeWorldChanges();
         for (let index = 0; index < changes.length; index += 100) {
           sendPeerMessage(connection, { type: "world_changes", changes: changes.slice(index, index + 100) });
@@ -3106,6 +3249,8 @@
         name: `Online Room ${joined.code}`,
         seed: joined.seed,
         elapsed: Number.isFinite(joined.elapsed) ? joined.elapsed : 0,
+        tickRate: Number.isInteger(joined.tickRate) ? THREE.MathUtils.clamp(joined.tickRate, 1, 40) : 20,
+        tickFrozen: joined.tickFrozen === true,
         gameMode: joined.gameMode === "creative" ? "creative" : "survival",
         edits: {},
         placed: {}
@@ -3122,6 +3267,7 @@
       beginWorld(world);
       for (const state of joined.players) updateRemotePlayer(state);
       setMultiplayerStatus(`Joined room ${joined.code}.`);
+      appendChatLine(`${settings.username} has joined the world.`);
       appendChatLine(`Joined the online world. Room code: ${joined.code}.`);
       updateNetworkPlayerState(performance.now());
     }
@@ -3145,6 +3291,8 @@
           playerId: message.playerId,
           players: message.players,
           elapsed: message.elapsed,
+          tickRate: message.tickRate,
+          tickFrozen: message.tickFrozen,
           gameMode: message.gameMode,
           spawn: message.spawn,
           changes: []
@@ -3159,10 +3307,17 @@
         pendingJoinRoom.changes.push(...message.changes);
       } else if (message.type === "world_sync_complete") {
         finishJoiningRoom();
-      } else if (message.type === "player_joined" || message.type === "player_state") {
+      } else if (message.type === "player_joined") {
+        if (message.player && typeof message.player.name === "string") {
+          appendChatLine(`${sanitizeUsername(message.player.name)} has joined the world.`);
+        }
+        updateRemotePlayer(message.player);
+      } else if (message.type === "player_state") {
         if (message.player?.id === "host" && Number.isFinite(message.player.worldTime)) {
           worldTime = message.player.worldTime;
           updateSky(worldTime);
+          if (Number.isInteger(message.player.tickRate)) tickRate = THREE.MathUtils.clamp(message.player.tickRate, 1, 40);
+          if (typeof message.player.tickFrozen === "boolean") tickFrozen = message.player.tickFrozen;
         }
         updateRemotePlayer(message.player);
       } else if (message.type === "player_left") {
@@ -3495,6 +3650,33 @@
     const WORLD_STORAGE_KEY = "blocklands.worlds.v1";
     let worldPreviewCapturePending = false;
     const SETTINGS_STORAGE_KEY = "blocklands.settings.v1";
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyAHRTc7Nb0z7BmaH8D31xorajkaOQGpbAQ",
+      authDomain: "chatapp-kids.firebaseapp.com",
+      projectId: "chatapp-kids",
+      storageBucket: "chatapp-kids.firebasestorage.app",
+      messagingSenderId: "1011249452235",
+      appId: "1:1011249452235:web:1fae7b355f08bbd797f74e",
+      measurementId: "G-SF9M2H7B5P"
+    };
+    const FIREBASE_SETTINGS_UPDATED_KEY = "blocklands.settings-updated.v1";
+    const FIREBASE_PROFILE_UPDATED_KEY = "blocklands.profile-updated.v1";
+    const FIREBASE_SDK_VERSION = "11.10.0";
+    const CLOUD_WORLD_CHUNK_SIZE = 180000;
+    const CLOUD_WORLD_MAX_LENGTH = 20 * 1024 * 1024;
+    let firebaseRuntimePromise = null;
+    let firebaseRuntime = null;
+    let firebaseCurrentUser = null;
+    let firebaseStatusMessage = location.protocol === "file:"
+      ? "Firebase sign-in requires a local web server; open this game at http://localhost."
+      : "Not signed in.";
+    let firebaseStatusIsError = false;
+    let firebaseSyncTimer = 0;
+    let firebaseSyncActive = false;
+    let firebaseApplyingCloudData = false;
+    let firebaseSettingsUpdatedAt = 0;
+    let firebaseProfileUpdatedAt = 0;
+    const firebaseDirtyCategories = new Set();
     const settingsDefinitions = [
       { key: "renderDistance", label: "Render Distance", category: "Video", type: "range", min: 2, max: 5, step: 1, unit: " chunks" },
       { key: "fieldOfView", label: "Field of View", category: "Video", type: "range", min: 55, max: 110, step: 1, unit: "°" },
@@ -3532,7 +3714,6 @@
       { key: "destroyBlockVibrate", label: "Destroy Block (Vibrate)", category: "Controls", type: "checkbox" },
       { key: "splitControls", label: "Split Controls", category: "Controls", type: "checkbox" },
       { key: "lefty", label: "Lefty", category: "Controls", type: "checkbox" },
-      { key: "swapJumpAndSneak", label: "Swap Jump and Sneak", category: "Controls", type: "checkbox" },
       { key: "mobileControlSize", label: "Mobile Control Size", category: "Controls", type: "range", min: 0.7, max: 1.5, step: 0.1, unit: "x", mobileOnly: true },
       { key: "mobileDpadX", label: "Mobile D-Pad Position X", category: "Controls", type: "range", min: 0, max: 0.8, step: 0.01, mobileOnly: true },
       { key: "mobileDpadY", label: "Mobile D-Pad Position Y", category: "Controls", type: "range", min: 0, max: 0.6, step: 0.01, mobileOnly: true },
@@ -3556,8 +3737,8 @@
     const settingsPages = [
       { title: "Keyboard & Mouse Settings", group: "Controls", icon: "⌨", keys: ["mouseSensitivity", "invertMouseX", "invertMouseY", "sprintToggle", "walkSpeed", "sprintSpeed", "jumpStrength", "gravity", "autoJump", "reverseHotbarScroll", "pickupRange"] },
       { title: "Controller Settings", group: "Controls", icon: "◉", keys: ["walkSpeed", "sprintSpeed", "jumpStrength", "gravity", "autoJump"] },
-      { title: "Touch Settings", group: "Controls", icon: "▣", keys: ["mobileLookSensitivity", "invertMouseY", "autoJump", "destroyBlockVibrate", "splitControls", "lefty", "swapJumpAndSneak", "mobileControlSize"] },
-      { title: "Profile Settings", group: "General", icon: "●", category: "Interface" },
+      { title: "Touch Settings", group: "Controls", icon: "▣", keys: ["mobileLookSensitivity", "invertMouseY", "autoJump", "destroyBlockVibrate", "splitControls", "lefty", "mobileControlSize"] },
+      { title: "Profile Settings", group: "General", icon: "●", keys: ["username"] },
       { title: "Global Resources", group: "General", icon: "▤", info: "Resource packs aren't available in this version. The built-in block textures are used." },
       { title: "Video Settings", group: "General", icon: "▰", category: "Video" },
       { title: "Gameplay Settings", group: "General", icon: "⚙", category: "Gameplay" }
@@ -3597,9 +3778,13 @@
         return [];
       }
     }
-    function saveWorldList() {
+    function saveWorldList(syncCategory = "worlds") {
       try {
+        for (const world of savedWorlds) {
+          if (!Number.isFinite(world.updatedAt)) world.updatedAt = Date.now();
+        }
         localStorage.setItem(WORLD_STORAGE_KEY, JSON.stringify(savedWorlds));
+        if (syncCategory) scheduleFirebaseSync(syncCategory);
         return true;
       } catch {
         setMenuMessage("World data could not be saved in this browser.");
@@ -3614,7 +3799,9 @@
       for (const [key, blocks] of placed) savedBlocks[key] = [...blocks];
       activeWorld.edits = savedEdits;
       activeWorld.placed = savedBlocks;
-      activeWorld.player = { x: player.x, y: player.y, z: player.z, yaw: player.yaw, pitch: player.pitch };
+      activeWorld.player = {
+        x: player.x, y: player.y, z: player.z, yaw: player.yaw, bodyYaw: player.bodyYaw, pitch: player.pitch
+      };
       activeWorld.elapsed = worldTime;
       activeWorld.items = items.map((item) => item ? { type: item.type, count: item.count } : null);
       activeWorld.selected = selected;
@@ -3622,10 +3809,13 @@
       activeWorld.hunger = hunger;
       activeWorld.experience = experience;
       activeWorld.gameMode = gameMode;
+      activeWorld.tickRate = tickRate;
+      activeWorld.tickFrozen = tickFrozen;
+      activeWorld.updatedAt = Date.now();
       activeWorld.spawnPoint = { ...spawnPoint };
       activeWorld.perspectiveMode = perspectiveMode;
       if (!savedWorlds.some((world) => world.id === activeWorld.id)) savedWorlds.push(activeWorld);
-      return saveWorldList();
+      return saveWorldList(`world:${activeWorld.id}`);
     }
     function clearWorldScene() {
       clearRemotePlayers();
@@ -3719,6 +3909,7 @@
       player.z = Number.isFinite(world.player?.z) ? world.player.z : 0;
       player.y = Number.isFinite(world.player?.y) ? world.player.y : heightAt(Math.floor(player.x), Math.floor(player.z)) + 1.72;
       player.yaw = Number.isFinite(world.player?.yaw) ? world.player.yaw : Math.PI;
+      player.bodyYaw = Number.isFinite(world.player?.bodyYaw) ? world.player.bodyYaw : player.yaw;
       player.pitch = Number.isFinite(world.player?.pitch) ? world.player.pitch : 0;
       player.vy = 0;
       player.grounded = false;
@@ -3731,6 +3922,10 @@
       lastRegenerationAt = performance.now();
       lastHungerRecoveryAt = performance.now();
       worldTime = Number.isFinite(world.elapsed) ? Math.max(0, world.elapsed) : 0;
+      tickRate = Number.isInteger(world.tickRate) ? THREE.MathUtils.clamp(world.tickRate, 1, 40) : 20;
+      tickFrozen = world.tickFrozen === true;
+      tickStepRemaining = 0;
+      tickSprintRemaining = 0;
       items.fill(null);
       ["grass", "dirt", "stone", "sand", "wood"].forEach((type, index) => {
         items[index] = { type, count: settings.startingStackSize };
@@ -3750,6 +3945,7 @@
       desktopMining = null;
       mobileTouch = null;
       resetMobileSprint();
+      clearSneakState();
       mainMenu.classList.remove("visible");
       pauseMenu.classList.remove("visible");
       document.body.classList.add("world-active");
@@ -3795,6 +3991,7 @@
       document.body.classList.remove("world-active");
       clearWorldScene();
       activeWorld = null;
+      clearSneakState();
       seed = 0;
       worldTime = 0;
       steveModel.visible = false;
@@ -3860,6 +4057,7 @@
           for (const direction of [
             { name: "forward", src: "mobile_res/Forward_button.webp" },
             { name: "left", src: "mobile_res/Left_button.webp" },
+            { name: "sneak", src: "mobile_res/Sneak_button.webp" },
             { name: "right", src: "mobile_res/Right_button.webp" },
             { name: "backward", src: "mobile_res/Backward_button.webp" }
           ]) {
@@ -3871,15 +4069,13 @@
           }
           element.appendChild(grid);
         } else {
-          for (const label of ["JUMP", "SNEAK"]) {
+          for (const label of ["JUMP"]) {
             const button = document.createElement("span");
             if (label === "JUMP") {
               const image = document.createElement("img");
               image.src = "mobile_res/Jump_button.webp";
               image.alt = "";
               button.appendChild(image);
-            } else {
-              button.textContent = label;
             }
             element.appendChild(button);
           }
@@ -3942,6 +4138,419 @@
       }
       return [help, preview];
     }
+    function setFirebaseStatus(message, isError = false) {
+      firebaseStatusMessage = message;
+      firebaseStatusIsError = isError;
+      const status = document.querySelector("#firebase-account-status");
+      if (status) {
+        status.textContent = message;
+        status.classList.toggle("error", isError);
+      }
+    }
+    function defaultFirebaseStatus() {
+      return location.protocol === "file:"
+        ? "Firebase sign-in requires a local web server; open this game at http://localhost."
+        : "Not signed in.";
+    }
+    function firebaseErrorMessage(error) {
+      if (error?.code === "auth/unauthorized-domain") {
+        const host = location.hostname || "file://";
+        const localFileHelp = location.protocol === "file:"
+          ? " This page is open as a local file; serve it at http://localhost instead."
+          : "";
+        return `Firebase does not authorize ${host}. Add localhost for local testing and jjpie23.github.io for the published site under Firebase Authentication → Settings → Authorized domains.${localFileHelp}`;
+      }
+      if (error?.code === "auth/operation-not-allowed") {
+        return "This sign-in provider is disabled. Enable Google and Email/Password in Firebase Authentication → Sign-in method.";
+      }
+      if (error?.code === "auth/popup-blocked") {
+        return "The browser blocked the Google sign-in window. Allow pop-ups for localhost and try again, or use email/password.";
+      }
+      if (error?.code === "auth/popup-closed-by-user") {
+        return "Google sign-in was cancelled when its window closed. Try again and complete sign-in in the pop-up.";
+      }
+      return error?.message || "Firebase account action failed.";
+    }
+    function persistFirebaseTimestamps() {
+      try {
+        localStorage.setItem(FIREBASE_SETTINGS_UPDATED_KEY, String(firebaseSettingsUpdatedAt));
+        localStorage.setItem(FIREBASE_PROFILE_UPDATED_KEY, String(firebaseProfileUpdatedAt));
+      } catch {
+        setMenuMessage("Account sync timestamps could not be saved in this browser.");
+      }
+    }
+    function markFirebaseSettingsChanged() {
+      const updatedAt = Date.now();
+      firebaseSettingsUpdatedAt = updatedAt;
+      firebaseProfileUpdatedAt = updatedAt;
+      persistFirebaseTimestamps();
+      scheduleFirebaseSync("settings");
+      scheduleFirebaseSync("profile");
+    }
+    function markFirebaseProfileChanged() {
+      firebaseProfileUpdatedAt = Date.now();
+      persistFirebaseTimestamps();
+      scheduleFirebaseSync("profile");
+    }
+    function getFirebaseRuntime() {
+      if (!firebaseRuntimePromise) {
+        const base = `https://www.gstatic.com/firebasejs/${FIREBASE_SDK_VERSION}`;
+        firebaseRuntimePromise = Promise.all([
+          import(`${base}/firebase-app.js`),
+          import(`${base}/firebase-auth.js`),
+          import(`${base}/firebase-firestore.js`)
+        ]).then(([appSdk, authSdk, firestoreSdk]) => {
+          const app = appSdk.initializeApp(FIREBASE_CONFIG);
+          const auth = authSdk.getAuth(app);
+          const db = firestoreSdk.getFirestore(app);
+          firebaseRuntime = { auth, authSdk, db, firestoreSdk };
+          authSdk.onAuthStateChanged(auth, (user) => {
+            firebaseCurrentUser = user;
+            if (!user) {
+              setFirebaseStatus(defaultFirebaseStatus());
+              if (activeSettingsPage === "Profile Settings") renderSettingsCategory();
+              return;
+            }
+            const label = user.email || user.displayName || "your account";
+            setFirebaseStatus(`Signed in as ${label}. Syncing…`);
+            syncAccountData().then(() => {
+              if (activeSettingsPage === "Profile Settings") renderSettingsCategory();
+            }).catch((error) => {
+              setFirebaseStatus(`Sync failed: ${error.message}`, true);
+            });
+            if (activeSettingsPage === "Profile Settings") renderSettingsCategory();
+          }, (error) => setFirebaseStatus(firebaseErrorMessage(error), true));
+          return firebaseRuntime;
+        }).catch((error) => {
+          firebaseRuntimePromise = null;
+          setFirebaseStatus(`Firebase could not be initialized: ${error.message}`, true);
+          throw error;
+        });
+      }
+      return firebaseRuntimePromise;
+    }
+    function isCloudWorld(world) {
+      return !!world && typeof world.id === "string" && /^[A-Za-z0-9._-]{1,128}$/.test(world.id) &&
+        typeof world.name === "string" && world.name.length <= 80 && Number.isSafeInteger(world.seed);
+    }
+    function splitCloudWorldData(value) {
+      const chunks = [];
+      for (let offset = 0; offset < value.length;) {
+        let end = Math.min(offset + CLOUD_WORLD_CHUNK_SIZE, value.length);
+        const lastCodeUnit = value.charCodeAt(end - 1);
+        if (end < value.length && lastCodeUnit >= 0xD800 && lastCodeUnit <= 0xDBFF) end--;
+        chunks.push(value.slice(offset, end));
+        offset = end;
+      }
+      return chunks;
+    }
+    async function readCloudWorld(snapshot, runtime, userId) {
+      const metadata = snapshot.data();
+      let serialized = metadata.inline;
+      if (Number.isInteger(metadata.chunkCount) && metadata.chunkCount > 0) {
+        if (metadata.chunkCount > Math.ceil(CLOUD_WORLD_MAX_LENGTH / CLOUD_WORLD_CHUNK_SIZE)) {
+          throw new Error(`Cloud world ${snapshot.id} exceeds the supported size.`);
+        }
+        const versionPrefix = typeof metadata.versionId === "string" ? `${metadata.versionId}-` : "";
+        const chunkSnapshot = await runtime.firestoreSdk.getDocs(
+          runtime.firestoreSdk.collection(runtime.db, "users", userId, "worlds", snapshot.id, "chunks")
+        );
+        const chunks = chunkSnapshot.docs
+          .filter((chunk) => versionPrefix ? chunk.id.startsWith(versionPrefix) : /^\d{4}$/.test(chunk.id))
+          .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }))
+          .map((chunk) => chunk.data().text);
+        if (chunks.length !== metadata.chunkCount || chunks.some((chunk) => typeof chunk !== "string")) {
+          throw new Error(`Cloud world ${snapshot.id} has incomplete data.`);
+        }
+        serialized = chunks.join("");
+      }
+      if (typeof serialized !== "string" || serialized.length > CLOUD_WORLD_MAX_LENGTH) {
+        throw new Error(`Cloud world ${snapshot.id} has invalid data.`);
+      }
+      let world;
+      try {
+        world = JSON.parse(serialized);
+      } catch {
+        throw new Error(`Cloud world ${snapshot.id} could not be parsed.`);
+      }
+      if (!isCloudWorld(world) || world.id !== snapshot.id) {
+        throw new Error(`Cloud world ${snapshot.id} has invalid metadata.`);
+      }
+      world.updatedAt = Number.isFinite(metadata.updatedAt) ? metadata.updatedAt : (world.updatedAt || 0);
+      return world;
+    }
+    async function writeCloudWorld(world, runtime, userId) {
+      if (!isCloudWorld(world)) throw new Error("A saved world has invalid account-sync data.");
+      const serialized = JSON.stringify(world);
+      if (serialized.length > CLOUD_WORLD_MAX_LENGTH) {
+        throw new Error(`World "${world.name}" is too large to sync.`);
+      }
+      const parent = runtime.firestoreSdk.doc(runtime.db, "users", userId, "worlds", world.id);
+      const chunksRef = runtime.firestoreSdk.collection(runtime.db, "users", userId, "worlds", world.id, "chunks");
+      const oldChunks = await runtime.firestoreSdk.getDocs(chunksRef);
+      const chunks = serialized.length > CLOUD_WORLD_CHUNK_SIZE ? splitCloudWorldData(serialized) : [];
+      const versionId = chunks.length
+        ? `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`
+        : null;
+      for (let offset = 0; offset < chunks.length; offset += 12) {
+        const batch = runtime.firestoreSdk.writeBatch(runtime.db);
+        chunks.slice(offset, offset + 12).forEach((text, index) => {
+          const chunkId = `${versionId}-${String(offset + index).padStart(4, "0")}`;
+          batch.set(runtime.firestoreSdk.doc(chunksRef, chunkId), { text });
+        });
+        await batch.commit();
+      }
+      await runtime.firestoreSdk.setDoc(parent, {
+        updatedAt: Number.isFinite(world.updatedAt) ? world.updatedAt : Date.now(),
+        inline: chunks.length ? null : serialized,
+        chunkCount: chunks.length,
+        versionId
+      });
+      const staleChunks = oldChunks.docs.filter((chunk) =>
+        !versionId || !chunk.id.startsWith(`${versionId}-`)
+      );
+      for (let offset = 0; offset < staleChunks.length; offset += 400) {
+        const batch = runtime.firestoreSdk.writeBatch(runtime.db);
+        staleChunks.slice(offset, offset + 400).forEach((chunk) => batch.delete(chunk.ref));
+        await batch.commit();
+      }
+    }
+    function applyCloudSettings(values) {
+      if (!values || typeof values !== "object" || Array.isArray(values)) return;
+      for (const definition of settingsDefinitions) {
+        const candidate = values[definition.key];
+        if (definition.type === "range" && Number.isFinite(candidate)) {
+          const clamped = THREE.MathUtils.clamp(candidate, definition.min, definition.max);
+          settings[definition.key] = Number((definition.min + Math.round((clamped - definition.min) / definition.step) * definition.step).toFixed(5));
+        } else if (definition.type === "checkbox" && typeof candidate === "boolean") {
+          settings[definition.key] = candidate;
+        } else if (definition.type === "select" && definition.options.includes(candidate)) {
+          settings[definition.key] = candidate;
+        } else if (definition.type === "text" && typeof candidate === "string") {
+          settings[definition.key] = sanitizeUsername(candidate);
+        }
+      }
+    }
+    async function writeCloudAccountData(runtime, user = firebaseCurrentUser, categories = null) {
+      if (!user) return;
+      const firestore = runtime.firestoreSdk;
+      if (!categories || categories.has("worlds") || [...categories].some((category) => category.startsWith("world:"))) {
+        const selectedWorldIds = categories && !categories.has("worlds")
+          ? new Set([...categories].filter((category) => category.startsWith("world:")).map((category) => category.slice(6)))
+          : null;
+        for (const world of savedWorlds) {
+          if (!selectedWorldIds || selectedWorldIds.has(world.id)) await writeCloudWorld(world, runtime, user.uid);
+        }
+      }
+      if (!categories || categories.has("settings")) {
+        await firestore.setDoc(firestore.doc(runtime.db, "users", user.uid, "settings", "current"), {
+          updatedAt: firebaseSettingsUpdatedAt || Date.now(),
+          values: settings
+        });
+      }
+      if (!categories || categories.has("profile")) {
+        await firestore.setDoc(firestore.doc(runtime.db, "users", user.uid, "profile", "current"), {
+          updatedAt: firebaseProfileUpdatedAt || Date.now(),
+          username: settings.username,
+          selectedSkinId
+        });
+      }
+      if (!categories || categories.has("skins")) {
+        for (const skin of skinLibrary) {
+          if (!skin.dataURL) continue;
+          await firestore.setDoc(firestore.doc(runtime.db, "users", user.uid, "skins", skin.id), {
+            id: skin.id,
+            name: skin.name,
+            dataURL: skin.dataURL,
+            updatedAt: Number.isFinite(skin.updatedAt) ? skin.updatedAt : 0
+          });
+        }
+      }
+    }
+    async function mergeCloudAccountData(runtime, user = firebaseCurrentUser) {
+      if (!user) return;
+      const firestore = runtime.firestoreSdk;
+      const remoteWorlds = await firestore.getDocs(firestore.collection(runtime.db, "users", user.uid, "worlds"));
+      const worldMap = new Map(savedWorlds.map((world) => [world.id, world]));
+      for (const snapshot of remoteWorlds.docs) {
+        const remote = await readCloudWorld(snapshot, runtime, user.uid);
+        const local = worldMap.get(remote.id);
+        if (!local || (remote.updatedAt || 0) > (local.updatedAt || 0)) worldMap.set(remote.id, remote);
+      }
+      savedWorlds = [...worldMap.values()];
+      if (!saveWorldList()) throw new Error("Merged worlds could not be saved in this browser.");
+
+      const settingsRef = firestore.doc(runtime.db, "users", user.uid, "settings", "current");
+      const remoteSettings = await firestore.getDoc(settingsRef);
+      if (remoteSettings.exists()) {
+        const values = remoteSettings.data();
+        if ((Number(values.updatedAt) || 0) > firebaseSettingsUpdatedAt) {
+          applyCloudSettings(values.values);
+          firebaseSettingsUpdatedAt = Number(values.updatedAt);
+          localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+        }
+      }
+      const profileRef = firestore.doc(runtime.db, "users", user.uid, "profile", "current");
+      const remoteProfile = await firestore.getDoc(profileRef);
+      if (remoteProfile.exists()) {
+        const profile = remoteProfile.data();
+        if ((Number(profile.updatedAt) || 0) > firebaseProfileUpdatedAt) {
+          if (typeof profile.username === "string") settings.username = sanitizeUsername(profile.username);
+          if (typeof profile.selectedSkinId === "string" && /^[A-Za-z0-9_-]{1,64}$/.test(profile.selectedSkinId)) {
+            selectedSkinId = profile.selectedSkinId;
+          }
+          firebaseProfileUpdatedAt = Number(profile.updatedAt);
+          localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+        }
+      }
+
+      const remoteSkins = await firestore.getDocs(firestore.collection(runtime.db, "users", user.uid, "skins"));
+      const mergedSkins = new Map(skinLibrary.filter((skin) => skin.dataURL).map((skin) => [skin.id, skin]));
+      for (const snapshot of remoteSkins.docs) {
+        const remote = snapshot.data();
+        if (typeof remote.id !== "string" || !/^[A-Za-z0-9_-]{1,64}$/.test(remote.id) ||
+            typeof remote.name !== "string" || typeof remote.dataURL !== "string" ||
+            remote.dataURL.length > MAX_SKIN_DATA_LENGTH) {
+          throw new Error(`Cloud skin ${snapshot.id} has invalid data.`);
+        }
+        const local = mergedSkins.get(remote.id);
+        if (!local || (Number(remote.updatedAt) || 0) > (local.updatedAt || 0)) {
+          const texture = await loadSkinTexture(remote.dataURL);
+          texture.dispose();
+          mergedSkins.set(remote.id, {
+            id: remote.id,
+            name: remote.name.replace(/[^a-zA-Z0-9 _-]/g, "").trim().slice(0, 24) || "Custom skin",
+            dataURL: remote.dataURL,
+            updatedAt: Number(remote.updatedAt) || 0
+          });
+        }
+      }
+      skinLibrary = [{ id: "default-steve", name: "Steve", dataURL: null }, ...mergedSkins.values()]
+        .slice(0, MAX_WARDROBE_SKINS + 1);
+      if (!saveSkinLibrary()) throw new Error("Merged skins could not be saved in this browser.");
+      const selectedSkin = skinLibrary.find((skin) => skin.id === selectedSkinId) || skinLibrary[0];
+      await setLocalPlayerSkin(selectedSkin.dataURL || null, true);
+      applySettings();
+      renderSettingsCategory();
+    }
+    async function syncAccountData() {
+      if (!firebaseCurrentUser || firebaseSyncActive) return;
+      firebaseSyncActive = true;
+      firebaseApplyingCloudData = true;
+      try {
+        const runtime = await getFirebaseRuntime();
+        const user = firebaseCurrentUser;
+        if (!user) return;
+        await mergeCloudAccountData(runtime, user);
+        await writeCloudAccountData(runtime, user);
+        setFirebaseStatus(`Synced to ${user.email || "your account"}.`);
+      } catch (error) {
+        setFirebaseStatus(`Sync failed: ${error.message}`, true);
+        throw error;
+      } finally {
+        firebaseApplyingCloudData = false;
+        firebaseSyncActive = false;
+      }
+    }
+    async function pushAccountData() {
+      if (!firebaseCurrentUser || firebaseSyncActive) return;
+      if (!firebaseDirtyCategories.size) return;
+      firebaseSyncActive = true;
+      const categories = new Set(firebaseDirtyCategories);
+      firebaseDirtyCategories.clear();
+      try {
+        const runtime = await getFirebaseRuntime();
+        const user = firebaseCurrentUser;
+        if (!user) return;
+        await writeCloudAccountData(runtime, user, categories);
+        setFirebaseStatus(`Synced to ${user.email || "your account"}.`);
+      } catch (error) {
+        for (const category of categories) firebaseDirtyCategories.add(category);
+        setFirebaseStatus(`Sync failed: ${error.message}`, true);
+        throw error;
+      } finally {
+        firebaseSyncActive = false;
+        if (firebaseDirtyCategories.size) scheduleFirebaseSync();
+      }
+    }
+    function scheduleFirebaseSync(category) {
+      if (!firebaseCurrentUser || firebaseApplyingCloudData) return;
+      if (category) firebaseDirtyCategories.add(category);
+      if (!firebaseDirtyCategories.size) return;
+      clearTimeout(firebaseSyncTimer);
+      firebaseSyncTimer = setTimeout(() => {
+        pushAccountData().catch(() => {});
+      }, 1000);
+    }
+    function createFirebaseAccountPanel() {
+      const panel = document.createElement("section");
+      panel.className = "firebase-account-panel";
+      const heading = document.createElement("h3");
+      heading.textContent = "Account sync";
+      const status = document.createElement("div");
+      status.id = "firebase-account-status";
+      status.setAttribute("role", "status");
+      status.setAttribute("aria-live", "polite");
+      status.textContent = firebaseStatusMessage;
+      status.classList.toggle("error", firebaseStatusIsError);
+      const email = document.createElement("input");
+      email.type = "email";
+      email.autocomplete = "email";
+      email.maxLength = 254;
+      email.placeholder = "Email address";
+      email.setAttribute("aria-label", "Email address");
+      const password = document.createElement("input");
+      password.type = "password";
+      password.autocomplete = "current-password";
+      password.maxLength = 128;
+      password.placeholder = "Password";
+      password.setAttribute("aria-label", "Password");
+      const actions = document.createElement("div");
+      actions.className = "firebase-account-actions";
+      const addButton = (label, action) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "menu-button";
+        button.textContent = label;
+        button.addEventListener("click", async () => {
+          button.disabled = true;
+          try {
+            await action();
+          } catch (error) {
+            setFirebaseStatus(firebaseErrorMessage(error), true);
+          } finally {
+            button.disabled = false;
+          }
+        });
+        actions.appendChild(button);
+      };
+      addButton("Google sign in", async () => {
+        const runtime = await getFirebaseRuntime();
+        const provider = new runtime.authSdk.GoogleAuthProvider();
+        if (isMobile) await runtime.authSdk.signInWithRedirect(runtime.auth, provider);
+        else await runtime.authSdk.signInWithPopup(runtime.auth, provider);
+      });
+      addButton("Create account", async () => {
+        const runtime = await getFirebaseRuntime();
+        await runtime.authSdk.createUserWithEmailAndPassword(runtime.auth, email.value.trim(), password.value);
+      });
+      addButton("Email sign in", async () => {
+        const runtime = await getFirebaseRuntime();
+        await runtime.authSdk.signInWithEmailAndPassword(runtime.auth, email.value.trim(), password.value);
+      });
+      if (firebaseCurrentUser) {
+        addButton("Sync now", syncAccountData);
+        addButton("Sign out", async () => {
+          const runtime = await getFirebaseRuntime();
+          await runtime.authSdk.signOut(runtime.auth);
+        });
+      }
+      panel.append(heading, status);
+      if (!firebaseCurrentUser) panel.append(email, password);
+      panel.append(actions);
+      getFirebaseRuntime().catch(() => {});
+      return panel;
+    }
     function renderSettingsCategory() {
       settingsNav.replaceChildren();
       let lastGroup = "";
@@ -3958,10 +4567,17 @@
         button.type = "button";
         button.className = `settings-nav-button${page.title === activeSettingsPage ? " active" : ""}`;
         button.setAttribute("aria-current", String(page.title === activeSettingsPage));
-        const icon = document.createElement("span");
+        const icon = page.title === "Profile Settings"
+          ? document.createElement("canvas")
+          : document.createElement("span");
         icon.className = "settings-nav-icon";
         icon.setAttribute("aria-hidden", "true");
-        icon.textContent = page.icon;
+        if (icon instanceof HTMLCanvasElement) {
+          icon.width = icon.height = 16;
+          drawSkinHead(icon, steveModel.userData.currentSkinTexture.image);
+        } else {
+          icon.textContent = page.icon;
+        }
         const label = document.createElement("span");
         renderBitmapText(label, page.title.replace(/ Settings$/, "").toUpperCase(), "#ffffff", 1);
         button.setAttribute("aria-label", page.title);
@@ -4032,6 +4648,7 @@
       }
       const touchPreview = createTouchLayoutPreview();
       if (touchPreview) settingsList.append(...touchPreview);
+      if (activePage.title === "Profile Settings") settingsList.appendChild(createFirebaseAccountPanel());
     }
     function applySettings() {
       const oldRadius = RADIUS;
@@ -4064,7 +4681,6 @@
       const touchControls = document.querySelector("#mobile-controls");
       touchControls.classList.toggle("lefty", settings.lefty);
       touchControls.classList.toggle("split-controls", settings.splitControls);
-      document.querySelector("#touch-actions").classList.toggle("swap-jump-sneak", settings.swapJumpAndSneak);
       const dpadPosition = touchControlSettingKeys("dpad");
       const actionsPosition = touchControlSettingKeys("actions");
       document.documentElement.style.setProperty("--touch-dpad-x", String(settings[dpadPosition.x]));
@@ -4082,6 +4698,7 @@
       if (activeWorld && oldRadius !== RADIUS) updateChunks();
     }
     function saveSettings() {
+      markFirebaseSettingsChanged();
       try {
         localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
       } catch {
@@ -4120,6 +4737,8 @@
     });
     function loadSettings() {
       try {
+        firebaseSettingsUpdatedAt = Number(localStorage.getItem(FIREBASE_SETTINGS_UPDATED_KEY)) || 0;
+        firebaseProfileUpdatedAt = Number(localStorage.getItem(FIREBASE_PROFILE_UPDATED_KEY)) || 0;
         const value = localStorage.getItem(SETTINGS_STORAGE_KEY);
         if (value) {
           const stored = JSON.parse(value);
@@ -4197,7 +4816,8 @@
           entry = {
             id: `skin-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
             name,
-            dataURL
+            dataURL,
+            updatedAt: Date.now()
           };
           skinLibrary.push(entry);
           librarySaved = saveSkinLibrary();
@@ -4249,9 +4869,12 @@
         return;
       }
       const previousName = entry.name;
+      const previousUpdatedAt = entry.updatedAt;
       entry.name = name;
+      entry.updatedAt = Date.now();
       if (!saveSkinLibrary()) {
         entry.name = previousName;
+        entry.updatedAt = previousUpdatedAt;
         document.querySelector("#wardrobe-status").textContent = "The new skin name could not be saved in this browser.";
         return;
       }
@@ -4327,16 +4950,22 @@
     let frames = 0, fps = 0, fpsAt = last;
     function animate(now) {
       requestAnimationFrame(animate);
-      const dt = Math.min((now-last)/1000, .05);
+      const frameDt = Math.min((now-last)/1000, .05);
       last = now;
-      if (playing && !chatOpen) {
+      const dt = tickFrozen ? 1 / tickRate : Math.min(frameDt * tickRate / 20, 0.1);
+      const tickRunning = !tickFrozen || tickStepRemaining > 0 || tickSprintRemaining > 0;
+      crouchAnimation += ((isSneaking() ? 1 : 0) - crouchAnimation) * Math.min(1, frameDt * 12);
+      updateBodyYaw(frameDt);
+      if (playing && !chatOpen && tickRunning) {
+        if (tickStepRemaining > 0) tickStepRemaining--;
+        if (tickSprintRemaining > 0) tickSprintRemaining--;
         worldTime += dt * 1000;
         updateMining(now);
         updateDroppedItems(dt, now);
         const forward = (keys.has("KeyW") || keys.has("ArrowUp") ? 1 : 0) - (keys.has("KeyS") || keys.has("ArrowDown") ? 1 : 0);
         const side = (keys.has("KeyD") || keys.has("ArrowRight") ? 1 : 0) - (keys.has("KeyA") || keys.has("ArrowLeft") ? 1 : 0);
         const moving = forward !== 0 || side !== 0;
-        const sneaking = keys.has("ControlLeft") || keys.has("ControlRight");
+        const sneaking = isSneaking();
         const sprinting = moving && !sneaking && (keys.has("ShiftLeft") || keys.has("ShiftRight"));
         const speed = sprinting ? settings.sprintSpeed : sneaking ? settings.walkSpeed * 0.3 : settings.walkSpeed;
         if (sprinting && gameMode !== "creative" && now - lastSprintHungerAt >= settings.sprintHungerSeconds * 1000) {
@@ -4346,7 +4975,7 @@
         } else if (!sprinting) {
           lastSprintHungerAt = now;
         }
-        if (settings.autoJump && player.grounded && forward > 0 && now - lastAutoJumpAt > 450) {
+        if (settings.autoJump && !sneaking && player.grounded && forward > 0 && now - lastAutoJumpAt > 450) {
           const obstacleX = player.x - Math.sin(player.yaw) * forward * 0.45;
           const obstacleZ = player.z - Math.cos(player.yaw) * forward * 0.45;
           if (solidBlocksOverlapping(obstacleX, player.y, obstacleZ, true).length) {
@@ -4360,10 +4989,14 @@
         const wasGrounded = player.grounded;
         const previousY = player.y;
         if (!wasGrounded && fallStartY === null) fallStartY = previousY;
+        const preventEdgeFall = sneaking && wasGrounded && player.vy <= 0;
+        const feetY = player.y - PLAYER_EYE_HEIGHT;
         const nextX = player.x + moveX;
-        if (!solidBlocksOverlapping(nextX, player.y, player.z).length) player.x = nextX;
+        if (!solidBlocksOverlapping(nextX, player.y, player.z).length &&
+            (!preventEdgeFall || hasGroundSupportAt(nextX, player.z, feetY))) player.x = nextX;
         const nextZ = player.z + moveZ;
-        if (!solidBlocksOverlapping(player.x, player.y, nextZ).length) player.z = nextZ;
+        if (!solidBlocksOverlapping(player.x, player.y, nextZ).length &&
+            (!preventEdgeFall || hasGroundSupportAt(player.x, nextZ, feetY))) player.z = nextZ;
         player.vy -= settings.gravity * dt;
         const nextY = player.y + player.vy * dt;
         const collisions = solidBlocksOverlapping(player.x, nextY, player.z, true);
