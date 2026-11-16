@@ -123,12 +123,14 @@
     #menu-create.menu-view { width: min(900px, calc(100vw - 24px)); height: min(660px, calc(100dvh - 24px)); gap: 12px; padding: 16px; }
     .world-tabs { position: absolute; z-index: auto; top: calc(-13% + 1px); right: 0; left: 0; height: 15.8%; min-height: 32px; }
     .world-tab-panel { position: relative; z-index: 2; }
-    .world-tab { position: absolute; z-index: 0; top: 0; display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; height: 100%; padding: 5px 10px; border: 0; background-color: transparent; background-image: url("button_dact.png"); background-position: 45.92% 10.93%; background-repeat: no-repeat; background-size: 545.45% 962.86%; color: #fff; font: 14px ui-monospace, Consolas, monospace; cursor: pointer; image-rendering: pixelated; }
+    .world-tab { position: absolute; z-index: 0; top: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; min-width: 0; height: 100%; padding: 5px 0 5px 12%; border: 0; background-color: transparent; background-image: url("button_dact.png"); background-position: 45.92% 10.93%; background-repeat: no-repeat; background-size: 545.45% 962.86%; color: #fff; font: 14px ui-monospace, Consolas, monospace; cursor: pointer; image-rendering: pixelated; }
     #world-tab-worlds { left: 0; width: 29.73%; }
     #world-tab-friends { left: 29.73%; width: 29.73%; }
     #world-tab-multiplayer { z-index: 1; left: 59.46%; width: 29.73%; }
-    .world-tab[aria-selected="true"] { z-index: 3; background-image: url("button_act.png"); background-position: 23.47% 11.04%; background-size: 545.45% 886.84%; color: #222; }
-    .world-tab-count { align-self: center; font: 11px ui-monospace, Consolas, monospace; }
+    .world-tab[aria-selected="true"] { z-index: 3; background-image: url("button_act.png"); background-position: 23.47% 11.04%; background-size: 545.45% 886.84%; color: #000; }
+    .world-tab-count { align-self: flex-start; font: 11px ui-monospace, Consolas, monospace; }
+    .world-tab .bitmap-label canvas { height: 13px; }
+    .world-tab-count canvas { height: 10px; }
     .world-tab-return { z-index: 0; left: calc(89.19% - 5px); width: calc(10.81% + 5px); margin: 0; padding: 0; border: 0; background: url("x_button_world.png") no-repeat 79.68% 11% / 1539% 910%; }
     .world-tab-panel { display: none; flex: 1; min-height: 0; }
     .world-tab-panel.active:not([hidden]) { display: flex; flex-direction: column; gap: 6px; }
@@ -205,24 +207,31 @@
     .skin-rename-actions button { min-width: 90px; padding: 7px 10px; border: 1px solid #888; background: #3a3a3a; color: #fff; cursor: pointer; }
     #multiplayer-status { color: #d7dfcd; }
     #pause-player-list { display: grid; gap: 4px; white-space: pre-line; }
-    .settings-screen { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; align-items: stretch; gap: 10px; padding: max(18px, env(safe-area-inset-top, 0px)) max(22px, env(safe-area-inset-right, 0px)) max(18px, env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px)); border: 0; background: linear-gradient(#10151acc, #10151af0), url("res/title/bg/panorama0.png") center / cover; box-shadow: none; text-align: left; }
-    .settings-titlebar { display: grid; grid-template-columns: minmax(100px, 1fr) minmax(0, 2fr) 32px; align-items: center; min-height: 42px; padding-left: 12px; border: 2px solid #d0d0d0; background: #383838; color: #fff; font-size: 14px; }
-    .settings-titlebar-title { color: #fff; font-weight: 700; }
+    .settings-screen { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; align-items: stretch; gap: 0; padding: 0; border: 0; background: linear-gradient(#10151a35, #10151a88), url("res/title/bg/panorama0.png") center / cover; box-shadow: none; text-align: left; }
+    .settings-titlebar { position: absolute; z-index: 3; top: 0; left: 0; right: 0; display: grid; grid-template-columns: 1fr; align-items: center; min-height: 28px; padding: 0; border: 0; background: #62666a99; color: #fff; font-size: 11px; }
+    .settings-titlebar-title { display: none; }
     #settings-page-title { text-align: center; }
-    #settings-close { display: grid; place-items: center; width: 32px; height: 38px; border: 1px solid #f1f1f1; background: #858585; color: #fff; font: 18px/1 Arial, sans-serif; cursor: pointer; }
+    #settings-close { position: absolute; top: 2px; right: 4px; display: grid; place-items: center; width: 24px; height: 22px; border: 1px solid #c5c5c5; background: #555b; color: #fff; font: 16px/1 Arial, sans-serif; cursor: pointer; }
     #settings-close:hover { background: #8794c7; }
     #settings-close:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
-    .settings-layout { display: grid; grid-template-columns: minmax(210px, 27%) minmax(0, 1fr); gap: 8px; flex: 1; min-height: 0; }
-    .settings-nav { display: flex; flex-direction: column; gap: 5px; min-height: 0; overflow-y: auto; padding: 8px; border: 2px solid #aaa; background: #252a30; }
-    .settings-nav-group { padding: 8px 6px 2px; color: #c9c9c9; font: 10px Arial, sans-serif; letter-spacing: .08em; }
-    .settings-nav-button { display: flex; align-items: center; gap: 9px; min-height: 36px; padding: 4px 8px; border: 0; background: url("res/gui/gui.png") no-repeat 0 20% / 128% 1280%; filter: brightness(3); color: #fff; text-align: left; cursor: pointer; image-rendering: pixelated; }
-    .settings-nav-button:hover, .settings-nav-button:focus-visible, .settings-nav-button.active { background-position: 0 36.6%; filter: none; outline: 1px solid #fff; }
+    .settings-layout { position: absolute; inset: 34px 0 34px; display: block; min-height: 0; }
+    .settings-nav { position: absolute; z-index: 2; top: 6px; bottom: 6px; left: 8px; display: flex; flex-direction: column; gap: 3px; width: 25px; min-height: 0; overflow-x: hidden; overflow-y: auto; padding: 3px; border: 1px solid #aaa9; background: #252a3099; transition: width .12s ease; }
+    .settings-nav:hover, .settings-nav:focus-within { width: 138px; }
+    .settings-nav-group { display: none; }
+    .settings-nav-button { display: flex; align-items: center; gap: 7px; width: 18px; min-height: 21px; padding: 2px; border: 1px solid #171717; background: linear-gradient(#555, #303030); color: #fff; text-align: left; cursor: pointer; image-rendering: pixelated; }
+    .settings-nav:hover .settings-nav-button, .settings-nav:focus-within .settings-nav-button { width: 128px; }
+    .settings-nav-button:hover, .settings-nav-button:focus-visible, .settings-nav-button.active { background: linear-gradient(#777, #494949); outline: 1px solid #ddd; }
+    .settings-nav-button > span:last-child { display: none; white-space: nowrap; }
+    .settings-nav:hover .settings-nav-button > span:last-child, .settings-nav:focus-within .settings-nav-button > span:last-child { display: block; }
     .settings-nav-icon { display: grid; place-items: center; flex: 0 0 16px; height: 16px; border: 1px solid #333; background: linear-gradient(#d5d5d5, #858585); color: #243244; font: 11px Arial, sans-serif; }
-    .settings-main { display: flex; flex-direction: column; min-width: 0; min-height: 0; padding: 8px; border: 2px solid #aaa; background: #252a30e8; box-shadow: inset 0 0 0 1px #0008; }
-    .settings-list { display: grid; align-content: start; gap: 4px; flex: 1; width: 100%; min-height: 0; overflow-y: auto; padding: 4px; }
-    .setting-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(110px, .9fr); align-items: center; gap: 10px; min-height: 36px; padding: 5px 8px; border: 1px solid #4d5661; background: #343a42; color: #f5f5f5; font: 12px Arial, sans-serif; }
-    .setting-control { display: flex; justify-content: flex-end; align-items: center; gap: 8px; min-width: 0; }
-    .setting-control input[type="range"] { width: min(200px, 100%); accent-color: #c8c8c8; }
+    .settings-main { position: absolute; inset: 0 18%; display: flex; flex-direction: column; min-width: 0; min-height: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
+    .settings-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: 4px 8px; flex: 1; width: 100%; min-height: 0; overflow-y: auto; padding: 0; }
+    .settings-section-heading { grid-column: 1 / -1; margin: 3px 0 0; color: #fff; font: 9px ui-monospace, Consolas, monospace; text-shadow: 1px 1px #222; }
+    .setting-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(70px, .9fr); align-items: center; gap: 4px; min-height: 25px; padding: 2px 5px; border: 1px solid #171717; background: linear-gradient(#555, #303030); box-shadow: inset 1px 1px #9998, inset -1px -1px #111; color: #f5f5f5; font: 10px Arial, sans-serif; }
+    .setting-row > span { min-width: 0; overflow: hidden; }
+    .setting-row > span canvas { max-width: 100%; height: 8px; }
+    .setting-control { display: flex; justify-content: flex-end; align-items: center; gap: 4px; min-width: 0; }
+    .setting-control input[type="range"] { width: min(120px, 100%); height: 12px; accent-color: #c8c8c8; }
     .setting-control input[type="checkbox"] { width: 18px; height: 18px; accent-color: #858585; }
     .setting-control input[type="text"], .setting-control select { width: min(170px, 100%); min-width: 0; height: 25px; padding: 3px 6px; border: 1px solid #aaa; background: #454545; color: #fff; font: 11px Arial, sans-serif; }
     .settings-info { padding: 10px; color: #eee; font: 11px/1.5 Arial, sans-serif; }
@@ -252,8 +261,8 @@
     .touch-sneak-reference { display: flex; align-items: center; gap: 8px; margin: 0; padding: 6px; border: 1px solid #fff8; background: #172019cc; color: #fff; font: 10px/1.35 Arial, sans-serif; }
     .touch-sneak-reference img { width: 44px; height: 64px; object-fit: contain; background: #fff; image-rendering: pixelated; }
     .setting-value { min-width: 38px; color: #d3dccb; font: 11px ui-monospace, Consolas, monospace; text-align: right; }
-    .settings-actions { display: flex; justify-content: center; gap: 8px; width: 100%; }
-    .settings-actions .menu-button { flex: 1; width: auto; height: 30px; }
+    .settings-actions { position: absolute; right: 18%; bottom: 4px; left: 18%; display: flex; justify-content: center; gap: 8px; width: 64%; }
+    .settings-actions .menu-button { flex: 1; width: auto; height: 26px; }
     #chat-overlay { position: fixed; z-index: 3; left: 16px; bottom: 86px; display: none; width: min(480px, calc(100vw - 32px)); pointer-events: auto; }
     #chat-overlay.open { display: block; }
     #chat-announcement { position: fixed; z-index: 6; left: 16px; bottom: 86px; display: none; width: min(480px, calc(100vw - 32px)); pointer-events: none; }
@@ -267,9 +276,61 @@
     .chat-line { width: fit-content; max-width: 100%; padding: 3px 6px; background: #080b08b8; color: #fff; font-size: calc(12px * var(--chat-scale, 1)); line-height: 1.35; overflow-wrap: anywhere; text-shadow: 0 1px 2px #000; }
     #chat-form { display: flex; width: 100%; }
     #chat-input { flex: 1; min-width: 0; height: 32px; padding: 5px 8px; border: 1px solid #ddd; background: #111d; color: #fff; font: 13px ui-monospace, Consolas, monospace; outline: none; }
+    #inventory-screen { position: fixed; inset: 0; z-index: 6; display: none; place-items: center; padding: 16px; background: #0009; }
+    #inventory-screen.open { display: grid; }
+    .inventory-panel { position: relative; display: block; width: min(720px, 96vw, calc(90dvh * 1.061)); max-height: 90dvh; aspect-ratio: 174 / 164; overflow: hidden; padding: 0; border: 0; background: #c6c6c6 url("res/gui/inventory.png") left top / 147.13% 156.1% no-repeat; box-shadow: 0 12px 40px #000b; color: #202020; font: 13px ui-monospace, Consolas, monospace; }
+    .inventory-header { position: absolute; z-index: 2; top: 1.4%; left: 3.5%; display: flex; align-items: center; gap: 5px; width: 93%; height: 5.5%; color: #222; font-weight: 700; }
+    #inventory-title { flex: 1; font-size: clamp(9px, 1.4vw, 13px); }
+    .inventory-close { width: 5.5%; height: 100%; min-width: 19px; padding: 0; border: 2px solid #444; background: #8e8e8e; color: #fff; font: 18px/1 Arial, sans-serif; cursor: pointer; }
+    #crafting-table-toggle { width: 11%; font-size: 9px; }
+    #crafting-table-toggle:disabled { opacity: .45; cursor: default; }
+    .inventory-player { position: absolute; top: 4.5%; left: 14%; width: 31%; height: 44%; overflow: hidden; }
+    #inventory-preview { display: block; width: 100%; height: 100%; touch-action: none; }
+    .crafting-grid { position: absolute; top: 14.6%; left: 49.5%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); width: 21.8%; height: 23.2%; }
+    .crafting-slot, .crafting-result { position: relative; min-width: 0; min-height: 0; padding: 0; border: 0; background: transparent; cursor: pointer; }
+    .crafting-slot:hover, .crafting-result:not(:disabled):hover { background: #ffffff30; }
+    .crafting-slot .item-icon, .crafting-result .item-icon { position: absolute; inset: 14%; }
+    .crafting-slot em, .crafting-result em { position: absolute; right: 0; bottom: 0; color: #fff; font: 9px ui-monospace, Consolas, monospace; font-style: normal; text-shadow: 1px 1px #222; }
+    .crafting-result { position: absolute; top: 21.3%; left: 82.3%; width: 10%; height: 11%; }
+    .crafting-result:disabled { cursor: default; }
+    .inventory-panel.crafting-table-mode { background-image: url("res/gui/crafting.png"); }
+    .inventory-panel.crafting-table-mode .inventory-player { display: none; }
+    .inventory-panel.crafting-table-mode .crafting-grid { top: 9.7%; left: 16.4%; width: 31%; height: 33%; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); }
+    .inventory-panel.crafting-table-mode .crafting-result { top: 18.3%; left: 68.3%; width: 15%; height: 16%; }
+    .inventory-slots { position: absolute; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 0; width: 93%; }
+    #inventory-slots { top: 50.6%; left: 3.5%; height: 32.5%; grid-template-rows: repeat(3, minmax(0, 1fr)); }
+    #inventory-hotbar { top: 85.7%; left: 3.5%; height: 11.6%; grid-template-rows: 1fr; }
+    .inventory-slot { position: relative; min-width: 0; min-height: 0; padding: 0; border: 0; background: transparent; cursor: pointer; }
+    .inventory-slot:hover { background: #ffffff2a; }
+    .inventory-slot.selected { outline: 2px solid #313131; outline-offset: -3px; background: #ffffff44; }
+    .inventory-slot .item-icon { position: absolute; inset: 20%; }
+    .item-icon { display: block; image-rendering: pixelated; background-repeat: no-repeat; }
+    .item-icon.block-icon { background-image: url("res/terrain.png"); background-size: 1600% 1600%; }
+    .item-icon.sprite-icon { background-image: url("res/gui/items.png"); background-size: 1600% 1600%; }
+    .item-icon.tool-icon { display: grid; place-items: center; color: #4a2e16; font: bold 12px ui-monospace, Consolas, monospace; text-shadow: 1px 1px #ddd; }
+    .item-icon.tool-icon::before { content: attr(data-glyph); }
+    .inventory-slot small { position: absolute; top: 0; left: 2px; color: #f8f8f8; font: 9px ui-monospace, Consolas, monospace; text-shadow: 1px 1px #222; }
+    .inventory-slot em { position: absolute; right: 1px; bottom: 0; color: #fff; font: 9px ui-monospace, Consolas, monospace; font-style: normal; text-shadow: 1px 1px #222; }
+    #furnace-controls { display: none; }
+    .inventory-panel.furnace-mode { background-image: url("res/gui/furnace.png"); }
+    .inventory-panel.furnace-mode .inventory-player,
+    .inventory-panel.furnace-mode .crafting-grid,
+    .inventory-panel.furnace-mode .crafting-result { display: none; }
+    .inventory-panel.furnace-mode #furnace-controls { position: absolute; top: 9.5%; left: 31%; display: block; width: 45%; height: 31%; }
+    .furnace-slot { position: absolute; display: block; border: 0; background: transparent; }
+    .furnace-slot:nth-child(1) { top: 0; left: 0; width: 22%; height: 32%; }
+    .furnace-slot:nth-child(2) { top: 63%; left: 0; width: 22%; height: 32%; }
+    .furnace-slot:nth-child(3) { top: 27%; left: 69%; width: 33%; height: 45%; }
+    .crafting-slot:focus-visible, .crafting-result:focus-visible, .inventory-slot:focus-visible { outline: 2px solid #222; outline-offset: -2px; }
+    @media (max-width: 600px) {
+      #inventory-screen { padding: 6px; }
+      .inventory-panel { width: min(96vw, calc(90dvh * 1.061)); }
+      .inventory-slot em { font-size: 7px; }
+      .inventory-slot small { font-size: 7px; }
+    }
     .status-icon.empty::after { display: none; }
     .status-icon.half::after { clip-path: inset(0 50% 0 0); }
-    .status-icon.heart.half::after { clip-path: inset(0 0 0 50%); }
+    .status-icon.heart.half::after { clip-path: inset(0 50% 0 0); }
     .status-icon.full::after { clip-path: inset(0); }
     .world-hidden { display: none !important; }
     .pov-third-person .status-icon { filter: drop-shadow(0 1px 1px #000); }
@@ -287,6 +348,7 @@
     #touch-pause { position: absolute; top: 58px; right: 12px; pointer-events: auto; }
     #touch-chat { position: absolute; top: 58px; right: 64px; pointer-events: auto; }
     #touch-f3 { position: absolute; top: 58px; right: 116px; pointer-events: auto; }
+    #touch-inventory { display: none; }
     #touch-f3[hidden] { display: none; }
     #mobile-controls.split-controls #touch-look { width: 50%; }
     .touch-button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; overflow: hidden; border: 2px solid #ffffff80; border-radius: 9px; background: #172019b8; box-shadow: none; color: #fff; font: 800 9px ui-monospace, monospace; text-shadow: none; touch-action: none; user-select: none; -webkit-user-select: none; }
@@ -319,7 +381,7 @@
       .menu-title-content { gap: 8px; }
       #menu-worlds.menu-view { width: min(96vw, 120.3dvh, calc(100vw - 24px)); height: min(78dvh, 62.25vw, calc(64.85vw - 15.6px), calc(100dvh - 24px)); max-height: calc(100dvh - 24px); gap: 6px; }
       #menu-create.menu-view { width: calc(100vw - 16px); height: min(720px, calc(100dvh - 16px)); max-height: calc(100dvh - 16px); gap: 8px; padding: 10px; }
-      .world-tab { flex: 1; min-width: 0; padding: 5px 3px; font-size: 12px; }
+      .world-tab { flex: 1; min-width: 0; padding: 5px 0 5px 8%; font-size: 12px; }
       .world-menu-header { gap: 8px; }
       .world-menu-footer { gap: 6px; }
       .world-menu-footer .menu-button { width: min(150px, 32%); }
@@ -337,7 +399,8 @@
       .pause-info { width: min(160px, 38vw); padding: 12px; }
       .pause-footer { bottom: 8px; left: 20px; }
       .settings-screen { width: 100vw; height: 100vh; height: 100dvh; padding: max(6px, env(safe-area-inset-top, 0px)) max(6px, env(safe-area-inset-right, 0px)) max(6px, env(safe-area-inset-bottom, 0px)) max(6px, env(safe-area-inset-left, 0px)); }
-      .settings-layout { grid-template-columns: minmax(112px, 34%) minmax(0, 1fr); }
+      .settings-layout { inset: 34px 0 34px; grid-template-columns: minmax(112px, 34%) minmax(0, 1fr); }
+      .settings-main { right: 18%; left: 18%; }
       .settings-nav-button { min-height: 25px; padding: 3px; font-size: 10px; }
       .settings-nav-icon { flex-basis: 14px; height: 14px; }
       .setting-row { grid-template-columns: minmax(0, 1fr) minmax(70px, .8fr); gap: 5px; padding: 3px 2px; font-size: 10px; }
@@ -383,6 +446,28 @@
       <div id="bottom-hint"><b>WASD / ↑</b> move &nbsp; double tap to run &nbsp; <b>SHIFT</b> sneak &nbsp; <b>SPACE</b> jump &nbsp; <b>ESC</b> pause</div>
     </div>
   </div>
+  <div id="inventory-screen" aria-hidden="true">
+    <section class="inventory-panel" role="dialog" aria-modal="true" aria-labelledby="inventory-title">
+      <header class="inventory-header">
+        <span id="inventory-title">Inventory</span>
+        <button id="crafting-table-toggle" class="inventory-close" type="button" aria-label="Open crafting table" disabled>3×3</button>
+        <button id="furnace-toggle" class="inventory-close" type="button" aria-label="Open furnace interface">F</button>
+        <button id="inventory-close" class="inventory-close" type="button" aria-label="Close inventory">×</button>
+      </header>
+      <div class="inventory-player">
+        <canvas id="inventory-preview" width="240" height="300" aria-label="3D preview of your Steve character"></canvas>
+      </div>
+      <div id="crafting-grid" class="crafting-grid" aria-label="Crafting grid"></div>
+      <button id="crafting-result" class="crafting-result" type="button" aria-label="Crafting result" disabled></button>
+      <div id="inventory-slots" class="inventory-slots" aria-label="Inventory slots"></div>
+      <div id="inventory-hotbar" class="inventory-slots" aria-label="Hotbar slots"></div>
+      <div id="furnace-controls" aria-label="Furnace interface">
+        <span class="furnace-slot" aria-label="Furnace input"></span>
+        <span class="furnace-slot" aria-label="Furnace fuel"></span>
+        <span class="furnace-slot" aria-label="Furnace output"></span>
+      </div>
+    </section>
+  </div>
   <div id="mobile-controls" aria-label="Mobile game controls">
     <div id="touch-look" aria-label="Drag to look"></div>
     <div id="touch-dpad">
@@ -397,6 +482,7 @@
     </div>
     <button id="touch-chat" class="touch-button" aria-label="Open chat"><img src="mobile_res/Chat_button.webp" alt=""></button>
     <button id="touch-f3" class="touch-button" aria-label="Toggle developer debug information" aria-pressed="false" hidden><img src="mobile_res/Agent_button.webp" alt=""></button>
+    <button id="touch-inventory" class="touch-button" aria-label="Open inventory">INV</button>
     <button id="touch-pause" class="touch-button" aria-label="Pause"><img src="mobile_res/Pause_button.webp" alt=""></button>
   </div>
   <div id="chat-overlay" aria-label="Game chat">
@@ -471,7 +557,7 @@
       <header class="world-tabs" role="tablist" aria-label="World options">
         <button id="world-tab-worlds" class="world-tab" type="button" role="tab" aria-selected="true" aria-controls="world-panel-worlds" aria-label="Worlds 0"><span class="bitmap-label">Worlds</span><span id="world-count" class="world-tab-count bitmap-label">0</span></button>
         <button id="world-tab-friends" class="world-tab" type="button" role="tab" aria-selected="false" aria-controls="world-panel-friends" aria-label="Friends 0"><span class="bitmap-label">Friends</span><span class="world-tab-count bitmap-label">0</span></button>
-        <button id="world-tab-multiplayer" class="world-tab" type="button" role="tab" aria-selected="false" aria-controls="world-panel-multiplayer" aria-label="Servers 0"><span class="bitmap-label">Servers</span><span class="world-tab-count bitmap-label">0</span></button>
+        <button id="world-tab-multiplayer" class="world-tab" type="button" role="tab" aria-selected="false" aria-controls="world-panel-multiplayer" aria-label="Multiplayer 0"><span class="bitmap-label">Multiplayer</span><span class="world-tab-count bitmap-label">0</span></button>
         <button id="worlds-back" class="world-tab world-tab-return" type="button" aria-label="Return to title"></button>
       </header>
       <section id="world-panel-worlds" class="world-tab-panel active" role="tabpanel" aria-labelledby="world-tab-worlds">
@@ -823,6 +909,70 @@
     });
     wardrobeScene.add(wardrobeModel);
     let wardrobeRotation = 0;
+    const inventoryCanvas = document.querySelector("#inventory-preview");
+    const inventoryRenderer = new THREE.WebGLRenderer({
+      canvas: inventoryCanvas, antialias: false, alpha: false, powerPreference: "low-power"
+    });
+    inventoryRenderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+    inventoryRenderer.outputColorSpace = THREE.SRGBColorSpace;
+    const inventoryScene = new THREE.Scene();
+    inventoryScene.background = new THREE.Color(0x000000);
+    inventoryScene.add(new THREE.HemisphereLight(0xe4f0ff, 0x574b3f, 1.8));
+    const inventoryLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    inventoryLight.position.set(2, 4, 3);
+    inventoryScene.add(inventoryLight);
+    const inventoryCamera = new THREE.PerspectiveCamera(32, 1, 0.1, 10);
+    inventoryCamera.position.set(0, 0.3, 4.4);
+    inventoryCamera.lookAt(0, 0.3, 0);
+    const inventoryModel = steveModel.clone(true);
+    inventoryModel.visible = true;
+    inventoryModel.scale.multiplyScalar(0.78);
+    inventoryModel.position.y = 0.3;
+    const inventoryMaterials = [];
+    inventoryModel.traverse((object) => {
+      if (!object.isMesh) return;
+      const applySkin = (material) => {
+        const clone = material.clone();
+        clone.map = steveModel.userData.currentSkinTexture;
+        clone.needsUpdate = true;
+        inventoryMaterials.push(clone);
+        return clone;
+      };
+      object.material = Array.isArray(object.material)
+        ? object.material.map(applySkin)
+        : applySkin(object.material);
+    });
+    updateModelNecklace(inventoryModel, steveModel.userData.currentSkinTexture.image);
+    inventoryScene.add(inventoryModel);
+    let inventoryRotation = 0;
+    let inventoryPointerX = null;
+    inventoryCanvas.addEventListener("pointerdown", (event) => {
+      inventoryPointerX = event.clientX;
+      inventoryCanvas.setPointerCapture(event.pointerId);
+    });
+    inventoryCanvas.addEventListener("pointermove", (event) => {
+      if (inventoryPointerX === null) return;
+      inventoryRotation += (event.clientX - inventoryPointerX) * 0.012;
+      inventoryPointerX = event.clientX;
+    });
+    const stopInventoryRotate = () => { inventoryPointerX = null; };
+    inventoryCanvas.addEventListener("pointerup", stopInventoryRotate);
+    inventoryCanvas.addEventListener("pointercancel", stopInventoryRotate);
+    function renderInventoryPreview(now) {
+      if (!inventoryOpen) return;
+      const rect = inventoryCanvas.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const ratio = Math.min(devicePixelRatio, 1.5);
+      if (inventoryCanvas.width !== Math.round(rect.width * ratio) ||
+          inventoryCanvas.height !== Math.round(rect.height * ratio)) {
+        inventoryRenderer.setPixelRatio(ratio);
+        inventoryRenderer.setSize(rect.width, rect.height, false);
+      }
+      inventoryCamera.aspect = rect.width / rect.height;
+      inventoryCamera.updateProjectionMatrix();
+      inventoryModel.rotation.y = inventoryRotation + Math.sin(now * 0.00025) * 0.08;
+      inventoryRenderer.render(inventoryScene, inventoryCamera);
+    }
     let wardrobePointerX = null;
     wardrobeCanvas.addEventListener("pointerdown", (event) => {
       wardrobePointerX = event.clientX;
@@ -961,14 +1111,22 @@
       grassSide: tileMaterial(3, 0),
       dirt: tileMaterial(2, 0),
       stone: tileMaterial(1, 0),
+      cobblestone: tileMaterial(0, 1),
       sand: tileMaterial(2, 1),
+      oakPlanks: tileMaterial(4, 0),
+      craftingTable: tileMaterial(11, 3),
+      craftingTableTop: tileMaterial(11, 2),
+      craftingTableBottom: tileMaterial(4, 0),
+      furnace: tileMaterial(12, 2),
+      furnaceFront: tileMaterial(13, 2),
       wood: tileMaterial(4, 1),
       woodTop: tileMaterial(5, 1),
-      leaves: tileMaterial(4, 2, 0x7fae4b, { side: THREE.DoubleSide }),
+      leaves: tileMaterial(4, 3, 0x7fae4b, { transparent: true, alphaTest: 0.08, side: THREE.DoubleSide }),
       birchWood: tileMaterial(5, 7),
       birchWoodTop: tileMaterial(5, 1, 0xe8dfc7),
-      birchLeaves: tileMaterial(4, 2, 0xd9e8bf, { side: THREE.DoubleSide }),
+      birchLeaves: tileMaterial(4, 3, 0xd9e8bf, { transparent: true, alphaTest: 0.08, side: THREE.DoubleSide }),
       deadBush: tileMaterial(7, 3, 0xffffff, { transparent: true, alphaTest: 0.08, side: THREE.DoubleSide }),
+      sapling: tileMaterial(6, 3, 0xffffff, { transparent: true, alphaTest: 0.08, side: THREE.DoubleSide }),
       water: tileMaterial(14, 0, 0x93dfff, { transparent: true, opacity: 0.58, depthWrite: false, side: THREE.DoubleSide }),
       cactus: tileMaterial(6, 4),
       cactusTop: tileMaterial(5, 4)
@@ -1127,6 +1285,8 @@
     const treeSpots = new Map();
     const treeCandidates = new Map();
     const treeBlockCache = new Map();
+    const saplingGrowth = new Map();
+    const grownTrees = new Map();
     const tempObject = new THREE.Object3D();
     const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
     const targetOutline = new THREE.LineSegments(
@@ -1143,6 +1303,12 @@
       h = Math.imul(h ^ (h >>> 13), 1274126177);
       return ((h ^ (h >>> 16)) >>> 0) / 4294967295;
     }
+    function hash3(x, y, z) {
+      let h = Math.imul(x, 374761393) + Math.imul(y, 668265263) +
+        Math.imul(z, 69069) + Math.imul(seed, 1274126177);
+      h = Math.imul(h ^ (h >>> 13), 1274126177);
+      return ((h ^ (h >>> 16)) >>> 0) / 4294967295;
+    }
     const smooth = (t) => t * t * (3 - 2 * t);
     function noise(x, z, scale) {
       const gx = x / scale, gz = z / scale;
@@ -1151,6 +1317,29 @@
       const a = THREE.MathUtils.lerp(hash(x0, z0), hash(x0 + 1, z0), tx);
       const b = THREE.MathUtils.lerp(hash(x0, z0 + 1), hash(x0 + 1, z0 + 1), tx);
       return THREE.MathUtils.lerp(a, b, tz) * 2 - 1;
+    }
+    function noise3D(x, y, z, scale) {
+      const gx = x / scale, gy = y / scale, gz = z / scale;
+      const x0 = Math.floor(gx), y0 = Math.floor(gy), z0 = Math.floor(gz);
+      const tx = smooth(gx - x0), ty = smooth(gy - y0), tz = smooth(gz - z0);
+      const sample = (ix, iy, iz) => hash3(ix, iy, iz) * 2 - 1;
+      const low = THREE.MathUtils.lerp(
+        THREE.MathUtils.lerp(sample(x0, y0, z0), sample(x0 + 1, y0, z0), tx),
+        THREE.MathUtils.lerp(sample(x0, y0, z0 + 1), sample(x0 + 1, y0, z0 + 1), tx),
+        tz
+      );
+      const high = THREE.MathUtils.lerp(
+        THREE.MathUtils.lerp(sample(x0, y0 + 1, z0), sample(x0 + 1, y0 + 1, z0), tx),
+        THREE.MathUtils.lerp(sample(x0, y0 + 1, z0 + 1), sample(x0 + 1, y0 + 1, z0 + 1), tx),
+        tz
+      );
+      return THREE.MathUtils.lerp(low, high, ty);
+    }
+    function caveAt(x, y, z) {
+      const tunnels = Math.abs(noise3D(x, y, z, 10)) < 0.11 &&
+        Math.abs(noise3D(x + 173, y - 53, z + 317, 24)) < 0.65;
+      const chambers = noise3D(x - 41, y + 89, z + 191, 17) > 0.68;
+      return tunnels || chambers;
     }
     function heightAt(x, z) {
       const broad = noise(x, z, 92) * 6.2 + noise(x, z, 38) * 3.2 + noise(x, z, 15) * 1.2;
@@ -1171,7 +1360,7 @@
     }
     function cactusHeightAt(x, z, top = heightAt(x, z)) {
       if (biomeAt(x, z) !== "Desert" || top <= SEA + 1 || top > 14 ||
-          blockType(x, top, z) !== "sand" || hash(x + 311, z - 997) < 0.994) return 0;
+          blockType(x, top, z) !== "sand" || hash(x + 311, z - 997) < 0.998) return 0;
       return 2 + Math.floor(hash(x - 157, z + 463) * 3);
     }
     function cactusBlockAt(x, y, z, top = heightAt(x, z)) {
@@ -1252,6 +1441,73 @@
       treeBlockCache.set(key, null);
       return null;
     }
+    function treeOriginForTrunkBlock(x, y, z) {
+      if (!treeAt(x, z)) return null;
+      const top = heightAt(x, z);
+      const trunkHeight = 4 + Math.floor(hash(x, z) * 2);
+      if (y <= top || y > top + trunkHeight) return null;
+      return { x, z, top, trunkHeight, birch: biomeAt(x, z) === "Birch Forest" };
+    }
+    function treeHasRemainingWood(tree) {
+      for (let y = tree.top + 1; y <= tree.top + tree.trunkHeight; y++) {
+        if (!isEditedAway(tree.x, y, tree.z)) return true;
+      }
+      return false;
+    }
+    function decayProceduralTree(tree) {
+      const leaves = tree.birch ? "birchLeaves" : "leaves";
+      const crown = tree.top + tree.trunkHeight;
+      const chunks = new Set();
+      for (let dy = -1; dy <= 2; dy++) {
+        const radius = dy === 2 ? 1 : 2;
+        for (let dx = -radius; dx <= radius; dx++) for (let dz = -radius; dz <= radius; dz++) {
+          if (Math.abs(dx) === radius && Math.abs(dz) === radius &&
+              hash(tree.x + dx * 3, tree.z + dz * 5 + dy) < 0.45) continue;
+          if (dx === 0 && dz === 0 && dy < 1) continue;
+          const x = tree.x + dx, y = crown + dy, z = tree.z + dz;
+          const key = `${Math.floor(x / CHUNK)},${Math.floor(z / CHUNK)}`;
+          const coords = `${x},${y},${z}`;
+          if (placed.get(key)?.has(coords)) continue;
+          treeBlockCache.delete(coords);
+          if (treeBlockAt(x, y, z) !== leaves) continue;
+          if (!edits.has(key)) edits.set(key, new Set());
+          edits.get(key).add(coords);
+          chunks.add(key);
+          syncBlockChange("remove", { x, y, z }, leaves);
+        }
+      }
+      for (const key of chunks) if (loaded.has(key)) buildChunk(...key.split(",").map(Number));
+      if (gameMode !== "creative") createDroppedItem("sapling", tree.x, tree.top, tree.z);
+      return true;
+    }
+    function grownTreeRootForLog(coords) {
+      for (const [root, tree] of grownTrees) {
+        if (tree.logs.includes(coords)) return root;
+      }
+      return null;
+    }
+    function decayGrownTree(root) {
+      const tree = grownTrees.get(root);
+      if (!tree) return;
+      const chunks = new Set();
+      for (const coords of tree.leaves) {
+        const [x, y, z] = coords.split(",").map(Number);
+        const key = `${Math.floor(x / CHUNK)},${Math.floor(z / CHUNK)}`;
+        if (placed.get(key)?.get(coords) !== "leaves") continue;
+        placed.get(key).delete(coords);
+        if (!edits.has(key)) edits.set(key, new Set());
+        edits.get(key).add(coords);
+        chunks.add(key);
+        syncBlockChange("remove", { x, y, z }, "leaves");
+      }
+      grownTrees.delete(root);
+      for (const key of chunks) if (loaded.has(key)) buildChunk(...key.split(",").map(Number));
+      if (gameMode !== "creative") {
+        const [x, y, z] = root.split(",").map(Number);
+        createDroppedItem("sapling", x, y - 1, z);
+      }
+      return true;
+    }
     function isEditedAway(x, y, z) {
       return edits.get(`${Math.floor(x / CHUNK)},${Math.floor(z / CHUNK)}`)?.has(`${x},${y},${z}`) || false;
     }
@@ -1266,6 +1522,7 @@
       const desert = biomeAt(x, z) === "Desert";
       if (y === top) return beach || desert ? "sand" : "grass";
       if (y >= top - 3 && (!beach || desert)) return desert ? "sand" : "dirt";
+      if (y > 1 && y < top - 3 && caveAt(x, y, z)) return null;
       return "stone";
     }
     const dirs = [
@@ -1294,12 +1551,14 @@
       if (type === "grass") return face.n[1] === 1 ? "grassTop" : face.n[1] === -1 ? "dirt" : "grassSide";
       if (type === "wood") return face.n[1] === 0 ? "wood" : "woodTop";
       if (type === "birchWood") return face.n[1] === 0 ? "birchWood" : "birchWoodTop";
+      if (type === "craftingTable") return face.n[1] === 1 ? "craftingTableTop" : face.n[1] === -1 ? "craftingTableBottom" : "craftingTable";
+      if (type === "furnace") return face.n[1] !== 0 ? "stone" : face.n[2] !== 0 ? "furnaceFront" : "furnace";
       return type;
     }
-    function addDeadBush(bucket, x, y, z) {
+    function addCrossPlant(bucket, x, y, z, height) {
       const halfWidth = 0.42;
       const bottom = y - 0.5;
-      const top = y + 0.38;
+      const top = bottom + height;
       const planes = [
         {
           normal: [Math.SQRT1_2, 0, -Math.SQRT1_2],
@@ -1318,10 +1577,17 @@
         bucket.vertex += 4;
       }
     }
+    function addDeadBush(bucket, x, y, z) {
+      addCrossPlant(bucket, x, y, z, 0.88);
+    }
     function addCube(bucket, x, y, z, kind, checkTerrain) {
       if (isEditedAway(x, y, z)) return;
       if (kind === "deadBush") {
         addDeadBush(bucket.deadBush, x, y, z);
+        return;
+      }
+      if (kind === "sapling") {
+        addCrossPlant(bucket.sapling, x, y, z, 0.72);
         return;
       }
       for (const face of dirs) {
@@ -1351,7 +1617,7 @@
       const previous = loaded.get(key);
       if (previous) { scene.remove(previous); previous.traverse((o) => { if (o.geometry && o.geometry !== cubeGeometry) o.geometry.dispose(); }); }
       const buckets = {};
-      for (const type of ["grassTop", "grassSide", "dirt", "stone", "sand", "wood", "woodTop", "leaves", "birchWood", "birchWoodTop", "birchLeaves", "cactus", "cactusTop", "deadBush"]) {
+      for (const type of ["grassTop", "grassSide", "dirt", "stone", "sand", "cobblestone", "wood", "woodTop", "oakPlanks", "craftingTable", "craftingTableTop", "craftingTableBottom", "furnace", "furnaceFront", "leaves", "birchWood", "birchWoodTop", "birchLeaves", "cactus", "cactusTop", "deadBush", "sapling"]) {
         buckets[type] = { positions: [], normals: [], uvs: [], indices: [], vertex: 0 };
       }
       const startX = cx * CHUNK, startZ = cz * CHUNK;
@@ -1515,7 +1781,7 @@
           for (let bz = Math.floor(z - PLAYER_RADIUS + 0.5); bz <= Math.floor(z + PLAYER_RADIUS + 0.5); bz++) {
             const chunkKey = `${Math.floor(bx / CHUNK)},${Math.floor(bz / CHUNK)}`;
             const placedType = placed.get(chunkKey)?.get(`${bx},${by},${bz}`);
-            if (placedType === "deadBush") continue;
+            if (placedType === "deadBush" || placedType === "sapling") continue;
             if (!placedType && !treeBlockAt(bx, by, bz) && !cactusBlockAt(bx, by, bz) &&
                 !(includeTerrain && blockType(bx, by, bz))) continue;
             if (x + PLAYER_RADIUS <= bx - 0.5 + COLLISION_EPSILON || x - PLAYER_RADIUS >= bx + 0.5 - COLLISION_EPSILON) continue;
@@ -1664,12 +1930,17 @@
     let dragLooking = false;
     let fallbackPress = null;
     let desktopMining = null;
+    const inventoryEnabled = false;
+    let inventoryOpen = false;
     let lastPointerX = 0, lastPointerY = 0;
     let chatOpen = false;
     let chatAnnouncementTimeout = null;
     function pauseGame() {
       if (!activeWorld) return;
       playing = false;
+      inventoryOpen = false;
+      document.querySelector("#inventory-screen").classList.remove("open");
+      document.querySelector("#inventory-screen").setAttribute("aria-hidden", "true");
       setDebugVisible(false);
       closeChat();
       keys.clear();
@@ -1686,6 +1957,34 @@
       setPauseMessage(multiplayerRoomCode
         ? `Room code: ${multiplayerRoomCode}. Share it with a player.`
         : "Start Multiplayer to create a room code for this world.");
+    }
+    function setInventoryOpen(open) {
+      if (!inventoryEnabled || !activeWorld || !playing) return;
+      inventoryOpen = open;
+      const screen = document.querySelector("#inventory-screen");
+      const panel = document.querySelector(".inventory-panel");
+      panel.classList.remove("furnace-mode");
+      panel.classList.toggle("crafting-table-mode", craftingTableMode);
+      document.querySelector("#inventory-title").textContent = craftingTableMode ? "Crafting" : "Inventory";
+      document.querySelector("#furnace-toggle").setAttribute("aria-label", "Open furnace interface");
+      document.querySelector("#furnace-toggle").textContent = "F";
+      screen.classList.toggle("open", open);
+      screen.setAttribute("aria-hidden", String(!open));
+      if (open) {
+        closeChat();
+        keys.clear();
+        dragLooking = false;
+        fallbackPress = null;
+        cancelDesktopMining();
+        cancelMobileTouch();
+        resetMobileSprint();
+        clearSneakState();
+        renderInventory();
+        if (locked) document.exitPointerLock();
+      } else {
+        document.querySelector("#inventory-close").blur();
+        requestMouseLock();
+      }
     }
     function resumeGame() {
       if (!activeWorld) return;
@@ -1737,7 +2036,7 @@
         mainMenu.classList.remove("visible");
         pauseMenu.classList.remove("visible");
         document.body.classList.add("world-active");
-      } else if (playing && wasLocked) {
+      } else if (playing && wasLocked && !inventoryOpen) {
         pauseGame();
       }
     });
@@ -1802,6 +2101,13 @@
         }
         return;
       }
+      if (inventoryOpen) {
+        if (event.code === "Escape" || event.code === "KeyE") {
+          event.preventDefault();
+          setInventoryOpen(false);
+        }
+        return;
+      }
       if (!playing || event.repeat) return;
       if (event.code === "KeyT" || event.key === "/") {
         event.preventDefault();
@@ -1811,6 +2117,10 @@
       if (event.code === "F3" && settings.developerMode) {
         event.preventDefault();
         setDebugVisible(!debugVisible);
+        return;
+      }
+      if (event.code === "KeyE") {
+        event.preventDefault();
         return;
       }
       if (event.code === "F5") {
@@ -1901,7 +2211,7 @@
       if (!playing || !isMobile || event.pointerType === "mouse" || mobileTouch) return;
       const target = event.target;
       if (!(target instanceof Element) ||
-          target.closest("#touch-dpad, #touch-actions, #touch-chat, #touch-f3, #touch-pause, #hotbar, #room-code-pill, #chat-overlay, #main-menu, #pause-menu")) return;
+          target.closest("#touch-dpad, #touch-actions, #touch-chat, #touch-f3, #touch-inventory, #touch-pause, #hotbar, #room-code-pill, #chat-overlay, #main-menu, #pause-menu, #inventory-screen")) return;
       event.preventDefault();
       mobileTouch = {
         pointerId: event.pointerId,
@@ -1966,37 +2276,72 @@
     });
     document.querySelector("#touch-chat").addEventListener("click", () => openChat());
     document.querySelector("#touch-f3").addEventListener("click", () => setDebugVisible(!debugVisible));
+    document.querySelector("#touch-inventory").addEventListener("click", () => setInventoryOpen(true));
     document.querySelector("#touch-pause").addEventListener("click", pauseGame);
     document.addEventListener("contextmenu", (event) => event.preventDefault());
 
     const itemCatalog = {
-      grass: { name: "Grass", tile: [0, 0] },
-      dirt: { name: "Dirt", tile: [2, 0] },
-      stone: { name: "Stone", tile: [1, 0] },
-      sand: { name: "Sand", tile: [2, 1] },
-      cactus: { name: "Cactus", tile: [6, 4] },
-      deadBush: { name: "Dead Bush", tile: [7, 3] },
-      wood: { name: "Oak Log", tile: [4, 1] },
-      birchWood: { name: "Birch Log", tile: [5, 7] },
-      leaves: { name: "Oak Leaves", tile: [4, 2] },
-      birchLeaves: { name: "Birch Leaves", tile: [4, 2] }
+      grass: { name: "Grass", tile: [0, 0], placeable: true },
+      dirt: { name: "Dirt", tile: [2, 0], placeable: true },
+      stone: { name: "Stone", tile: [1, 0], placeable: true },
+      cobblestone: { name: "Cobblestone", tile: [0, 1], placeable: true },
+      sand: { name: "Sand", tile: [2, 1], placeable: true },
+      cactus: { name: "Cactus", tile: [6, 4], placeable: true },
+      deadBush: { name: "Dead Bush", tile: [7, 3], placeable: true },
+      sapling: { name: "Oak Sapling", tile: [6, 3], placeable: true },
+      wood: { name: "Oak Log", tile: [4, 1], placeable: true },
+      oakPlanks: { name: "Oak Planks", tile: [4, 0], placeable: true },
+      craftingTable: { name: "Crafting Table", tile: [11, 2], placeable: true },
+      furnace: { name: "Furnace", tile: [13, 2], placeable: true },
+      stick: { name: "Stick", sprite: [5, 4] },
+      woodenPickaxe: { name: "Wooden Pickaxe", sprite: [0, 4], tool: "pickaxe", tier: 1 },
+      woodenAxe: { name: "Wooden Axe", sprite: [0, 6], tool: "axe", tier: 1 },
+      stonePickaxe: { name: "Stone Pickaxe", sprite: [1, 4], tool: "pickaxe", tier: 2 },
+      stoneAxe: { name: "Stone Axe", sprite: [1, 6], tool: "axe", tier: 2 },
+      birchWood: { name: "Birch Log", tile: [5, 7], placeable: true },
+      leaves: { name: "Oak Leaves", tile: [4, 3], placeable: true },
+      birchLeaves: { name: "Birch Leaves", tile: [4, 3], placeable: true }
     };
-    const items = Array(9).fill(null);
+    const items = Array(36).fill(null);
+    const craftingGrid = Array(9).fill(null);
+    let craftingTableMode = false;
     ["grass", "dirt", "stone", "sand", "wood"].forEach((type, index) => {
       items[index] = { type, count: 64 };
     });
+    const craftingRecipes = [
+      { id: "oakPlanks", name: "Oak Planks", pattern: [["wood"]], output: { type: "oakPlanks", count: 4 } },
+      { id: "sticks", name: "Sticks", pattern: [["oakPlanks"], ["oakPlanks"]], output: { type: "stick", count: 4 } },
+      { id: "craftingTable", name: "Crafting Table", pattern: [["oakPlanks", "oakPlanks"], ["oakPlanks", "oakPlanks"]], output: { type: "craftingTable", count: 1 } },
+      { id: "woodenPickaxe", name: "Wooden Pickaxe", requiresTable: true, pattern: [["oakPlanks", "oakPlanks", "oakPlanks"], [null, "stick", null], [null, "stick", null]], output: { type: "woodenPickaxe", count: 1 } },
+      { id: "woodenAxe", name: "Wooden Axe", requiresTable: true, mirrored: true, pattern: [["oakPlanks", "oakPlanks", null], ["oakPlanks", "stick", null], [null, "stick", null]], output: { type: "woodenAxe", count: 1 } },
+      { id: "furnace", name: "Furnace", requiresTable: true, pattern: [["cobblestone", "cobblestone", "cobblestone"], ["cobblestone", null, "cobblestone"], ["cobblestone", "cobblestone", "cobblestone"]], output: { type: "furnace", count: 1 } },
+      { id: "stonePickaxe", name: "Stone Pickaxe", requiresTable: true, pattern: [["cobblestone", "cobblestone", "cobblestone"], [null, "stick", null], [null, "stick", null]], output: { type: "stonePickaxe", count: 1 } },
+      { id: "stoneAxe", name: "Stone Axe", requiresTable: true, mirrored: true, pattern: [["cobblestone", "cobblestone", null], ["cobblestone", "stick", null], [null, "stick", null]], output: { type: "stoneAxe", count: 1 } }
+    ];
     const miningInfo = {
       grass: { name: "Grass Block", seconds: 0.9, drops: "Dirt" },
       dirt: { name: "Dirt", seconds: 0.75, drops: "Dirt" },
-      stone: { name: "Stone", seconds: 7.55, drops: "nothing without a pickaxe" },
+      stone: { name: "Stone", seconds: 7.55, drops: "Cobblestone with a pickaxe" },
       sand: { name: "Sand", seconds: 0.75, drops: "Sand" },
       cactus: { name: "Cactus", seconds: 0.4, drops: "Cactus" },
       deadBush: { name: "Dead Bush", seconds: 0.05, drops: "Dead Bush" },
+      sapling: { name: "Oak Sapling", seconds: 0.1, drops: "Oak Sapling" },
       wood: { name: "Oak Log", seconds: 3.05, drops: "Oak Log" },
-      leaves: { name: "Oak Leaves", seconds: 0.3, drops: "5% Sapling, 2% Sticks, 0.5% Apple" },
+      leaves: { name: "Oak Leaves", seconds: 0.3, drops: "Sapling when the tree canopy decays" },
       birchWood: { name: "Birch Log", seconds: 3.05, drops: "Birch Log" },
-      birchLeaves: { name: "Birch Leaves", seconds: 0.3, drops: "5% Birch Sapling, 2% Sticks" }
+      birchLeaves: { name: "Birch Leaves", seconds: 0.3, drops: "Sapling when the tree canopy decays" }
     };
+    function miningDuration(type) {
+      const base = miningInfo[type]?.seconds || 0.75;
+      const tool = itemCatalog[items[selected]?.type];
+      if ((type === "stone" || type === "cobblestone") && tool?.tool === "pickaxe") {
+        return base / (tool.tier > 1 ? 3.5 : 2);
+      }
+      if (["wood", "birchWood", "oakPlanks", "craftingTable"].includes(type) && tool?.tool === "axe") {
+        return base / (tool.tier > 1 ? 4 : 2.5);
+      }
+      return base;
+    }
     let miningOverlay = null;
     let miningCircleOverlay = null;
     let miningOverlayStage = -1;
@@ -2064,7 +2409,7 @@
     function updateDesktopMining(now) {
       if (!desktopMining) return;
       const { block, startedAt } = desktopMining;
-      const seconds = gameMode === "creative" ? 0.05 : (miningInfo[block.type]?.seconds || 0.75) / settings.miningSpeed;
+      const seconds = gameMode === "creative" ? 0.05 : miningDuration(block.type) / settings.miningSpeed;
       const progress = Math.min(1, (now - startedAt) / (seconds * 1000));
       setMiningOverlay(block, Math.min(9, Math.floor(progress * 10)), progress);
       if (progress >= 1) {
@@ -2074,9 +2419,26 @@
     }
     const bar = document.querySelector("#hotbar");
     let selected = 0;
+    let inventorySelectedIndex = null;
+    function createItemIcon(type) {
+      const definition = itemCatalog[type];
+      const icon = document.createElement("span");
+      icon.className = "item-icon";
+      if (definition.tile) {
+        icon.classList.add("block-icon");
+        icon.style.backgroundPosition = `${definition.tile[0] / 15 * 100}% ${definition.tile[1] / 15 * 100}%`;
+      } else if (definition.sprite) {
+        icon.classList.add("sprite-icon");
+        icon.style.backgroundPosition = `${definition.sprite[0] / 15 * 100}% ${definition.sprite[1] / 15 * 100}%`;
+      } else {
+        icon.classList.add("tool-icon");
+        icon.dataset.glyph = definition.glyph || definition.name.slice(0, 1);
+      }
+      return icon;
+    }
     function renderHotbar() {
       bar.replaceChildren();
-      items.forEach((item, index) => {
+      items.slice(0, 9).forEach((item, index) => {
         const slot = document.createElement("div");
         slot.className = `slot${index === selected ? " selected" : ""}${item ? "" : " empty"}`;
         slot.innerHTML = `<small>${index + 1}</small>`;
@@ -2084,12 +2446,9 @@
           const definition = itemCatalog[item.type];
           const info = miningInfo[item.type];
           slot.title = info ? `${info.name} · ${info.seconds}s by hand · Drops: ${info.drops}` : definition.name;
-          const swatch = document.createElement("div");
-          swatch.className = "swatch";
-          swatch.style.backgroundImage = 'url("res/terrain.png")';
-          swatch.style.backgroundSize = "1600% 1600%";
-          swatch.style.backgroundPosition = `${definition.tile[0] / 15 * 100}% ${definition.tile[1] / 15 * 100}%`;
-          slot.appendChild(swatch);
+          const icon = createItemIcon(item.type);
+          icon.classList.add("swatch");
+          slot.appendChild(icon);
           slot.insertAdjacentHTML("beforeend", `<em>${item.count}</em>`);
         } else {
           slot.title = "Empty slot";
@@ -2097,6 +2456,238 @@
         bar.appendChild(slot);
       });
     }
+    function hasCraftingTableAccess(inventory) {
+      if (inventory.some((item) => item?.type === "craftingTable")) return true;
+      for (const blocks of placed.values()) {
+        for (const [coordinates, type] of blocks) {
+          if (type !== "craftingTable") continue;
+          const [x, y, z] = coordinates.split(",").map(Number);
+          const dx = x - player.x;
+          const dz = z - player.z;
+          if (dx * dx + dz * dz <= 16 && Math.abs(y - player.y) <= 4) return true;
+        }
+      }
+      return false;
+    }
+    function addItemsTo(inventory, type, count) {
+      for (const stack of inventory) {
+        if (stack?.type !== type || stack.count >= 64) continue;
+        const added = Math.min(count, 64 - stack.count);
+        stack.count += added;
+        count -= added;
+        if (!count) return true;
+      }
+      while (count > 0) {
+        const emptyIndex = inventory.findIndex((item) => !item);
+        if (emptyIndex < 0) return false;
+        const added = Math.min(count, 64);
+        inventory[emptyIndex] = { type, count: added };
+        count -= added;
+      }
+      return true;
+    }
+    function renderInventorySlots(container, indexes) {
+      container.replaceChildren();
+      indexes.forEach((index) => {
+        const item = items[index];
+        const slot = document.createElement("button");
+        slot.type = "button";
+        slot.className = `inventory-slot${inventorySelectedIndex === index ? " selected" : ""}`;
+        slot.dataset.index = String(index);
+        slot.setAttribute("aria-label", `Slot ${index < 9 ? index + 1 : index - 8}: ${item ? `${itemCatalog[item.type].name}, ${item.count}` : "empty"}`);
+        if (item) {
+          slot.title = `${itemCatalog[item.type].name} × ${item.count}`;
+          slot.appendChild(createItemIcon(item.type));
+          const count = document.createElement("em");
+          count.textContent = String(item.count);
+          slot.appendChild(count);
+        }
+        if (index < 9) {
+          const number = document.createElement("small");
+          number.textContent = String(index + 1);
+          slot.appendChild(number);
+        }
+        container.appendChild(slot);
+      });
+    }
+    function compactCraftingPattern(pattern) {
+      const positions = [];
+      pattern.forEach((row, y) => row.forEach((type, x) => {
+        if (type) positions.push({ x, y });
+      }));
+      if (!positions.length) return [];
+      const minX = Math.min(...positions.map((point) => point.x));
+      const maxX = Math.max(...positions.map((point) => point.x));
+      const minY = Math.min(...positions.map((point) => point.y));
+      const maxY = Math.max(...positions.map((point) => point.y));
+      return pattern.slice(minY, maxY + 1).map((row) => row.slice(minX, maxX + 1));
+    }
+    function findCraftingRecipe() {
+      const size = craftingTableMode ? 3 : 2;
+      const grid = Array.from({ length: size }, (_, y) =>
+        Array.from({ length: size }, (_, x) => craftingGrid[y * size + x] || null));
+      const placed = compactCraftingPattern(grid);
+      if (!placed.length) return null;
+      for (const recipe of craftingRecipes) {
+        if (recipe.requiresTable && !craftingTableMode) continue;
+        const patterns = [recipe.pattern];
+        if (recipe.mirrored) patterns.push(recipe.pattern.map((row) => [...row].reverse()));
+        for (const pattern of patterns) {
+          const expected = compactCraftingPattern(pattern);
+          if (placed.length === expected.length && placed.every((row, y) =>
+            row.length === expected[y].length && row.every((type, x) => type === expected[y][x]))) return recipe;
+        }
+      }
+      return null;
+    }
+    function renderCraftingGrid() {
+      const grid = document.querySelector("#crafting-grid");
+      const size = craftingTableMode ? 3 : 2;
+      grid.replaceChildren();
+      for (let index = 0; index < size * size; index++) {
+        const slot = document.createElement("button");
+        slot.type = "button";
+        slot.className = "crafting-slot";
+        slot.dataset.index = String(index);
+        const type = craftingGrid[index];
+        slot.setAttribute("aria-label", `Crafting slot ${index + 1}: ${type ? itemCatalog[type].name : "empty"}`);
+        if (type) slot.appendChild(createItemIcon(type));
+        grid.appendChild(slot);
+      }
+    }
+    function renderCraftingResult() {
+      const resultSlot = document.querySelector("#crafting-result");
+      const recipe = findCraftingRecipe();
+      resultSlot.replaceChildren();
+      resultSlot.disabled = !recipe;
+      resultSlot.title = recipe ? `${recipe.name} × ${recipe.output.count}` : "No matching recipe";
+      resultSlot.setAttribute("aria-label", recipe
+        ? `Craft ${recipe.output.count} ${itemCatalog[recipe.output.type].name}`
+        : "No crafting result");
+      if (!recipe) return;
+      resultSlot.appendChild(createItemIcon(recipe.output.type));
+      if (recipe.output.count > 1) {
+        const count = document.createElement("em");
+        count.textContent = String(recipe.output.count);
+        resultSlot.appendChild(count);
+      }
+    }
+    function renderInventory() {
+      renderInventorySlots(document.querySelector("#inventory-slots"), Array.from({ length: 27 }, (_, index) => index + 9));
+      renderInventorySlots(document.querySelector("#inventory-hotbar"), Array.from({ length: 9 }, (_, index) => index));
+      renderCraftingGrid();
+      renderCraftingResult();
+      const tableToggle = document.querySelector("#crafting-table-toggle");
+      tableToggle.disabled = !craftingTableMode && !hasCraftingTableAccess(items);
+      tableToggle.textContent = craftingTableMode ? "2×2" : "3×3";
+      tableToggle.setAttribute("aria-label", craftingTableMode ? "Use inventory crafting grid" : "Open crafting table");
+    }
+    function setCraftingTableMode(enabled) {
+      if (enabled === craftingTableMode) return true;
+      if (enabled && !hasCraftingTableAccess(items)) return false;
+      const oldSize = craftingTableMode ? 3 : 2;
+      const newSize = enabled ? 3 : 2;
+      const updatedItems = items.map((item) => item ? { ...item } : null);
+      const nextGrid = Array(9).fill(null);
+      for (let y = 0; y < oldSize; y++) {
+        for (let x = 0; x < oldSize; x++) {
+          const type = craftingGrid[y * oldSize + x];
+          if (x < newSize && y < newSize) {
+            nextGrid[y * newSize + x] = type;
+          } else if (type && !addItemsTo(updatedItems, type, 1)) {
+            showNotice("Make room in your inventory before closing the 3×3 grid.");
+            return false;
+          }
+        }
+      }
+      items.splice(0, items.length, ...updatedItems);
+      craftingGrid.splice(0, craftingGrid.length, ...nextGrid);
+      craftingTableMode = enabled;
+      const panel = document.querySelector(".inventory-panel");
+      panel.classList.toggle("crafting-table-mode", enabled);
+      document.querySelector("#inventory-title").textContent = enabled ? "Crafting" : "Inventory";
+      renderHotbar();
+      renderInventory();
+      saveActiveWorld();
+      return true;
+    }
+    function craftRecipe() {
+      const recipe = findCraftingRecipe();
+      if (!recipe) return;
+      const updatedItems = items.map((item) => item ? { ...item } : null);
+      if (!addItemsTo(updatedItems, recipe.output.type, recipe.output.count)) {
+        showNotice("There is no room for the crafted item.");
+        return;
+      }
+      items.splice(0, items.length, ...updatedItems);
+      craftingGrid.fill(null);
+      renderHotbar();
+      renderInventory();
+      saveActiveWorld();
+      showNotice(`Crafted ${recipe.output.count} ${itemCatalog[recipe.output.type].name}`);
+    }
+    function handleCraftingSlotClick(event) {
+      const slot = event.target.closest(".crafting-slot");
+      if (!slot) return;
+      const index = Number(slot.dataset.index);
+      if (inventorySelectedIndex !== null) {
+        const selectedItem = items[inventorySelectedIndex];
+        if (!selectedItem || craftingGrid[index]) return;
+        craftingGrid[index] = selectedItem.type;
+        selectedItem.count--;
+        if (!selectedItem.count) items[inventorySelectedIndex] = null;
+        inventorySelectedIndex = null;
+        renderHotbar();
+        saveActiveWorld();
+      } else if (craftingGrid[index]) {
+        const updatedItems = items.map((item) => item ? { ...item } : null);
+        if (!addItemsTo(updatedItems, craftingGrid[index], 1)) {
+          showNotice("There is no room for that item.");
+          return;
+        }
+        items.splice(0, items.length, ...updatedItems);
+        craftingGrid[index] = null;
+        renderHotbar();
+        saveActiveWorld();
+      }
+      renderInventory();
+    }
+    function handleInventorySlotClick(event) {
+      const slot = event.target.closest(".inventory-slot");
+      if (!slot) return;
+      const index = Number(slot.dataset.index);
+      if (inventorySelectedIndex === null) {
+        inventorySelectedIndex = index;
+      } else if (inventorySelectedIndex === index) {
+        inventorySelectedIndex = null;
+      } else {
+        [items[inventorySelectedIndex], items[index]] = [items[index], items[inventorySelectedIndex]];
+        inventorySelectedIndex = null;
+        renderHotbar();
+        saveActiveWorld();
+      }
+      renderInventory();
+    }
+    document.querySelector("#inventory-slots").addEventListener("click", handleInventorySlotClick);
+    document.querySelector("#inventory-hotbar").addEventListener("click", handleInventorySlotClick);
+    document.querySelector("#crafting-grid").addEventListener("click", handleCraftingSlotClick);
+    document.querySelector("#crafting-result").addEventListener("click", craftRecipe);
+    document.querySelector("#crafting-table-toggle").addEventListener("click", () => {
+      if (!setCraftingTableMode(!craftingTableMode)) showNotice("A crafting table is required for the 3×3 grid.");
+    });
+    document.querySelector("#furnace-toggle").addEventListener("click", () => {
+      const panel = document.querySelector(".inventory-panel");
+      const furnaceMode = panel.classList.toggle("furnace-mode");
+      panel.classList.toggle("crafting-table-mode", !furnaceMode && craftingTableMode);
+      document.querySelector("#inventory-title").textContent = furnaceMode ? "Furnace" : craftingTableMode ? "Crafting" : "Inventory";
+      document.querySelector("#furnace-toggle").setAttribute("aria-label", furnaceMode ? "Return to inventory" : "Open furnace interface");
+      document.querySelector("#furnace-toggle").textContent = furnaceMode ? "I" : "F";
+      if (!furnaceMode) renderInventory();
+    });
+    document.querySelector("#inventory-close").addEventListener("click", () => setInventoryOpen(false));
+    document.querySelector("#inventory-screen").addEventListener("click", (event) => {
+      if (event.target.id === "inventory-screen") setInventoryOpen(false);
+    });
     for (const [id, type] of [["health-icons", "heart"], ["hunger-icons", "hunger"]]) {
       const icons = document.querySelector(`#${id}`);
       for (let i = 0; i < 10; i++) {
@@ -2107,19 +2698,19 @@
       }
     }
     function updateSurvivalHud() {
-      const updateIcons = (id, value, maxValue) => {
+      const updateIcons = (id, value, maxValue, fromRight = false) => {
         const nodes = document.querySelector(`#${id}`).children;
         const iconCount = Math.ceil(maxValue / 2);
         for (let index = 0; index < nodes.length; index++) {
           const icon = nodes[index];
-          const points = value / 2 - (iconCount - 1 - index);
+          const points = value / 2 - (fromRight ? index : iconCount - 1 - index);
           icon.hidden = index >= iconCount;
           icon.classList.toggle("full", points >= 1);
           icon.classList.toggle("half", points >= 0.5 && points < 1);
           icon.classList.toggle("empty", points < 0.5);
         }
       };
-      updateIcons("health-icons", health, settings.maxHealth);
+      updateIcons("health-icons", health, settings.maxHealth, true);
       updateIcons("hunger-icons", hunger, 20);
       const experienceFill = document.querySelector("#experience-fill");
       experienceFill.style.width = `${experience}%`;
@@ -2385,7 +2976,7 @@
         const [x, y, z] = args.slice(0, 3).map(Number);
         const normalizedType = args[3].toLowerCase();
         const type = commandBlockAliases[normalizedType] || normalizedType;
-        if (![x, y, z].every(Number.isInteger) || ![x, y, z].every(validWorldCoordinate) || y < 0 || y > 320 || !itemCatalog[type]) {
+        if (![x, y, z].every(Number.isInteger) || ![x, y, z].every(validWorldCoordinate) || y < 0 || y > 320 || !itemCatalog[type]?.placeable) {
           return appendChatLine("Invalid position or block type.");
         }
         if (playerOverlapsBlock(x, y, z)) return appendChatLine("Cannot place a block inside the player.");
@@ -2651,7 +3242,8 @@
       if (type === "grass") return [materials.grassSide, materials.grassSide, materials.grassTop, materials.dirt, materials.grassSide, materials.grassSide];
       if (type === "wood") return [materials.wood, materials.wood, materials.woodTop, materials.woodTop, materials.wood, materials.wood];
       if (type === "birchWood") return [materials.birchWood, materials.birchWood, materials.birchWoodTop, materials.birchWoodTop, materials.birchWood, materials.birchWood];
-      const material = materials[type];
+      if (type === "craftingTable") return [materials.craftingTable, materials.craftingTable, materials.craftingTableTop, materials.craftingTableBottom, materials.craftingTable, materials.craftingTable];
+      const material = materials[type] || materials.oakPlanks;
       return Array(6).fill(material);
     }
     function setMultiplayerStatus(message, isError = false) {
@@ -2944,6 +3536,7 @@
       selectedSkinId = skinLibrary.find((entry) => entry.dataURL === dataURL)?.id || "default-steve";
       updateModelNecklace(steveModel, texture.image);
       updateModelNecklace(wardrobeModel, texture.image);
+      updateModelNecklace(inventoryModel, texture.image);
       if (previous !== steveModel.userData.defaultSkinTexture && previous !== texture) previous.dispose();
       let saved = true;
       if (persist) {
@@ -2957,6 +3550,10 @@
       }
       drawWardrobePreview();
       for (const material of wardrobeMaterials) {
+        material.map = texture;
+        material.needsUpdate = true;
+      }
+      for (const material of inventoryMaterials) {
         material.map = texture;
         material.needsUpdate = true;
       }
@@ -3813,7 +4410,7 @@
       if (peer && !peer.destroyed) peer.destroy();
     }
     function setWorldSelectionTab(tab) {
-      const activeTab = tab === "friends" ? "friends" : tab === "servers" ? "multiplayer" : "worlds";
+      const activeTab = tab === "friends" ? "friends" : tab === "multiplayer" || tab === "servers" ? "multiplayer" : "worlds";
       document.querySelector("#menu-worlds").dataset.activeTab = activeTab === "multiplayer" ? "servers" : activeTab;
       const tabs = [
         ["worlds", "#world-tab-worlds", "#world-panel-worlds"],
@@ -3827,12 +4424,13 @@
         panel.classList.toggle("active", selected);
         panel.hidden = !selected;
       }
+      renderWorldTabLabels();
     }
     document.querySelector("#world-tab-worlds").addEventListener("click", () => setWorldSelectionTab("worlds"));
     document.querySelector("#world-tab-friends").addEventListener("click", () => setWorldSelectionTab("friends"));
     document.querySelector("#world-tab-multiplayer").addEventListener("click", () => {
       setMultiplayerStatus("Enter the five-digit code shown in the host's paused game.");
-      setWorldSelectionTab("servers");
+      setWorldSelectionTab("multiplayer");
     });
     document.querySelector("#join-room").addEventListener("click", () => {
       const code = document.querySelector("#room-code-input").value.trim();
@@ -3878,6 +4476,7 @@
         items[emptyIndex] = { type, count: 1 };
       }
       renderHotbar();
+      if (inventoryOpen) renderInventory();
       saveActiveWorld();
       return true;
     }
@@ -3910,6 +4509,81 @@
         }
       }
     }
+    function saplingSpaceIsClear(x, y, z, trunkHeight) {
+      for (let offset = 0; offset < trunkHeight; offset++) {
+        const bx = x, by = y + offset, bz = z;
+        const key = `${Math.floor(bx / CHUNK)},${Math.floor(bz / CHUNK)}`;
+        const coords = `${bx},${by},${bz}`;
+        if (placed.get(key)?.has(coords) && !(bx === x && by === y && bz === z)) return false;
+        if (blockType(bx, by, bz) && !(bx === x && by === y && bz === z)) return false;
+        if (treeBlockAt(bx, by, bz)) return false;
+      }
+      const crown = y + trunkHeight;
+      for (let dy = -1; dy <= 2; dy++) {
+        const radius = dy === 2 ? 1 : 2;
+        for (let dx = -radius; dx <= radius; dx++) for (let dz = -radius; dz <= radius; dz++) {
+          if (Math.abs(dx) === radius && Math.abs(dz) === radius &&
+              hash(x + dx * 3, z + dz * 5 + dy) < 0.45) continue;
+          if (dx === 0 && dz === 0 && dy < 1) continue;
+          const bx = x + dx, by = crown + dy, bz = z + dz;
+          if (blockType(bx, by, bz) || treeBlockAt(bx, by, bz)) return false;
+        }
+      }
+      return true;
+    }
+    function growSapling(x, y, z) {
+      const root = `${x},${y},${z}`;
+      const chunk = `${Math.floor(x / CHUNK)},${Math.floor(z / CHUNK)}`;
+      if (placed.get(chunk)?.get(root) !== "sapling") {
+        saplingGrowth.delete(root);
+        return;
+      }
+      const trunkHeight = 4 + Math.floor(hash(x, z) * 2);
+      if (!saplingSpaceIsClear(x, y, z, trunkHeight)) {
+        saplingGrowth.set(root, worldTime + 20000);
+        return;
+      }
+      placed.get(chunk).delete(root);
+      saplingGrowth.delete(root);
+      const logs = [];
+      const leaves = [];
+      const changedChunks = new Set([chunk]);
+      const placeGrownBlock = (bx, by, bz, type, record) => {
+        const key = `${Math.floor(bx / CHUNK)},${Math.floor(bz / CHUNK)}`;
+        const coords = `${bx},${by},${bz}`;
+        if (!placed.has(key)) placed.set(key, new Map());
+        placed.get(key).set(coords, type);
+        edits.get(key)?.delete(coords);
+        record.push(coords);
+        changedChunks.add(key);
+        syncBlockChange("place", { x: bx, y: by, z: bz }, type);
+      };
+      for (let offset = 0; offset < trunkHeight; offset++) {
+        placeGrownBlock(x, y + offset, z, "wood", logs);
+      }
+      const crown = y + trunkHeight;
+      for (let dy = -1; dy <= 2; dy++) {
+        const radius = dy === 2 ? 1 : 2;
+        for (let dx = -radius; dx <= radius; dx++) for (let dz = -radius; dz <= radius; dz++) {
+          if (Math.abs(dx) === radius && Math.abs(dz) === radius &&
+              hash(x + dx * 3, z + dz * 5 + dy) < 0.45) continue;
+          if (dx === 0 && dz === 0 && dy < 1) continue;
+          if (dx === 0 && dz === 0 && dy < 0) continue;
+          placeGrownBlock(x + dx, crown + dy, z + dz, "leaves", leaves);
+        }
+      }
+      grownTrees.set(root, { logs, leaves });
+      syncBlockChange("remove", { x, y, z }, "sapling");
+      for (const key of changedChunks) if (loaded.has(key)) buildChunk(...key.split(",").map(Number));
+      saveActiveWorld();
+      showNotice("Your sapling grew into an oak tree");
+    }
+    function updateSaplings() {
+      for (const [coords, growAt] of saplingGrowth) {
+        if (worldTime < growAt) continue;
+        growSapling(...coords.split(",").map(Number));
+      }
+    }
     function mineBlock(block) {
       clearMiningOverlay();
       if (!block || block.y <= 0) return;
@@ -3921,9 +4595,16 @@
       const type = wasPlaced ? placed.get(key).get(coords) :
         treeType || deadBushType || blockType(block.x, block.y, block.z);
       if (!type || isEditedAway(block.x, block.y, block.z)) return;
+      const naturalTree = !wasPlaced && (treeType === "wood" || treeType === "birchWood")
+        ? treeOriginForTrunkBlock(block.x, block.y, block.z)
+        : null;
+      const grownTreeRoot = wasPlaced && (type === "wood" || type === "birchWood")
+        ? grownTreeRootForLog(coords)
+        : null;
       if (isMobile && settings.destroyBlockVibrate && typeof navigator.vibrate === "function") navigator.vibrate(15);
       syncBlockChange("remove", block, type);
       placed.get(key)?.delete(`${block.x},${block.y},${block.z}`);
+      if (type === "sapling") saplingGrowth.delete(coords);
       if (!edits.has(key)) edits.set(key, new Set());
       edits.get(key).add(coords);
       treeBlockCache.delete(coords);
@@ -3936,20 +4617,38 @@
         }
       }
       for (const chunkKey of chunksToRebuild) buildChunk(...chunkKey.split(",").map(Number));
-      const dropType = type === "grass" ? "dirt" : type;
+      let treeDecayed = false;
+      if (naturalTree && !treeHasRemainingWood(naturalTree)) {
+        treeDecayed = decayProceduralTree(naturalTree) || treeDecayed;
+      }
+      if (grownTreeRoot) {
+        const grownTree = grownTrees.get(grownTreeRoot);
+        const hasWood = grownTree?.logs.some((position) => {
+          const [x, y, z] = position.split(",").map(Number);
+          const chunk = `${Math.floor(x / CHUNK)},${Math.floor(z / CHUNK)}`;
+          return placed.get(chunk)?.get(position) === "wood" || placed.get(chunk)?.get(position) === "birchWood";
+        });
+        if (!hasWood) treeDecayed = decayGrownTree(grownTreeRoot) || treeDecayed;
+      }
+      const selectedTool = itemCatalog[items[selected]?.type];
+      const dropType = type === "grass" ? "dirt" :
+        (type === "stone" || type === "cobblestone") && selectedTool?.tool === "pickaxe" ? "cobblestone" :
+          type === "stone" || type === "cobblestone" ? null : type;
       if (itemCatalog[dropType] && gameMode !== "creative") createDroppedItem(dropType, block.x, block.y, block.z);
       const info = miningInfo[type];
-      showNotice(`${info ? info.name : itemCatalog[type]?.name || "Block"} mined · Dropped ${itemCatalog[dropType]?.name || "item"}`);
+      showNotice(`${info ? info.name : itemCatalog[type]?.name || "Block"} mined · Dropped ${itemCatalog[dropType]?.name || (dropType ? "item" : "nothing")}${treeDecayed ? " · Tree leaves decayed (sapling dropped)" : ""}`);
       saveActiveWorld();
     }
     function placeBlock(block) {
       const item = items[selected];
       const type = item?.type;
-      if (!type || !block || block.y < 0 || blockType(block.x, block.y, block.z) || treeBlockAt(block.x, block.y, block.z) || playerOverlapsBlock(block.x, block.y, block.z)) return;
+      if (!type || !itemCatalog[type]?.placeable || !block || block.y < 0 || blockType(block.x, block.y, block.z) || treeBlockAt(block.x, block.y, block.z) || playerOverlapsBlock(block.x, block.y, block.z)) return;
+      if (type === "sapling" && !["grass", "dirt"].includes(blockType(block.x, block.y - 1, block.z))) return;
       const key = `${Math.floor(block.x / CHUNK)},${Math.floor(block.z / CHUNK)}`;
       if (edits.has(key)) edits.get(key).delete(`${block.x},${block.y},${block.z}`);
       if (!placed.has(key)) placed.set(key, new Map());
       placed.get(key).set(`${block.x},${block.y},${block.z}`, type);
+      if (type === "sapling") saplingGrowth.set(`${block.x},${block.y},${block.z}`, worldTime + 90000);
       syncBlockChange("place", block, type);
       buildChunk(...key.split(",").map(Number));
       if (gameMode !== "creative") {
@@ -3990,7 +4689,7 @@
         mobileTouch.target = mobileMiningTarget(mobileTouch)?.block || null;
       }
       if (!mobileTouch.target || !mobileTouch.mineStartedAt) return;
-      const seconds = gameMode === "creative" ? 0.05 : (miningInfo[mobileTouch.target.type]?.seconds || 0.75) / settings.miningSpeed;
+      const seconds = gameMode === "creative" ? 0.05 : miningDuration(mobileTouch.target.type) / settings.miningSpeed;
       const progress = Math.min(1, (now - mobileTouch.mineStartedAt) / (seconds * 1000));
       setMiningOverlay(mobileTouch.target, Math.min(9, Math.floor(progress * 10)), progress);
       if (progress >= 1) {
@@ -4100,7 +4799,7 @@
       { title: "Gameplay Settings", group: "General", icon: "⚙", category: "Gameplay" },
       { title: "Developer Settings", group: "General", icon: "⌘", keys: ["developerMode"] }
     ];
-    let activeSettingsPage = isMobile ? "Touch Settings" : "Keyboard & Mouse Settings";
+    let activeSettingsPage = "Video Settings";
     let savedWorlds = [];
     let selectedWorldId = null;
     let settingsReturnToPause = false;
@@ -4163,6 +4862,10 @@
       activeWorld.weatherRaining = weatherRaining;
       activeWorld.nextWeatherChangeAt = nextWeatherChangeAt;
       activeWorld.items = items.map((item) => item ? { type: item.type, count: item.count } : null);
+      activeWorld.craftingGrid = [...craftingGrid];
+      activeWorld.craftingTableMode = craftingTableMode;
+      activeWorld.saplingGrowth = [...saplingGrowth];
+      activeWorld.grownTrees = [...grownTrees];
       activeWorld.selected = selected;
       activeWorld.health = health;
       activeWorld.hunger = hunger;
@@ -4193,6 +4896,8 @@
       treeSpots.clear();
       treeCandidates.clear();
       treeBlockCache.clear();
+      saplingGrowth.clear();
+      grownTrees.clear();
       clearMiningOverlay();
       targetOutline.visible = false;
     }
@@ -4205,9 +4910,7 @@
     function renderWorldList() {
       const list = document.querySelector("#world-list");
       list.replaceChildren();
-      const worldCount = String(savedWorlds.length);
-      renderBitmapText(document.querySelector("#world-count"), worldCount, "#ffffff", 2);
-      document.querySelector("#world-tab-worlds").setAttribute("aria-label", `Worlds ${worldCount}`);
+      renderWorldTabLabels();
       if (!savedWorlds.some((world) => world.id === selectedWorldId)) {
         selectedWorldId = savedWorlds[0]?.id || null;
       }
@@ -4240,6 +4943,20 @@
         list.appendChild(entry);
       }
     }
+    function renderWorldTabLabels() {
+      const tabs = [
+        ["world-tab-worlds", "Worlds", savedWorlds.length],
+        ["world-tab-friends", "Friends", 0],
+        ["world-tab-multiplayer", "Multiplayer", 0]
+      ];
+      for (const [id, label, count] of tabs) {
+        const button = document.querySelector(`#${id}`);
+        const color = button.getAttribute("aria-selected") === "true" ? "#000000" : "#ffffff";
+        renderBitmapText(button.querySelector(".bitmap-label:not(.world-tab-count)"), label.toUpperCase(), color, 2);
+        renderBitmapText(button.querySelector(".world-tab-count"), String(count), color, 1);
+        button.setAttribute("aria-label", `${label} ${count}`);
+      }
+    }
     function beginWorld(world) {
       if (!world) return;
       clearWorldScene();
@@ -4259,6 +4976,25 @@
             Array.isArray(entry) && entry.length === 2 && typeof entry[0] === "string" && itemCatalog[entry[1]]
           ));
           if (blocks.size) placed.set(key, blocks);
+        }
+      }
+      if (Array.isArray(world.grownTrees)) {
+        for (const entry of world.grownTrees) {
+          if (!Array.isArray(entry) || entry.length !== 2 || typeof entry[0] !== "string" ||
+              !/^-?\d+,-?\d+,-?\d+$/.test(entry[0]) || !entry[1] ||
+              !Array.isArray(entry[1].logs) || !Array.isArray(entry[1].leaves)) continue;
+          const logs = entry[1].logs.filter((coords) => typeof coords === "string" && /^-?\d+,-?\d+,-?\d+$/.test(coords)).slice(0, 8);
+          const leaves = entry[1].leaves.filter((coords) => typeof coords === "string" && /^-?\d+,-?\d+,-?\d+$/.test(coords)).slice(0, 128);
+          if (logs.length) grownTrees.set(entry[0], { logs, leaves });
+        }
+      }
+      if (Array.isArray(world.saplingGrowth)) {
+        for (const entry of world.saplingGrowth) {
+          if (!Array.isArray(entry) || entry.length !== 2 || typeof entry[0] !== "string" ||
+              !/^-?\d+,-?\d+,-?\d+$/.test(entry[0]) || !Number.isFinite(entry[1])) continue;
+          const [x, y, z] = entry[0].split(",").map(Number);
+          const chunk = `${Math.floor(x / CHUNK)},${Math.floor(z / CHUNK)}`;
+          if (placed.get(chunk)?.get(entry[0]) === "sapling") saplingGrowth.set(entry[0], entry[1]);
         }
       }
       player.x = Number.isFinite(world.player?.x) ? world.player.x : 0;
@@ -4298,6 +5034,14 @@
           }
         }
       }
+      craftingGrid.fill(null);
+      if (Array.isArray(world.craftingGrid)) {
+        for (let index = 0; index < Math.min(craftingGrid.length, world.craftingGrid.length); index++) {
+          const type = world.craftingGrid[index];
+          if (typeof type === "string" && itemCatalog[type]) craftingGrid[index] = type;
+        }
+      }
+      craftingTableMode = world.craftingTableMode === true && hasCraftingTableAccess(items);
       selected = Number.isInteger(world.selected) ? THREE.MathUtils.clamp(world.selected, 0, 8) : 0;
       renderHotbar();
       keys.clear();
@@ -4990,7 +5734,13 @@
         (!entry.mobileOnly || isMobile) && (activePage.keys ? activePage.keys.includes(entry.key) :
           activePage.category ? entry.category === activePage.category : false)
       );
-      for (const definition of visibleSettings) {
+      visibleSettings.forEach((definition, index) => {
+        if (activePage.category === "Video" && (index === 0 || index === 3)) {
+          const heading = document.createElement("h2");
+          heading.className = "settings-section-heading";
+          renderBitmapText(heading, index === 0 ? "DISPLAY" : "QUALITY & PERFORMANCE", "#ffffff", 1);
+          settingsList.appendChild(heading);
+        }
         const field = document.createElement("label");
         field.className = "setting-row";
         const title = document.createElement("span");
@@ -5033,7 +5783,7 @@
         }
         field.append(title, control);
         settingsList.appendChild(field);
-      }
+      });
       const touchPreview = createTouchLayoutPreview();
       if (touchPreview) settingsList.append(...touchPreview);
       if (activePage.title === "Profile Settings") settingsList.appendChild(createFirebaseAccountPanel());
@@ -5365,6 +6115,7 @@
         if (tickStepRemaining > 0) tickStepRemaining--;
         if (tickSprintRemaining > 0) tickSprintRemaining--;
         worldTime += dt * 1000;
+        updateSaplings();
         updateMining(now);
         updateDroppedItems(dt, now);
         const forward = (keys.has("KeyW") || keys.has("ArrowUp") ? 1 : 0) - (keys.has("KeyS") || keys.has("ArrowDown") ? 1 : 0);
@@ -5504,6 +6255,7 @@
       renderer.render(scene, camera);
       captureWorldPreviewOnEntry();
       renderWardrobeModel(now);
+      renderInventoryPreview(now);
     }
     requestAnimationFrame(animate);
     addEventListener("resize", () => {
